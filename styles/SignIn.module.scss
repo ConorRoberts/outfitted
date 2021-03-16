@@ -1,0 +1,52 @@
+@import "./variables.scss";
+
+.option{
+    display:flex;
+    align-items:center;
+    // justify-content:space-between;
+    border-radius:5px;
+    max-width:90%;
+    padding:0.4rem;
+    border:1px solid grey;
+    .optionImage{
+        width:10%;
+    }
+    .optionLabel{
+        width:90%;
+        font-weight:400;
+        font-size:1.1rem;
+    }
+}
+
+.container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:10vh;
+}
+
+.optionContainer{
+    border:1px solid grey;
+    border-radius:15px;
+    width:90%;
+    padding:3rem;
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+}
+.title{
+    font-size:3rem;
+    font-weight:300;
+    color:$light-blue;
+}
+.optionList{
+    margin-top:10%;
+    display:flex;
+    justify-content:center;
+}
+
+@media(min-width:800px){
+    .optionContainer{
+        width:40%;
+    }
+}

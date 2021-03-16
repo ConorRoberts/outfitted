@@ -1,0 +1,35 @@
+@import "./variables.scss";
+
+.main{
+    padding:0 1rem;
+}
+
+.title,.heading{
+    font-weight:300;
+    color:$light-blue;
+    text-align:center;
+}
+
+.title{
+    font-size:2rem;
+}
+
+.heading{
+    margin-top:.8rem;
+    font-size:1.2rem;
+}
+
+.submit{
+    margin-bottom:1rem;
+}
+
+@media(min-width:900px){
+    .main{
+        padding:0 25vw;
+    }
+}
+@media(min-width:1800px){
+    .main{
+        padding:0 35vw;
+    }
+}

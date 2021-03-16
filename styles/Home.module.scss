@@ -1,0 +1,51 @@
+@import "./variables.scss";
+
+.main {
+  position: relative;
+  height: 75vh;
+  top: 5vh;
+  .splashContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .titleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    text-align: center;
+    z-index: 1;
+    margin-top: 2.5rem;
+    h1 {
+      line-height: 2.4rem;
+      color: $light-blue;
+      font-size: 3rem;
+      font-weight: 300;
+      span {
+        color: black;
+        padding-left: 4rem;
+      }
+    }
+    p {
+      border-left: 3px solid $light-blue;
+      margin: 0 1rem;
+      margin-top: 5vh;
+      font-size: 1.2rem;
+      font-weight: 300;
+      padding-left: 1rem;
+      text-align: left;
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  .main {
+    .titleContainer {
+      .intro {
+        margin: 0 20vw;
+        margin-top: 5vh;
+      }
+    }
+  }
+}
