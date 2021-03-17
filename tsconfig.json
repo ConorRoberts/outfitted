@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/auth/signin.js", "pages/api/graphql.js"  ],
+, "pages/auth/signin.js", "pages/api/graphql.js", "pages/preferences.jsx", "pages/_app.jsx", "pages/closet.jsx", "pages/index.jsx", "pages/newsletter.jsx", "components/Article.jsx", "components/Header.jsx", "pages/admin/create_item.jsx", "pages/admin/create_article.jsx", "pages/article/[...id].jsx"  ],
   "exclude": [
     "node_modules"
   ]
