@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { gql, useMutation, useQuery } from '@apollo/client';
 import styles from "../styles/Newsletter.module.scss";
 import Link from "next/link";
+import Head from "next/head";
 
 const GET_ALL_ARTICLES = gql`
     query GetAllArticles{
@@ -43,6 +44,9 @@ const Newsletter = () => {
 
     return (
         <div>
+            <Head>
+                Newsletter
+            </Head>
             <Header />
             <main className={styles.main}>
                 <h1>Newsletter</h1>

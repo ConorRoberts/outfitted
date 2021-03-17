@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import Article from "../../components/Article";
 import Header from "../../components/Header";
 import styles from "../../styles/Create_Article.module.scss";
+import Head from "next/head";
 
 const CREATE_ARTICLE = gql`
     mutation CreateArticle($articleInput:ArticleInput!){
@@ -53,6 +54,9 @@ const CreateArticle = () => {
 
     return (
         <div>
+            <Head>
+                <title>Create an Article</title>
+            </Head>
             <Header />
             <div className={styles.container}>
                 <form onSubmit={handleSubmit(onSubmit)}>
