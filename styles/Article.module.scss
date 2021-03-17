@@ -1,0 +1,42 @@
+@import "./variables.scss";
+
+.title{
+    font-weight:400;
+    color:$light-blue;
+    font-size:1.7rem;
+    text-align:center;
+}
+.body{
+    font-weight:400;
+    font-size:1rem;
+}
+.sectionContainer{
+    font-family:"Shippori Mincho B1";
+    padding:1rem;
+    .sectionTitle{
+        background:$light-blue;
+        font-weight:500;
+        color:white;
+        font-size:1.4rem;
+        text-align:center;
+        text-transform:uppercase;
+    }
+    .sectionContent{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        padding:1rem;
+        .sectionImage{
+            border:1px solid grey;
+            border-radius:5px;
+            overflow:hidden;
+            margin-right:0.5rem;
+        }
+        .sectionBody{
+            // width:50%;
+            font-weight:500;
+            font-family:"Shippori Mincho B1";
+            margin-left:0.5rem;
+        }
+    }
+}

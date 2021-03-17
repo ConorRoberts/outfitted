@@ -15,23 +15,52 @@ const typeDefs = gql`
   }
 
   type Item {
-    _id:ID!
+    _id: ID!
     name: String
     brand: String
     description: String
     season: String
     category: String
-    occasion: String
+    occasion: [String]
     colours: [String]
     material: String
     price: Float
+    images: [String]
+    build: [String]
+  }
+
+  type ArticleSection {
     image: String
+    title: String
+    body: String
+  }
+
+  type Article {
+    _id:ID!
+    title: String
+    body: String
+    image:String
+    timestamp:String
+    sections: [ArticleSection!]
+  }
+  input ArticleSectionInput {
+    image: String!
+    title: String!
+    body: String!
+  }
+
+  input ArticleInput {
+    title: String!
+    body: String!
+    image:String!
+    sections: [ArticleSectionInput!]
   }
 
   type Query {
     users: [User!]!
     user(id: String): User
     items: [Item!]
+    articles: [Article!]
   }
 
   type Mutation {
@@ -54,6 +83,7 @@ const typeDefs = gql`
       price: Float
       image: String
     ): Item
+    createArticle(articleInput: ArticleInput!): Article
   }
 `;
 

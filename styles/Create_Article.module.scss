@@ -1,0 +1,28 @@
+@import "./variables.scss";
+
+.title{
+    font-weight:300;
+    font-size:1.5rem;
+    margin:1rem 0;
+    color:$light-blue;
+}
+
+.container{
+    padding:1rem;
+    padding-top:0;
+    display:flex;
+    flex-direction:column;
+
+    @media(min-width:800px){
+        padding:1rem 20vw;
+    }
+    @media(min-width:1200px){
+        padding:1rem 10vw;
+        flex-direction:row;
+    }
+}
+
+.buttonContainer{
+    display:flex;
+    justify-content:space-evenly;
+}
