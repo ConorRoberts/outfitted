@@ -2,6 +2,7 @@ import { providers, signIn } from "next-auth/client";
 import Image from "next/image";
 import Header from "../../components/Header";
 import styles from "../../styles/SignIn.module.scss";
+import Head from "next/head";
 
 const getImage = (name) => {
   switch (name) {
@@ -22,6 +23,9 @@ const Option = ({ name, providerID }) => {
 export default function SignIn({ providers }) {
   return (
     <div>
+      <Head>
+        <title>Sign In</title>
+      </Head>
       <Header />
 
       <div className={styles.container}>
