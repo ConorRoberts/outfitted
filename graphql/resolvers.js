@@ -54,6 +54,10 @@ const resolvers = {
         ...articleObject(article),
       }));
     },
+    article: async (_, { id }) => {
+      const article = await Article.findById(id);
+      return articleObject(article);
+    },
   },
   Mutation: {
     updateUserPrefs: async (_, { id, height, birthday, build, gender }) => {

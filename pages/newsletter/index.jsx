@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../components/Header";
-import { gql, useMutation, useQuery } from '@apollo/client';
-import styles from "../styles/Newsletter.module.scss";
+import Header from "../../components/Header";
+import { gql, useQuery } from '@apollo/client';
+import styles from "../../styles/Newsletter.module.scss";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -24,7 +24,7 @@ const GET_ALL_ARTICLES = gql`
 const ArticlePreview = ({ article }) => {
     const { title, image } = article;
     return (
-        <Link href={`/article/${article._id}`}>
+        <Link href={`/newsletter/${article._id}`}>
             <div className={styles.article}>
                 <div className={styles.imageContainer}>
                     <img src={image} />
@@ -45,13 +45,12 @@ const Newsletter = () => {
     return (
         <div>
             <Head>
-                Newsletter
+                <title>Newsletter</title>
             </Head>
             <Header />
             <main className={styles.main}>
                 <h1>Newsletter</h1>
                 <div className={styles.container}>
-
                     <div className={styles.articleListContainer}>
                         {data && data.articles.map((article) =>
                             <ArticlePreview key={article._id} article={article} />)}

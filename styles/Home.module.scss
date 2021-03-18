@@ -5,9 +5,13 @@
   height: 75vh;
   top: 5vh;
   .splashContainer {
-    width: 100%;
     display: flex;
     justify-content: center;
+    .container{
+      display:flex;
+      box-shadow: 0 0 5px black;
+      width: 90%;
+    }
   }
   .titleContainer {
     display: flex;
@@ -36,12 +40,7 @@
       padding-left: 1rem;
       text-align: left;
     }
-  }
-}
-
-@media (min-width: 1000px) {
-  .main {
-    .titleContainer {
+    @media(min-width:1000px){
       .intro {
         margin: 0 20vw;
         margin-top: 5vh;

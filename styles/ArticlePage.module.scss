@@ -1,0 +1,8 @@
+@import "./variables.scss";
+
+.main {
+  padding: 2rem;
+  @media (min-width: 1200px) {
+    padding: 0 20vw;
+  }
+}
