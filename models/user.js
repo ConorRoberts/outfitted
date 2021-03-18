@@ -7,7 +7,8 @@ const userSchema = new Schema({
     height:Number,
     build:String,
     birthday:Date,
-    gender:String
+    gender:String,
+    isAdmin:Boolean
 });
 
 export default mongoose.models.User || mongoose.model("User",userSchema);

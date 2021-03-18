@@ -11,6 +11,12 @@
       display:flex;
       box-shadow: 0 0 5px black;
       width: 90%;
+      @media(min-width:1000px){
+        width:70%;
+      }
+      @media(min-width:1200px){
+        width:50%;
+      }
     }
   }
   .titleContainer {
