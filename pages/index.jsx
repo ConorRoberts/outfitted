@@ -15,7 +15,8 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.splashContainer}>
           <div className={styles.container}>
-            <Image src="/closet-minimal.jpg" width={4416} height={2944} />
+            <img src="https://i.imgur.com/bwOtzkG.jpg" alt="Minimalistic closet"/>
+            {/* <Image src="/closet-minimal.jpg" width={4416} height={2944} /> */}
           </div>
           {/* <Image src="/cartoon-closet.jpg" width={800} height={508} /> */}
         </div>

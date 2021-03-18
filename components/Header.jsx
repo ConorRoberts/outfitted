@@ -105,30 +105,30 @@ const Header = () => {
                             <ul className={styles.drawerLinks}>
                                 <li>
                                     <Link passHref href="/">
-                                        <a className={styles.link}><span className={styles.icon}><FaHome /></span> Home</a>
+                                        <a className={styles.link}><span className={styles.icon}><FaHome /></span>Home</a>
                                     </Link>
                                 </li>
                                 {session &&
                                     <>
                                         <li>
                                             <Link passHref href="/preferences">
-                                                <a className={styles.link}><span className={styles.icon}><IoMdSettings /></span> Preferences</a>
+                                                <a className={styles.link}><span className={styles.icon}><IoMdSettings /></span>Preferences</a>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link passHref href="/newsletter">
-                                                <a className={styles.link}><span className={styles.icon}><FaRegNewspaper /></span> Newsletter</a>
+                                                <a className={styles.link}><span className={styles.icon}><FaRegNewspaper /></span>Newsletter</a>
                                             </Link>
                                         </li>
                                         <Divider/>
                                         <li>
                                             <Link passHref href="/admin/create_article">
-                                                <a className={styles.link}><span className={styles.icon}><BsFileEarmarkPlus /></span> Create Article</a>
+                                                <a className={styles.link}><span className={styles.icon}><BsFileEarmarkPlus /></span>Create Article</a>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link passHref href="/admin/create_item">
-                                                <a className={styles.link}><span className={styles.icon}><BsPlusCircle /></span> Create Item</a>
+                                                <a className={styles.link}><span className={styles.icon}><BsPlusCircle /></span>Create Item</a>
                                             </Link>
                                         </li>
                                         <Divider/>

@@ -29,6 +29,7 @@ const CreateArticle = () => {
     title: "",
     body: "",
     image: "",
+    sections:[]
     // sectionTitle: "",
     // sectionBody: "",
     // sectionImage: ""
@@ -49,6 +50,7 @@ const CreateArticle = () => {
       title: formData.title,
       body: formData.body,
       image: formData.image,
+      sections:sections
     });
     // sectionTitle: formData.sectionTitle, sectionBody: formData.sectionBody, sectionImage: formData.sectionImage
   };
@@ -107,6 +109,7 @@ const CreateArticle = () => {
             article={{
               title: preview.title,
               body: preview.body,
+              image:preview.image,
               sections: preview.sections,
             }}
           />
