@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Button, Input, FormLabel, Flex, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  Input,
+  FormLabel,
+  Flex,
+  Textarea,
+  Divider,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import Article from "../../components/Article";
+import ArticlePreview from "../../components/ArticlePreview";
 import Header from "../../components/Header";
 import styles from "../../styles/Create_Article.module.scss";
 import Head from "next/head";
@@ -29,14 +37,12 @@ const CreateArticle = () => {
     title: "",
     body: "",
     image: "",
-    sections:[]
-    // sectionTitle: "",
-    // sectionBody: "",
-    // sectionImage: ""
+    sections: [],
   });
   const [sections, setSections] = useState([]);
   const router = useRouter();
 
+  // Event on form submit
   const onSubmit = (formData) => {
     const { title, body, image } = formData;
 
@@ -45,16 +51,18 @@ const CreateArticle = () => {
     });
     router.push("/newsletter");
   };
+
+  // Event on form preview
   const onPreview = (formData) => {
     setPreview({
       title: formData.title,
       body: formData.body,
       image: formData.image,
-      sections:sections
+      sections: sections,
     });
-    // sectionTitle: formData.sectionTitle, sectionBody: formData.sectionBody, sectionImage: formData.sectionImage
   };
 
+  // Event on section add
   const onSectionAdd = (sectionData) => {
     const { sectionTitle, sectionBody, sectionImage } = sectionData;
     setSections([
@@ -104,14 +112,13 @@ const CreateArticle = () => {
             <Button onClick={handleSubmit(onPreview)}>Preview</Button>
           </section>
         </form>
+        <Divider />
         <div className={styles.previewContainer}>
+          <ArticlePreview
+            article={preview}
+          />
           <Article
-            article={{
-              title: preview.title,
-              body: preview.body,
-              image:preview.image,
-              sections: preview.sections,
-            }}
+            article={preview}
           />
         </div>
       </div>
