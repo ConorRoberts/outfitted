@@ -1,6 +1,7 @@
 import User from "../models/user";
 import Item from "../models/item";
 import Article from "../models/article";
+import Settings from "../models/settings";
 
 const userObject = (user) => {
   return {
@@ -12,10 +13,19 @@ const userObject = (user) => {
   };
 };
 const itemObject = (item) => {
-  return {
+  return item ? {
     ...item._doc,
     _id: item.id,
-  };
+  }: null;
+};
+const settingsObject = (settings) => {
+  return settings
+    ? {
+        ...settings._doc,
+        _id: settings.id,
+        birthday: new Date(settings._doc.birthday).toISOString(),
+      }
+    : null;
 };
 const articleObject = (article) => {
   return {
@@ -58,6 +68,11 @@ const resolvers = {
       const article = await Article.findById(id);
       return articleObject(article);
     },
+    settings: async (_, { id }) => {
+      // Finds a settings document based on a user id
+      const settings = await Settings.findOne({ _user:id });
+      return settingsObject(settings);
+    },
   },
   Mutation: {
     updateUserPrefs: async (_, { id, height, birthday, build, gender }) => {
@@ -75,6 +90,28 @@ const resolvers = {
       if (user) {
         return {
           ...userObject(user),
+        };
+      }
+
+      return null;
+    },
+    updateSettings:async(_,{settingsInput})=>{
+      const {_user, height, build, gender, birthday} = settingsInput;
+
+      const settings = await Settings.findOneAndUpdate(
+        {_user},
+        {
+          height,
+          build,
+          gender,
+          birthday,
+        },
+        { new: true }
+      );
+
+      if (settings) {
+        return {
+          ...settingsObject(settings),
         };
       }
 

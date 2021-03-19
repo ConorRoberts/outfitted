@@ -28,6 +28,7 @@ const Newsletter = () => {
         <div>
             <Head>
                 <title>Newsletter</title>
+                <link rel="icon" type="image/png" href="/logo.jpg"/>
             </Head>
             <Header />
             <main className={styles.main}>

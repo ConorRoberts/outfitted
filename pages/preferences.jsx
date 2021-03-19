@@ -35,6 +35,7 @@ const Preferences = () => {
         <div>
             <Head>
                 <title>Preferences</title>
+                <link rel="icon" type="image/png" href="/logo.jpg"/>
             </Head>
             <Header />
             <main className={styles.main}>

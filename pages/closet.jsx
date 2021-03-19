@@ -22,15 +22,6 @@ const GET_ALL_ITEMS = gql`
     }
 `;
 
-// const lorem = "This is where we will put a short description of the item. Ideally once someone clicks on the item, it will connect them to a page with more detail.";
-// type ItemProps = {
-//     imageURL: string;
-//     name: string;
-//     category: string;
-//     color: string;
-//     desc: string;
-// }
-
 const Item = ({ image, name, description, price, brand, material, category }) => {
     return (
         <div className={styles.item}>
@@ -60,6 +51,7 @@ const Closet = () => {
         <div>
             <Head>
                 <title>Closet</title>
+                <link rel="icon" type="image/png" href="/logo.jpg"/>
             </Head>
             <Header />
             <main className={styles.main}>

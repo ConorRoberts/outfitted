@@ -47,6 +47,7 @@ const ArticlePage = () => {
     <div>
       <Head>
         <title>{article.title}</title>
+        <link rel="icon" type="image/png" href="/logo.jpg"/>
       </Head>
       <Header />
       <div className={styles.main}>

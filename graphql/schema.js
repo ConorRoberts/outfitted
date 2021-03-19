@@ -8,10 +8,24 @@ const typeDefs = gql`
     image: String!
     createdAt: String!
     updatedAt: String!
-    gender: String
-    height: Float
-    build: String
-    birthday: String
+  }
+
+  type Settings{
+    _id:ID!
+    _user:ID!
+    gender:String!
+    height:Int!
+    birthday:String!
+    admin:Boolean!
+    build:String!
+  }
+
+  input SettingsInput{
+    _user:ID!
+    gender:String!
+    height:Int!
+    birthday:String!
+    build:String!
   }
 
   type Item {
@@ -37,6 +51,7 @@ const typeDefs = gql`
 
   type Article {
     _id:ID!
+    author:String
     title: String
     body: String
     image:String
@@ -51,6 +66,7 @@ const typeDefs = gql`
 
   input ArticleInput {
     title: String!
+    author:String!
     body: String!
     image:String!
     sections: [ArticleSectionInput!]
@@ -62,6 +78,7 @@ const typeDefs = gql`
     items: [Item!]
     articles: [Article!]
     article(id:String!): Article
+    settings(id:String!): Settings
   }
 
   type Mutation {
@@ -85,6 +102,7 @@ const typeDefs = gql`
       image: String
     ): Item
     createArticle(articleInput: ArticleInput!): Article
+    updateSettings(settingsInput: SettingsInput!): Settings
   }
 `;
 

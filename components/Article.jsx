@@ -2,10 +2,11 @@ import React from "react";
 import styles from "../styles/Article.module.scss";
 
 const Article = ({article}) => {
-    const { title, body, sections } = article;
+    const { title, body, sections,author } = article;
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{title}</h2>
+      <p className={styles.author}>By {author}</p>
       <p className={styles.body}>{body}</p>
       {sections &&
         sections.map((section, index) => (

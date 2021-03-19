@@ -25,6 +25,7 @@ export default function SignIn({ providers }) {
     <div>
       <Head>
         <title>Sign In</title>
+        <link rel="icon" type="image/png" href="/logo.jpg"/>
       </Head>
       <Header />
 

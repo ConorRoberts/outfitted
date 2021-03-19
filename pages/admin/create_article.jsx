@@ -15,12 +15,14 @@ import ArticlePreview from "../../components/ArticlePreview";
 import Header from "../../components/Header";
 import styles from "../../styles/Create_Article.module.scss";
 import Head from "next/head";
+import { useSession } from 'next-auth/client'
 
 const CREATE_ARTICLE = gql`
   mutation CreateArticle($articleInput: ArticleInput!) {
     createArticle(articleInput: $articleInput) {
       title
       body
+      author
       sections {
         title
         body
@@ -37,17 +39,19 @@ const CreateArticle = () => {
     title: "",
     body: "",
     image: "",
+    author:"",
     sections: [],
   });
   const [sections, setSections] = useState([]);
   const router = useRouter();
+    const [session, loading] = useSession();
 
   // Event on form submit
   const onSubmit = (formData) => {
     const { title, body, image } = formData;
 
     createArticle({
-      variables: { articleInput: { title, body, image, sections } },
+      variables: { articleInput: { title, body, image,author:session.user.name, sections } },
     });
     router.push("/newsletter");
   };
@@ -58,6 +62,7 @@ const CreateArticle = () => {
       title: formData.title,
       body: formData.body,
       image: formData.image,
+      author:session.user.name,
       sections: sections,
     });
   };
@@ -75,10 +80,11 @@ const CreateArticle = () => {
     <div>
       <Head>
         <title>Create an Article</title>
+        <link rel="icon" type="image/png" href="/logo.jpg"/>
       </Head>
       <Header />
       <div className={styles.container}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <section className={styles.headerSection}>
             <h3 className={styles.title}>Header</h3>
             <FormLabel>Title</FormLabel>
@@ -112,7 +118,7 @@ const CreateArticle = () => {
             <Button onClick={handleSubmit(onPreview)}>Preview</Button>
           </section>
         </form>
-        <Divider />
+        <Divider className={styles.divider}/>
         <div className={styles.previewContainer}>
           <ArticlePreview
             article={preview}

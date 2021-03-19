@@ -1,24 +1,20 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import Header from "../components/Header";
-import Image from "next/image";
-import { useQuery } from "@apollo/client";
 
 export default function Home() {
   return (
     <div>
       <Head>
         <title>Outfitted</title>
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" type="image/png" href="/logo.jpg"/>
       </Head>
       <Header />
       <main className={styles.main}>
         <div className={styles.splashContainer}>
           <div className={styles.container}>
             <img src="https://i.imgur.com/bwOtzkG.jpg" alt="Minimalistic closet"/>
-            {/* <Image src="/closet-minimal.jpg" width={4416} height={2944} /> */}
           </div>
-          {/* <Image src="/cartoon-closet.jpg" width={800} height={508} /> */}
         </div>
         <div className={styles.titleContainer}>
           <h1>
