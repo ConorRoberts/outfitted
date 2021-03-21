@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "../styles/Article.module.scss";
 
-const Article = ({article}) => {
-    const { title, body, sections,author } = article;
+const Article = ({ article }) => {
+  const { title = "Article", body = "", sections = [], author = "" } =
+    article ?? {};
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{title}</h2>

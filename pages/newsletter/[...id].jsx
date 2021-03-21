@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Article from "../../components/Article";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
@@ -12,6 +12,7 @@ const GET_ARTICLE = gql`
       title
       body
       image
+      author
       timestamp
       sections {
         title
@@ -25,34 +26,19 @@ const GET_ARTICLE = gql`
 const ArticlePage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { loading, error, data } = useQuery(GET_ARTICLE, {
+  const { data } = useQuery(GET_ARTICLE, {
     variables: { id: "" + id },
   });
-
-  //   Want to give the article some default values so we can display before the query resolves
-  const [article, setArticle] = useState({
-    title: "Article",
-    body: "",
-    image: "",
-    sections: [],
-  });
-
-  useEffect(() => {
-    if (data) {
-      setArticle(data.article);
-    }
-  }, [data]);
 
   return (
     <div>
       <Head>
-        <title>{article.title}</title>
-        <link rel="icon" type="image/png" href="/logo.jpg"/>
+        <title>{data?.article.title}</title>
+        <link rel="icon" type="image/png" href="/logo.jpg" />
       </Head>
       <Header />
       <div className={styles.main}>
-
-      <Article article={article} />
+        <Article article={data?.article} />
       </div>
     </div>
   );
