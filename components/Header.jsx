@@ -1,16 +1,18 @@
 import styles from "../styles/Header.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef } from "react";
+import useAdminStatus from "../utils/useAdminStatus";
+import { signIn, signOut, useSession } from "next-auth/client";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdSettings } from "react-icons/io";
+import { RiAdminFill } from "react-icons/ri";
 import { FaRegNewspaper } from "react-icons/fa";
 import { BsFileEarmarkPlus, BsPlusCircle } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
 import {
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
@@ -19,16 +21,6 @@ import {
   Button,
   Divider,
 } from "@chakra-ui/react";
-import { signIn, signOut, useSession } from "next-auth/client";
-import { gql, useQuery } from "@apollo/client";
-
-const GET_SETTINGS = gql`
-  query GetSettings($id: String!) {
-    settings(id: $id) {
-      admin
-    }
-  }
-`;
 
 const LoginButton = () => {
   return (
@@ -59,21 +51,9 @@ const Logo = () => {
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const admin = useAdminStatus();
   const [session, loading] = useSession();
-  const [uid, setUid] = useState("");
-  const [admin, setAdmin] = useState("");
-  const { data } = useQuery(GET_SETTINGS, {
-    variables: { id: `${uid}` },
-  });
 
-  useEffect(() => {
-    if (session) setUid(session.user.id);
-  }, [session]);
-
-  useEffect(() => {
-    if (data) setAdmin(data.settings.admin);
-  }, [data]);
-  
   return (
     <div className={styles.container}>
       <ul className={styles.mobile}>
@@ -141,6 +121,16 @@ const Header = () => {
                     </a>
                   </Link>
                 </li>
+                <li>
+                  <Link passHref href="/newsletter">
+                    <a className={styles.link}>
+                      <span className={styles.icon}>
+                        <FaRegNewspaper />
+                      </span>
+                      Newsletter
+                    </a>
+                  </Link>
+                </li>
                 {session && (
                   <>
                     <li>
@@ -153,19 +143,19 @@ const Header = () => {
                         </a>
                       </Link>
                     </li>
-                    <li>
-                      <Link passHref href="/newsletter">
-                        <a className={styles.link}>
-                          <span className={styles.icon}>
-                            <FaRegNewspaper />
-                          </span>
-                          Newsletter
-                        </a>
-                      </Link>
-                    </li>
                     {admin && (
                       <>
                         <Divider />
+                        <li>
+                          <Link passHref href="/admin">
+                            <a className={styles.link}>
+                              <span className={styles.icon}>
+                                <RiAdminFill />
+                              </span>
+                              Admin
+                            </a>
+                          </Link>
+                        </li>
                         <li>
                           <Link passHref href="/admin/create_article">
                             <a className={styles.link}>

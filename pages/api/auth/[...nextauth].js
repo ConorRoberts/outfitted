@@ -21,7 +21,7 @@ export default NextAuth({
     },
     async redirect(url, baseUrl) {
       return baseUrl;
-    }
+    },
   },
   events: {
     async signIn({ user }) {
@@ -30,6 +30,7 @@ export default NextAuth({
       if (!found) {
         const settings = new Settings({
           _user: user.id,
+          likes: [],
         });
         await settings.save();
       }

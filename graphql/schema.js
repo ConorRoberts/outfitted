@@ -10,22 +10,25 @@ const typeDefs = gql`
     updatedAt: String!
   }
 
-  type Settings{
-    _id:ID!
-    _user:ID!
-    gender:String!
-    height:Int!
-    birthday:String!
-    admin:Boolean!
-    build:String!
-  }
-
-  input SettingsInput{
-    _user:ID!
-    gender:String!
-    height:Int!
-    birthday:String!
-    build:String!
+  type Settings {
+    _id: ID!
+    _user: ID!
+    admin: Boolean!
+    likes: [Item!]!
+    gender: String!
+    build: String!
+    height: Float!
+    birthday: String!
+    shoeSize: Float!
+    favBrands: [String!]
+    sustainable: String!
+    fit: String!
+    favColours: [String!]!
+    pantsSize: String!
+    sweaterSize: String!
+    shirtSize: String!
+    styleIcons: [String!]!
+    favInfluencers: [String!]!
   }
 
   type Item {
@@ -35,12 +38,30 @@ const typeDefs = gql`
     description: String
     season: String
     category: String
-    occasion: [String]
+    occasions: [String]
     colours: [String]
     material: String
     price: Float
     images: [String]
     build: [String]
+    sizes: [String]
+    link: String
+  }
+
+  input NewItemInput {
+    name: String!
+    brand: String!
+    description: String!
+    season: String!
+    category: String!
+    occasions: [String!]!
+    colours: [String!]!
+    material: String!
+    price: Float!
+    images: [String!]!
+    sizes: [String!]!
+    build: [String!]!
+    link: String!
   }
 
   type ArticleSection {
@@ -50,12 +71,12 @@ const typeDefs = gql`
   }
 
   type Article {
-    _id:ID!
-    author:String
+    _id: ID!
+    author: String
     title: String
     body: String
-    image:String
-    timestamp:String
+    image: String
+    timestamp: String
     sections: [ArticleSection!]
   }
   input ArticleSectionInput {
@@ -66,10 +87,15 @@ const typeDefs = gql`
 
   input ArticleInput {
     title: String!
-    author:String!
+    author: String!
     body: String!
-    image:String!
+    image: String!
     sections: [ArticleSectionInput!]
+  }
+
+  input LikeItemInput {
+    user: String!
+    item: String!
   }
 
   type Query {
@@ -77,32 +103,34 @@ const typeDefs = gql`
     user(id: String): User
     items: [Item!]
     articles: [Article!]
-    article(id:String!): Article
-    settings(id:String!): Settings
+    article(id: String!): Article
+    settings(id: String!): Settings
+  }
+
+  input SettingsInput {
+    _user: ID!
+    gender: String
+    build: String
+    height: Float
+    birthday: String
+    favBrands: [String!]
+    sustainable: String
+    fit: String
+    favColours: [String!]
+    shoeSize: Float
+    pantsSize: String
+    sweaterSize: String
+    shirtSize: String
+    styleIcons: [String!]
+    favInfluencers: [String!]
+    likes: [ID!]
   }
 
   type Mutation {
-    updateUserPrefs(
-      gender: String!
-      id: ID!
-      build: String!
-      height: Float!
-      birthday: String!
-    ): User
-    createItem(
-      name: String
-      brand: String
-      description: String
-      season: String
-      category: String
-      occasion: String
-      colours: [String]
-      material: String
-      price: Float
-      image: String
-    ): Item
-    createArticle(articleInput: ArticleInput!): Article
     updateSettings(settingsInput: SettingsInput!): Settings
+    createItem(newItemInput: NewItemInput!): Item
+    createArticle(articleInput: ArticleInput!): Article
+    likeItem(likeItemInput: LikeItemInput!): Settings
   }
 `;
 

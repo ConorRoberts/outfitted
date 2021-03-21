@@ -4,7 +4,6 @@ import {
   Button,
   Input,
   FormLabel,
-  Flex,
   Textarea,
   Divider,
 } from "@chakra-ui/react";
@@ -16,6 +15,8 @@ import Header from "../../components/Header";
 import styles from "../../styles/Create_Article.module.scss";
 import Head from "next/head";
 import { useSession } from 'next-auth/client'
+import useAdminStatus from "../../utils/useAdminStatus";
+import Loading from "../../components/Loading";
 
 const CREATE_ARTICLE = gql`
   mutation CreateArticle($articleInput: ArticleInput!) {
@@ -33,6 +34,7 @@ const CREATE_ARTICLE = gql`
 `;
 
 const CreateArticle = () => {
+  const admin = useAdminStatus();
   const { register, handleSubmit, watch, errors } = useForm();
   const [createArticle, { data }] = useMutation(CREATE_ARTICLE);
   const [preview, setPreview] = useState({
@@ -75,6 +77,8 @@ const CreateArticle = () => {
       { title: sectionTitle, body: sectionBody, image: sectionImage },
     ]);
   };
+
+  if (!admin) return <Loading/>;
 
   return (
     <div>

@@ -10,7 +10,10 @@ const itemSchema = new Schema({
   colours: [String],
   material: String,
   price: Number,
-  image: String,
+  images: [String],
+  sizes: [String],
+  link: String,
+  build: [String],
 });
 
 export default mongoose.models.Item || mongoose.model("Item", itemSchema);

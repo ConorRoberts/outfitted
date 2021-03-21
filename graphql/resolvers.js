@@ -13,10 +13,12 @@ const userObject = (user) => {
   };
 };
 const itemObject = (item) => {
-  return item ? {
-    ...item._doc,
-    _id: item.id,
-  }: null;
+  return item
+    ? {
+        ...item._doc,
+        _id: item.id,
+      }
+    : null;
 };
 const settingsObject = (settings) => {
   return settings
@@ -68,43 +70,20 @@ const resolvers = {
       const article = await Article.findById(id);
       return articleObject(article);
     },
-    settings: async (_, { id }) => {
+    settings: async (_, { id = "" }) => {
       // Finds a settings document based on a user id
-      const settings = await Settings.findOne({ _user:id });
+      const settings = await Settings.findOne({ _user: id });
       return settingsObject(settings);
     },
   },
   Mutation: {
-    updateUserPrefs: async (_, { id, height, birthday, build, gender }) => {
-      const user = await User.findByIdAndUpdate(
-        id,
-        {
-          height,
-          build,
-          gender,
-          birthday,
-        },
-        { new: true }
-      );
-
-      if (user) {
-        return {
-          ...userObject(user),
-        };
-      }
-
-      return null;
-    },
-    updateSettings:async(_,{settingsInput})=>{
-      const {_user, height, build, gender, birthday} = settingsInput;
+    updateSettings: async (_, { settingsInput }) => {
+      const { _user } = settingsInput;
 
       const settings = await Settings.findOneAndUpdate(
-        {_user},
+        { _user },
         {
-          height,
-          build,
-          gender,
-          birthday,
+          ...settingsInput,
         },
         { new: true }
       );
@@ -117,32 +96,9 @@ const resolvers = {
 
       return null;
     },
-    createItem: async (
-      _,
-      {
-        name,
-        brand,
-        description,
-        season,
-        type,
-        occasion,
-        colours,
-        material,
-        price,
-        image,
-      }
-    ) => {
+    createItem: async (_, { newItemInput }) => {
       const item = new Item({
-        name,
-        brand,
-        description,
-        season,
-        type,
-        occasion,
-        colours,
-        material,
-        price,
-        image,
+        ...newItemInput,
       });
 
       const newItem = await item.save();
@@ -150,12 +106,13 @@ const resolvers = {
       return newItem;
     },
     createArticle: async (_, { articleInput }) => {
-      const { title, body, sections, image } = articleInput;
+      const { title, body, sections, image, author } = articleInput;
 
       const article = new Article({
         title,
         body,
         image,
+        author,
         timestamp: Date.now(),
         sections,
       });

@@ -5,6 +5,7 @@ const articleSchema = new Schema({
   body: String,
   image:String,
   timestamp:Date,
+  author:String,
   sections: [
     {
       image: String,
