@@ -1,35 +1,55 @@
 @import "./variables.scss";
 
-.titleContainer{
-    padding:.5rem .5rem;
-    color:black;
-    font-family:"Shippori Mincho B1";
-    font-weight:600;
-    font-size:1.3rem;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100%;
-    @media(min-width:1200px){
-    }
-    h4{
-        text-align:center;
-
-    }
+.titleContainer {
+  padding: 1rem 0.5rem;
+  color: black;
+  font-family: "Shippori Mincho B1";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h4 {
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.4rem;
+  }
+  p {
+    text-align: center;
+    font-weight: 300;
+    font-size: 1rem;
+    font-style: italic;
+  }
 }
-.article{
-    border-bottom:1px solid $light-blue;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    align-items:center;
-    overflow:hidden;
-    width:60%;
-    margin-bottom:2rem;
-    padding-bottom:1rem;
-    @media(min-width:1200px){
-        width:55%;
+.imageContainer {
+  box-shadow: 0 0 5px black;
+}
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.compact {
+  height: 100%;
+  flex-direction:column;
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  img{
+    height: 100%;
+    box-shadow:0 0 5px black;
+    @media(min-width:1000px){
+      overflow:hidden;
     }
-    cursor:pointer;
+  }
+  h4{
+    font-weight:400;
+    font-size:1.4rem;
+    color:$light-blue;
+  }
+  p{
+    font-weight:400;
+    font-style:italic;
+    font-size:0.8rem;
+  }
 }

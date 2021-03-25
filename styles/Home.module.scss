@@ -2,8 +2,6 @@
 
 .main {
   position: relative;
-  height: 75vh;
-  top: 5vh;
   .splashContainer {
     display: flex;
     justify-content: center;
@@ -19,7 +17,7 @@
         width:70%;
       }
       @media(min-width:1200px){
-        width:50%;
+        width:45%;
       }
     }
   }
@@ -58,3 +56,42 @@
     }
   }
 }
+.articlesTitle{
+  text-align:center;
+  font-size:2rem;
+  font-weight:300;
+  color:white;
+  box-shadow:0 0 5px black;
+  background:rgb(46, 105, 139);
+  margin:2rem 5vw;
+}
+.articles{
+  display:flex;
+  justify-content:center;
+  margin-bottom:1rem;
+  width:100%;
+  @media(min-width:1000px){
+    height:40vh;
+  }
+  .list{
+    width:60%;
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+    @media(min-width:1000px){
+      justify-content:space-evenly;
+      flex-direction:row;
+      width:80%;
+    }
+  }
+  .article{
+    display:flex;
+    justify-content:center;
+    
+    @media(min-width:1000px){
+      width:30%;
+      height:100%;
+    }
+  }
+}
+

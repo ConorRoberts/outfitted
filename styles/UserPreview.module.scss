@@ -1,0 +1,55 @@
+@import "./variables.scss";
+
+.container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid $light-blue;
+  margin: 1rem 0;
+  border-radius: 10px;
+}
+.label {
+  font-weight: 500;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .headerContent {
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    width: 100%;
+    padding: 0 0rem;
+    .imageContainer {
+      margin-right: 0.5rem;
+      // width: 15%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .plusContainer {
+    display:none;
+    font-size: 3rem;
+    padding: 1rem;
+    color: black;
+    transition: color 300ms;
+    cursor: pointer;
+    &:hover {
+      color: $light-blue;
+    }
+  }
+}
+
+.likes{
+  width:100%;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  .likedItem{
+    width:30%;
+  }
+}

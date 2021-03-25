@@ -1,10 +1,10 @@
 import React from "react";
-import Article from "../../components/Article";
+import Article from "@components/Article";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
-import Header from "../../components/Header";
+import Header from "@components/Header";
 import Head from "next/head";
-import styles from "../../styles/ArticlePage.module.scss";
+import styles from "@styles/ArticlePage.module.scss";
 
 const GET_ARTICLE = gql`
   query GetArticle($id: String!) {
@@ -14,6 +14,13 @@ const GET_ARTICLE = gql`
       image
       author
       timestamp
+      featuredItems{
+        _id
+        name
+        images
+        description
+        link
+      }
       sections {
         title
         body

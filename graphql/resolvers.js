@@ -1,16 +1,15 @@
-import User from "../models/user";
-import Item from "../models/item";
-import Article from "../models/article";
-import Settings from "../models/settings";
+import User from "@models/user";
+import Item from "@models/item";
+import Article from "@models/article";
+import Settings from "@models/settings";
 
 const userObject = (user) => {
-  return {
-    ...user._doc,
-    _id: user.id,
-    birthday: new Date(user._doc.birthday).toISOString(),
-    createdAt: new Date(user._doc.createdAt).toISOString(),
-    updatedAt: new Date(user._doc.updatedAt).toISOString(),
-  };
+  return user
+    ? {
+        ...user._doc,
+        _id: user.id,
+      }
+    : null;
 };
 const itemObject = (item) => {
   return item
@@ -30,49 +29,57 @@ const settingsObject = (settings) => {
     : null;
 };
 const articleObject = (article) => {
-  return {
-    ...article._doc,
-    _id: article.id,
-    timestamp: new Date(article._doc.timestamp).toISOString(),
-  };
+  return article
+    ? {
+        ...article._doc,
+        _id: article.id,
+        // featuredItems:article._doc.featuredItems.map(item=>itemObject(item))
+        timestamp: new Date(article._doc.timestamp).toISOString(),
+      }
+    : null;
+};
+
+const settingsFromId = async (id) => {
+  const settings = await Settings.findOne({ _user: id }).populate("likes");
+  return settingsObject(settings);
+};
+
+const articleFromId = async (id) => {
+  const article = await Article.findOne({ _id: id }).populate("featuredItems");
+  return article;
 };
 
 const resolvers = {
   Query: {
     users: async () => {
-      const users = await User.find({});
-      return users.map((user) => ({
-        ...userObject(user),
-      }));
+      const settings = await Settings.find({})
+        .populate("_user")
+        .populate("likes");
+      return settings.map((e) => settingsObject(e));
     },
     user: async (_, { id }) => {
       const user = await User.findById(id);
-      if (user) {
-        return {
-          ...userObject(user),
-        };
-      }
-      return null;
+      return userObject(user);
     },
     items: async () => {
       const items = await Item.find({});
-      return items.map((item) => ({
-        ...itemObject(item),
-      }));
+      return items?.reverse();
+      // return items.map((item) => ({
+      //   ...itemObject(item),
+      // }));
     },
     articles: async () => {
-      const articles = await Article.find({});
+      const articles = await Article.find({}).populate("featuredItems");
       return articles.reverse().map((article) => ({
         ...articleObject(article),
       }));
     },
     article: async (_, { id }) => {
-      const article = await Article.findById(id);
+      const article = await Article.findById(id).populate("featuredItems");
       return articleObject(article);
     },
     settings: async (_, { id = "" }) => {
-      // Finds a settings document based on a user id
-      const settings = await Settings.findOne({ _user: id });
+      const settings = await Settings.findOne({ _user: id }).populate("likes").populate("_user");
       return settingsObject(settings);
     },
   },
@@ -106,20 +113,25 @@ const resolvers = {
       return newItem;
     },
     createArticle: async (_, { articleInput }) => {
-      const { title, body, sections, image, author } = articleInput;
-
       const article = new Article({
-        title,
-        body,
-        image,
-        author,
+        ...articleInput,
         timestamp: Date.now(),
-        sections,
       });
       const savedArticle = await article.save();
 
-      return { ...articleObject(savedArticle) };
-      // return savedArticle;
+      return articleFromId(savedArticle._id);
+    },
+    likeItem: async (_, { likeItemInput }) => {
+      const { user, item } = likeItemInput;
+      const settings = await Settings.findOne({ _user: user });
+
+      if (!settings) return null;
+      if (!settings.likes.includes(item)) {
+        settings.likes.push(item);
+        await settings.save();
+      }
+
+      return settingsFromId(user);
     },
   },
 };

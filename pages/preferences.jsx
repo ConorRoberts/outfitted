@@ -140,7 +140,7 @@ const Preferences = () => {
             <option>Husky</option>
           </Select>
           <FormLabel>Shoe Size (US)</FormLabel>
-          <Input required name="shoeSize" ref={register} type="number" />
+          <Input required name="shoeSize" ref={register} type="number" step={0.5} />
           <FormLabel>What are your 5 favourite clothing brands?</FormLabel>
           <Input required name="favBrands" ref={register} />
           <FormLabel>
@@ -176,13 +176,13 @@ const Preferences = () => {
                 <Checkbox value="yellow">Yellow</Checkbox>
                 <Checkbox value="orange">Orange</Checkbox>
                 <Checkbox value="purple">Purple</Checkbox>
-                <Checkbox value="purple">Burgundy</Checkbox>
+                <Checkbox value="burgundy">Burgundy</Checkbox>
               </Stack>
               <Stack>
                 <Checkbox value="cream">Cream</Checkbox>
                 <Checkbox value="white">White</Checkbox>
                 <Checkbox value="black">Black</Checkbox>
-                <Checkbox value="purple">Brown</Checkbox>
+                <Checkbox value="brown">Brown</Checkbox>
               </Stack>
             </div>
           </CheckboxGroup>

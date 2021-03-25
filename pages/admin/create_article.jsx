@@ -6,17 +6,19 @@ import {
   FormLabel,
   Textarea,
   Divider,
+  Select,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import Article from "../../components/Article";
-import ArticlePreview from "../../components/ArticlePreview";
-import Header from "../../components/Header";
-import styles from "../../styles/Create_Article.module.scss";
+import Article from "@components/Article";
+import ArticlePreview from "@components/ArticlePreview";
+import Header from "@components/Header";
+import styles from "@styles/Create_Article.module.scss";
 import Head from "next/head";
-import { useSession } from 'next-auth/client'
-import useAdminStatus from "../../utils/useAdminStatus";
-import Loading from "../../components/Loading";
+import { useSession } from "next-auth/client";
+import useAdminStatus from "@utils/useAdminStatus";
+import useAllItems from "@utils/useAllItems";
+import Loading from "@components/Loading";
 
 const CREATE_ARTICLE = gql`
   mutation CreateArticle($articleInput: ArticleInput!) {
@@ -24,6 +26,11 @@ const CREATE_ARTICLE = gql`
       title
       body
       author
+      featuredItems{
+        name
+        images
+        description
+      }
       sections {
         title
         body
@@ -41,19 +48,33 @@ const CreateArticle = () => {
     title: "",
     body: "",
     image: "",
-    author:"",
+    author: "",
     sections: [],
   });
   const [sections, setSections] = useState([]);
+  const [itemsForm, setItemsForm] = useState({
+    current: "None",
+    featuredItems: [],
+  });
   const router = useRouter();
-    const [session, loading] = useSession();
+  const [session, loading] = useSession();
+  const items = useAllItems();
 
   // Event on form submit
   const onSubmit = (formData) => {
     const { title, body, image } = formData;
 
     createArticle({
-      variables: { articleInput: { title, body, image,author:session.user.name, sections } },
+      variables: {
+        articleInput: {
+          title,
+          body,
+          image,
+          author: session.user.name,
+          sections,
+          featuredItems:itemsForm.featuredItems
+        },
+      },
     });
     router.push("/newsletter");
   };
@@ -64,8 +85,9 @@ const CreateArticle = () => {
       title: formData.title,
       body: formData.body,
       image: formData.image,
-      author:session.user.name,
+      author: session.user.name,
       sections: sections,
+      featuredItems: itemsForm.featuredItems,
     });
   };
 
@@ -78,17 +100,20 @@ const CreateArticle = () => {
     ]);
   };
 
-  if (!admin) return <Loading/>;
+  if (!admin) return <Loading />;
 
   return (
     <div>
       <Head>
         <title>Create an Article</title>
-        <link rel="icon" type="image/png" href="/logo.jpg"/>
+        <link rel="icon" type="image/png" href="/logo.jpg" />
       </Head>
       <Header />
       <div className={styles.container}>
-        <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={styles.formContainer}
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <section className={styles.headerSection}>
             <h3 className={styles.title}>Header</h3>
             <FormLabel>Title</FormLabel>
@@ -97,6 +122,31 @@ const CreateArticle = () => {
             <Textarea name="body" ref={register} />
             <FormLabel>Image</FormLabel>
             <Input name="image" ref={register} />
+            <FormLabel>Featured Items</FormLabel>
+            <Select
+              name="featuredItems"
+              onChange={(e) =>
+                setItemsForm({ ...itemsForm, current: e.target.value })
+              }
+            >
+              <option value="None">None</option>
+              {items?.map((item) => (
+                <option key={item._id} value={item._id}>{item.name}</option>
+              ))}
+            </Select>
+            <Button
+              onClick={() =>
+                {(itemsForm.current!=="None") && setItemsForm({
+                  ...itemsForm,
+                  featuredItems: [
+                    ...itemsForm.featuredItems,
+                    itemsForm.current,
+                  ],
+                })}
+              }
+            >
+              Add Item
+            </Button>
           </section>
 
           <section className={styles.formSection}>
@@ -122,14 +172,10 @@ const CreateArticle = () => {
             <Button onClick={handleSubmit(onPreview)}>Preview</Button>
           </section>
         </form>
-        <Divider className={styles.divider}/>
+        <Divider className={styles.divider} />
         <div className={styles.previewContainer}>
-          <ArticlePreview
-            article={preview}
-          />
-          <Article
-            article={preview}
-          />
+          <ArticlePreview article={preview} />
+          <Article article={preview} />
         </div>
       </div>
     </div>

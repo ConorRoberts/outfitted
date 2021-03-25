@@ -38,6 +38,7 @@ const CreateItem = () => {
     build: [],
     occasions: [],
     sizes: [],
+    images: [],
   });
   const [createItem, { data }] = useMutation(CREATE_ITEM);
   const onSubmit = (formData) => {
@@ -46,12 +47,16 @@ const CreateItem = () => {
         newItemInput: {
           ...formData,
           ...form,
-          images: formData.images.split(","),
+          images: form.images,
           price: +formData.price,
         },
       },
     });
     router.push("/");
+  };
+
+  const onImageAdd = ({ images }) => {
+    setForm({ ...form, images: [...form.images, images] });
   };
 
   if (!admin) return <Loading />;
@@ -64,25 +69,26 @@ const CreateItem = () => {
       <h1 className={styles.title}>Create an Item</h1>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <FormLabel>Name</FormLabel>
-        <Input ref={register} name="name" />
+        <Input ref={register} required name="name" />
 
         <FormLabel>Description</FormLabel>
-        <Textarea ref={register} name="description" />
+        <Textarea ref={register} name="description" required />
 
         <FormLabel>Brand</FormLabel>
-        <Input ref={register} name="brand" />
+        <Input ref={register} name="brand" required />
 
         <FormLabel>Price</FormLabel>
-        <Input ref={register} name="price" />
+        <Input ref={register} name="price" required />
 
         <FormLabel>Image</FormLabel>
-        <Input ref={register} name="images" />
+        <Input ref={register} name="images" required />
+        <Button onClick={handleSubmit(onImageAdd)}>Add Image</Button>
 
         <FormLabel>Link</FormLabel>
-        <Input ref={register} name="link" />
+        <Input ref={register} name="link" required />
 
         <FormLabel>Material</FormLabel>
-        <Input ref={register} name="material" />
+        <Input ref={register} name="material" required />
 
         <FormLabel>Category</FormLabel>
         <Select ref={register} name="category" placeholder="None">
@@ -100,8 +106,11 @@ const CreateItem = () => {
         >
           <div className={styles.checkGroupFlex}>
             <Stack>
-              <Checkbox value="green">Green</Checkbox>
+              <Checkbox value="black">Black</Checkbox>
               <Checkbox value="blue">Blue</Checkbox>
+              <Checkbox value="brown">Brown</Checkbox>
+              <Checkbox value="cream">Cream</Checkbox>
+              <Checkbox value="green">Green</Checkbox>
               <Checkbox value="red">Red</Checkbox>
               <Checkbox value="magenta">Magenta</Checkbox>
             </Stack>
@@ -110,13 +119,14 @@ const CreateItem = () => {
               <Checkbox value="yellow">Yellow</Checkbox>
               <Checkbox value="orange">Orange</Checkbox>
               <Checkbox value="purple">Purple</Checkbox>
-              <Checkbox value="purple">Burgundy</Checkbox>
+              <Checkbox value="burgundy">Burgundy</Checkbox>
             </Stack>
             <Stack>
-              <Checkbox value="cream">Cream</Checkbox>
+              <Checkbox value="navy">Nav</Checkbox>
+              <Checkbox value="khaki">Khaki</Checkbox>
+              <Checkbox value="gray">Gray</Checkbox>
+              <Checkbox value="lime">Line</Checkbox>
               <Checkbox value="white">White</Checkbox>
-              <Checkbox value="black">Black</Checkbox>
-              <Checkbox value="purple">Brown</Checkbox>
             </Stack>
           </div>
         </CheckboxGroup>

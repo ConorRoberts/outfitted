@@ -27,10 +27,18 @@ export default NextAuth({
     async signIn({ user }) {
       await mongoConnect();
       const found = await Settings.findOne({ _user: user.id });
-      if (!found) {
+      if (found) {
+        // Make sure every user has this set of properties
+        if (!found.recommendations) found.recommendations = [];
+        if (!found.likes) found.likes = [];
+
+        await found.save();
+      } else {
+        // Generate new settings for user
         const settings = new Settings({
           _user: user.id,
           likes: [],
+          recommendations: [],
         });
         await settings.save();
       }

@@ -21,10 +21,12 @@ const settingsSchema = new Schema({
     type: Number,
     default: 0,
   },
-  likes: [{
-    type: Schema.Types.ObjectId,
-    ref: "Item",
-  }],
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Item",
+    },
+  ],
   gender: {
     type: String,
     default: "Other",
@@ -69,6 +71,12 @@ const settingsSchema = new Schema({
     type: String,
     default: "M",
   },
+  recommendations: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Item",
+    },
+  ],
 });
 
 export default mongoose.models.Settings ||

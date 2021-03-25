@@ -1,50 +1,62 @@
 @import "./variables.scss";
 
 .title {
-  font-weight: 400;
+  font-weight: 300;
   color: $light-blue;
-  font-size: 1.7rem;
+  font-size: 2.2rem;
   text-align: center;
+  // font-family: "Shippori Mincho B1";
 }
 .body {
-  font-weight: 400;
+  margin: 1rem 5vw;
+  font-weight: 500;
   font-size: 1rem;
+  font-family: "Shippori Mincho B1";
+}
+.sectionTitle {
+  background: $light-blue;
+  color: white;
+  font-size: 1.7rem;
+  letter-spacing: 0.05rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
 }
 .sectionContainer {
-  font-family: "Shippori Mincho B1";
-  padding: 1rem;
-  .sectionTitle {
-    background: $light-blue;
-    font-weight: 500;
-    color: white;
-    font-size: 1.4rem;
-    text-align: center;
-    text-transform: uppercase;
-  }
+  // padding: 1rem;
+  // font-family: "Shippori Mincho B1";
   .sectionContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 1rem;
     .sectionImage {
-      border: 1px solid grey;
+      box-shadow: 0 0 5px black;
       border-radius: 5px;
       overflow: hidden;
-      margin-right: 0.5rem;
+      @media (min-width: 1000px) {
+        margin-right: 0.6rem;
+        width: 40%;
+      }
     }
     .sectionBody {
       font-weight: 500;
+      font-size: 1rem;
       font-family: "Shippori Mincho B1";
-      margin-left: 0.5rem;
-    }
-    .sectionBody,
-    .sectionImage {
+      text-align: justify;
+      margin-top: 1rem;
       @media (min-width: 1000px) {
+        font-size: 1.1rem;
+        margin-top: 0;
+        margin-left: 0.6rem;
         width: 50%;
       }
     }
+
     @media (min-width: 1000px) {
       flex-direction: row;
+      // justify-content: space-evenly;
     }
   }
 }
@@ -54,4 +66,36 @@
   font-weight: 400;
   font-family: "Shippori Mincho B1";
   text-align: center;
+}
+
+.featuredItems {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 1rem;
+}
+
+.featuredItemContainer {
+  display: flex;
+  align-items: center;
+  .heart,
+  .heartLiked {
+    margin-left: 1rem;
+    border-radius: 50%;
+    border: 1px solid black;
+    padding: 1rem;
+    font-size: 3rem;
+    transition-duration: 300ms;
+    transition-property: color border;
+    cursor: pointer;
+    &:hover {
+      color: $light-blue;
+      border: 1px solid $light-blue;
+    }
+  }
+  .heartLiked {
+    $c: rgb(165, 116, 243);
+    color: $c;
+    border: 1px solid $c;
+  }
 }
