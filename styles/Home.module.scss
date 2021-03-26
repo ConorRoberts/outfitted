@@ -48,7 +48,7 @@
       padding-left: 1rem;
       text-align: left;
     }
-    @media(min-width:1000px){
+    @media(min-width:1100px){
       .intro {
         margin: 0 20vw;
         margin-top: 5vh;
@@ -70,7 +70,7 @@
   justify-content:center;
   margin-bottom:1rem;
   width:100%;
-  @media(min-width:1000px){
+  @media(min-width:1100px){
     height:40vh;
   }
   .list{
@@ -78,7 +78,7 @@
     display:flex;
     align-items:center;
     flex-direction:column;
-    @media(min-width:1000px){
+    @media(min-width:1100px){
       justify-content:space-evenly;
       flex-direction:row;
       width:80%;
@@ -88,7 +88,7 @@
     display:flex;
     justify-content:center;
     
-    @media(min-width:1000px){
+    @media(min-width:1100px){
       width:30%;
       height:100%;
     }
