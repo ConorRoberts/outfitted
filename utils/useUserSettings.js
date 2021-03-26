@@ -6,6 +6,7 @@ const GET_USER_SETTINGS = gql`
     settings(id: $id) {
       _id
       _user {
+        _id
         name
         email
         image
@@ -15,6 +16,7 @@ const GET_USER_SETTINGS = gql`
         name
         description
         images
+        category
       }
       gender
       build
@@ -30,6 +32,13 @@ const GET_USER_SETTINGS = gql`
       shirtSize
       styleIcons
       favInfluencers
+      recommendations {
+        _id
+        name
+        description
+        images
+        category
+      }
     }
   }
 `;
@@ -38,7 +47,7 @@ const useUserSettings = (id = "") => {
   const [settings, setSettings] = useState(null);
   const { data } = useQuery(GET_USER_SETTINGS, { variables: { id } });
 
-  useEffect(() => setSettings(data ? data.settings : null), [data]);
+  useEffect(() => setSettings(data?.settings), [data]);
   return settings;
 };
 

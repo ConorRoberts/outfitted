@@ -6,6 +6,7 @@ const GET_USERS = gql`
     users {
       _id
       _user {
+        _id
         name
         email
         image
@@ -15,20 +16,21 @@ const GET_USERS = gql`
         description
         images
       }
-      gender
-      build
-      height
-      birthday
-      shoeSize
-      favBrands
-      sustainable
-      fit
-      favColours
-      pantsSize
-      sweaterSize
-      shirtSize
-      styleIcons
-      favInfluencers
+      # gender
+      # build
+      # height
+      # birthday
+      # shoeSize
+      # favBrands
+      # sustainable
+      # fit
+      # favColours
+      # pantsSize
+      # sweaterSize
+      # shirtSize
+      # styleIcons
+      # favInfluencers
+      # recommendations
     }
   }
 `;

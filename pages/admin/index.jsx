@@ -74,7 +74,7 @@ const Admin = () => {
                       </Td>
                     </Tr>
                   ))
-                : settings?.map(({ _id, _user: { name, email } }) => (
+                : settings?.map(({ _user: { name, email, _id } }) => (
                     <Tr key={_id}>
                       <Td>{name}</Td>
                       <Td>{email}</Td>
