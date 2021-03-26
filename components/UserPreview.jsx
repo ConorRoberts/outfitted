@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "@styles/UserPreview.module.scss";
+import Item from "@components/Item";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useMutation, gql } from "@apollo/client";
 import { Select, Button } from "@chakra-ui/react";
@@ -23,21 +24,6 @@ const RECOMMEND_ITEM = gql`
     }
   }
 `;
-
-const Item = ({ item }) => {
-  const { images, name, category } = item ?? {};
-  return (
-    <Link href={`/item/${item._id}`}>
-      <div className={styles.item}>
-        <img src={images ? images[0] : "https://via.placeholder.com/500"} />
-        <div>
-          <h4>{name}</h4>
-          <p>{category}</p>
-        </div>
-      </div>
-    </Link>
-  );
-};
 
 const UserPreview = ({ user }) => {
   const {
