@@ -40,7 +40,7 @@ const articleObject = (article) => {
 };
 
 const settingsFromId = async (id) => {
-  const settings = await Settings.findOne({ _user: id }).populate("likes");
+  const settings = await Settings.findOne({ _user: id }).populate("likes").populate("recommendations").populate("_user");
   return settingsObject(settings);
 };
 
@@ -133,6 +133,18 @@ const resolvers = {
 
       return settingsFromId(user);
     },
+    createRecommendation: async (_, { recommendationInput }) => {
+      const { user, item } = recommendationInput;
+      const settings = await Settings.findOne({ _user: user });
+
+      if (!settings) return null;
+      if (!settings.recommendations.includes(item)) {
+        settings.recommendations.push(item);
+        await settings.save();
+      }
+
+      return settingsFromId(user);
+    }
   },
 };
 

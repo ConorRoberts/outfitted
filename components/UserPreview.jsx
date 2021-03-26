@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "@styles/UserPreview.module.scss";
 import { AiOutlinePlus } from "react-icons/ai";
-import ItemPreview from "@components/ItemPreview";
+import { useMutation, gql } from "@apollo/client";
 import { Select, Button } from "@chakra-ui/react";
 import useAllItems from "@utils/useAllItems";
 import {
@@ -16,12 +16,20 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
+const RECOMMEND_ITEM = gql`
+  mutation Recommend($recommendationInput: RecommendationInput!) {
+    createRecommendation(recommendationInput: $recommendationInput) {
+      _id
+    }
+  }
+`;
+
 const Item = ({ item }) => {
   const { images, name, category } = item ?? {};
   return (
     <Link href={`/item/${item._id}`}>
       <div className={styles.item}>
-        <img src={images[0]} />
+        <img src={item.images ? item?.images[0] : "https://via.placeholder.com/500"} />
         <div>
           <h4>{name}</h4>
           <p>{category}</p>
@@ -33,8 +41,7 @@ const Item = ({ item }) => {
 
 const UserPreview = ({ user }) => {
   const {
-    _user: { name, image, email },
-    _id,
+    _user: { _id, name, image, email },
     likes,
     gender,
     build,
@@ -53,9 +60,18 @@ const UserPreview = ({ user }) => {
     recommendations,
   } = user ?? {};
 
+  const [recommendItem, { data }] = useMutation(RECOMMEND_ITEM);
+
   const itemList = useAllItems();
 
   const addRecommendation = () => null;
+
+  const [open, setOpen] = useState({});
+  const [form, setForm] = useState({
+    recommend: "",
+  });
+
+  console.log(user);
 
   return (
     <div className={styles.container}>
@@ -181,24 +197,36 @@ const UserPreview = ({ user }) => {
         <span className={styles.label}>Previous Recommendations: </span>
       </p>
       <div className={styles.itemList}>
-        {likes?.map((item) => (
+        {recommendations?.map((item) => (
           <Item key={item._id} item={item} />
         ))}
       </div>
       <div className={styles.selectContainer}>
         {itemList && (
           <>
-            <Select>
+            <Select
+              onChange={(e) => setForm({ ...form, recommend: e.target.value })}
+            >
               <option value="None">None</option>
               {itemList?.map((item) => (
-                <option key={item._id} value={item.name}>
+                <option key={item._id} value={item._id}>
                   {item.name}
                 </option>
               ))}
             </Select>
-            <Button onClick={() => addRecommendation()}>
-              Submit Recommendation
-            </Button>
+            {form.recommend !== "" && (
+              <Button
+                onClick={() =>
+                  recommendItem({
+                    variables: {
+                      recommendationInput: { user: _id, item: form.recommend },
+                    },
+                  })
+                }
+              >
+                Submit Recommendation
+              </Button>
+            )}
           </>
         )}
       </div>
