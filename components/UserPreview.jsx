@@ -29,11 +29,7 @@ const Item = ({ item }) => {
   return (
     <Link href={`/item/${item._id}`}>
       <div className={styles.item}>
-        <img
-          src={
-            item.images ? item?.images[0] : "https://via.placeholder.com/500"
-          }
-        />
+        <img src={images ? images[0] : "https://via.placeholder.com/500"} />
         <div>
           <h4>{name}</h4>
           <p>{category}</p>
@@ -198,7 +194,7 @@ const UserPreview = ({ user }) => {
         ))}
       </div>
       <p>
-        <span className={styles.label}>Previous Recommendations: </span>
+        <span className={styles.label}>Recommendations: </span>
       </p>
       <div className={styles.itemList}>
         {recommendations?.map((item) => (
