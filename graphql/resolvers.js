@@ -79,8 +79,8 @@ const resolvers = {
       return articleObject(article);
     },
     settings: async (_, { id = "" }) => {
-      const settings = await Settings.findOne({ _user: id }).populate("likes").populate("_user");
-      return settingsObject(settings);
+      // const settings = await Settings.findOne({ _user: id }).populate("likes").populate("_user");
+      return settingsFromId(id);
     },
   },
   Mutation: {

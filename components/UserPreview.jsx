@@ -29,7 +29,11 @@ const Item = ({ item }) => {
   return (
     <Link href={`/item/${item._id}`}>
       <div className={styles.item}>
-        <img src={item.images ? item?.images[0] : "https://via.placeholder.com/500"} />
+        <img
+          src={
+            item.images ? item?.images[0] : "https://via.placeholder.com/500"
+          }
+        />
         <div>
           <h4>{name}</h4>
           <p>{category}</p>
@@ -204,16 +208,6 @@ const UserPreview = ({ user }) => {
       <div className={styles.selectContainer}>
         {itemList && (
           <>
-            <Select
-              onChange={(e) => setForm({ ...form, recommend: e.target.value })}
-            >
-              <option value="None">None</option>
-              {itemList?.map((item) => (
-                <option key={item._id} value={item._id}>
-                  {item.name}
-                </option>
-              ))}
-            </Select>
             {form.recommend !== "" && (
               <Button
                 onClick={() =>
@@ -227,6 +221,16 @@ const UserPreview = ({ user }) => {
                 Submit Recommendation
               </Button>
             )}
+            <Select
+              onChange={(e) => setForm({ ...form, recommend: e.target.value })}
+            >
+              <option value="None">None</option>
+              {itemList?.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
           </>
         )}
       </div>
