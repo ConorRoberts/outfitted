@@ -34,7 +34,7 @@
     "pages/newsletter/index.jsx",
     "components/Article.jsx",
     "components/Header.jsx",
-    "pages/admin/create_item.jsx",
+    "pages/admin/create_item/[...create_item].jsx",
     "pages/admin/create_article.jsx",
     "pages/newsletter/[...id].jsx"
   ],

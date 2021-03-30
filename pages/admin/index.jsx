@@ -38,7 +38,7 @@ const Admin = () => {
       <Header />
       <main className={styles.main}>
         <div className={styles.switchContainer}>
-          <p>Show Items/Users</p>
+          <p>Show Users or Items</p>
           <Switch
             size="md"
             onChange={() => setChecked(!checked)}

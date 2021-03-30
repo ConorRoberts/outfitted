@@ -39,8 +39,16 @@ const articleObject = (article) => {
     : null;
 };
 
+const itemFromId = async (id) => {
+  const item = await Item.findById(id);
+  return itemObject(item);
+};
+
 const settingsFromId = async (id) => {
-  const settings = await Settings.findOne({ _user: id }).populate("likes").populate("recommendations").populate("_user");
+  const settings = await Settings.findOne({ _user: id })
+    .populate("likes")
+    .populate("recommendations")
+    .populate("_user");
   return settingsObject(settings);
 };
 
@@ -64,9 +72,6 @@ const resolvers = {
     items: async () => {
       const items = await Item.find({});
       return items?.reverse();
-      // return items.map((item) => ({
-      //   ...itemObject(item),
-      // }));
     },
     articles: async () => {
       const articles = await Article.find({}).populate("featuredItems");
@@ -77,6 +82,9 @@ const resolvers = {
     article: async (_, { id }) => {
       const article = await Article.findById(id).populate("featuredItems");
       return articleObject(article);
+    },
+    item: async (_, { id }) => {
+      return itemFromId(id);
     },
     settings: async (_, { id = "" }) => {
       // const settings = await Settings.findOne({ _user: id }).populate("likes").populate("_user");
@@ -103,7 +111,7 @@ const resolvers = {
 
       return null;
     },
-    createItem: async (_, { newItemInput }) => {
+    createItem: async (_, { id, newItemInput }) => {
       const item = new Item({
         ...newItemInput,
       });
@@ -144,7 +152,17 @@ const resolvers = {
       }
 
       return settingsFromId(user);
-    }
+    },
+    updateItem: async (_, { id, updateItemInput }) => {
+      await Item.findByIdAndUpdate(id, { ...updateItemInput });
+
+      return itemFromId(id);
+    },
+    updateArticle: async (_, { id, updateArticleInput }) => {
+      await Article.findByIdAndUpdate(id, { ...updateArticleInput });
+
+      return articleFromId(id);
+    },
   },
 };
 

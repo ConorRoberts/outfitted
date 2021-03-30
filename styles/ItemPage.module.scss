@@ -1,0 +1,31 @@
+@import "./variables.scss";
+
+.label{
+    text-transform:capitalize;
+    font-weight:500;
+    // font-size:2rem;
+}
+
+.imagesContainer{
+    display:flex;
+    justify-content:center;
+    margin-bottom:2rem;
+}
+
+.editIcon{
+    font-size:2rem;
+    text-align:center;
+    transition: color 200ms ease;
+    &:hover{
+        color:$light-blue;
+    }
+}
+
+.editIconContainer{
+    display:flex;
+    justify-content:center;
+}
+
+.main{
+    margin:0 5vw;
+}

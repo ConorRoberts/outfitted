@@ -25,7 +25,7 @@ const RECOMMEND_ITEM = gql`
   }
 `;
 
-const UserPreview = ({ user }) => {
+const UserPreview = ({user}) => {
   const {
     _user: { _id, name, image, email },
     likes,
@@ -56,8 +56,6 @@ const UserPreview = ({ user }) => {
   const [form, setForm] = useState({
     recommend: "",
   });
-
-  console.log(user);
 
   return (
     <div className={styles.container}>

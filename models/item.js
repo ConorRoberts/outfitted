@@ -4,16 +4,16 @@ const itemSchema = new Schema({
   name: String,
   brand: String,
   description: String,
-  season: String,
+  seasons: [String],
   category: String,
-  occasion: String,
+  occasions: [String],
   colours: [String],
   material: String,
   price: Number,
   images: [String],
   sizes: [String],
   link: String,
-  build: [String],
+  builds: [String],
 });
 
 export default mongoose.models.Item || mongoose.model("Item", itemSchema);

@@ -37,14 +37,14 @@ const typeDefs = gql`
     name: String
     brand: String
     description: String
-    season: String
+    seasons: [String]
     category: String
     occasions: [String]
     colours: [String]
     material: String
     price: Float
     images: [String]
-    build: [String]
+    builds: [String]
     sizes: [String]
     link: String
   }
@@ -53,7 +53,7 @@ const typeDefs = gql`
     name: String!
     brand: String!
     description: String!
-    season: String!
+    seasons: [String!]!
     category: String!
     occasions: [String!]!
     colours: [String!]!
@@ -61,8 +61,23 @@ const typeDefs = gql`
     price: Float!
     images: [String!]!
     sizes: [String!]!
-    build: [String!]!
+    builds: [String!]!
     link: String!
+  }
+  input UpdateItemInput {
+    name: String
+    brand: String
+    description: String
+    seasons: [String!]
+    category: String
+    occasions: [String!]
+    colours: [String!]
+    material: String
+    price: Float
+    images: [String!]
+    sizes: [String!]
+    builds: [String!]
+    link: String
   }
 
   type ArticleSection {
@@ -92,6 +107,14 @@ const typeDefs = gql`
     author: String!
     body: String!
     image: String!
+    sections: [ArticleSectionInput]
+    featuredItems: [String]
+  }
+  input UpdateArticleInput {
+    title: String
+    author: String
+    body: String
+    image: String
     sections: [ArticleSectionInput]
     featuredItems: [String]
   }
@@ -127,8 +150,9 @@ const typeDefs = gql`
 
   type Query {
     users: [Settings!]!
-    user(id: String): User
+    user(id: String!): User
     items: [Item!]
+    item(id:String!): Item
     articles: [Article!]
     article(id: String!): Article
     settings(id: String!): Settings
@@ -139,6 +163,8 @@ const typeDefs = gql`
     createArticle(articleInput: ArticleInput!): Article
     likeItem(likeItemInput: LikeItemInput!): Settings
     createRecommendation(recommendationInput:RecommendationInput!): Settings
+    updateItem(id:String!,updateItemInput:UpdateItemInput!):Item
+    updateArticle(id:String!,updateArticleInput:UpdateArticleInput!):Article
   }
 `;
 
