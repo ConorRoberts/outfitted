@@ -64,7 +64,7 @@ const UpdateItemPage = () => {
   const { id } = router.query;
   const { data } = useQuery(GET_ITEM, { variables: { id: `${id}` } });
   const [updateItem] = useMutation(UPDATE_ITEM);
-  const { register, handleSubmit, control, formState, setValue } = useForm();
+  const { register, handleSubmit, control, setValue } = useForm();
   const { fields, append } = useFieldArray({
     control,
     name: "images",
@@ -74,20 +74,32 @@ const UpdateItemPage = () => {
     data &&
       Object.entries(data?.item).forEach(([key, val]) => setValue(key, val));
 
-    // data && data?.item.images.forEach((e) => append({ link: "stinky" }));
+    data && setValue("colours",data.item.colours.join(", "));
+    data && setValue("builds",data.item.builds.join(", "));
+    data && setValue("occasions",data.item.occasions.join(", "));
+    data && setValue("seasons",data.item.seasons.join(", "));
+    data && setValue("sizes",data.item.sizes.join(", "));
+    
+    // data && data?.item.images.forEach((e) => append({ link: e }));
     // append({link:"hi"});
   }, [data]);
   const onSubmit = (formData) => {
     updateItem({
-      variables: {id:id,
+      variables: {
+        id: id,
         updateItemInput: {
           ...formData,
           price: +formData.price,
-          images: formData.images && formData.images.map(({ link }) => link),
+          // images: formData.images && formData.images.map(({ link }) => link),
+          colours: formData.colours.split(",").map((e) => e.trim()),
+          builds: formData.builds.split(",").map((e) => e.trim()),
+          occasions: formData.occasions.split(",").map((e) => e.trim()),
+          seasons: formData.seasons.split(",").map((e) => e.trim()),
+          sizes: formData.sizes.split(",").map((e) => e.trim()),
         },
       },
     });
-    router.push("/");
+    router.push("/admin");
   };
   return (
     <div>
@@ -95,7 +107,7 @@ const UpdateItemPage = () => {
         <title>Create an Item</title>
       </Head>
       <Header />
-      <main>
+      <main className={styles.main}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <FormLabel>Name</FormLabel>
           <Input ref={register} required name="name" />
@@ -109,9 +121,9 @@ const UpdateItemPage = () => {
           <FormLabel>Price</FormLabel>
           <Input ref={register} name="price" required />
 
-          <FormLabel>Images</FormLabel>
+          {/* <FormLabel>Images</FormLabel>
           <BsPlusCircle onClick={() => append({ link: "" })} />
-          {/* {fields.map((item, index) => (
+          {fields.map((item, index) => (
             <Input
               key={item.id}
               ref={register}
@@ -136,100 +148,19 @@ const UpdateItemPage = () => {
           </Select>
 
           <FormLabel>Colours</FormLabel>
-          <CheckboxGroup colorScheme="green">
-            <div className={styles.checkGroupFlex}>
-              <Stack>
-                {[
-                  "black",
-                  "blue",
-                  "brown",
-                  "cream",
-                  "green",
-                  "red",
-                  "magenta",
-                ].map((e) => (
-                  <Checkbox key={e} name="colours" ref={register} value={e}>
-                    {e}
-                  </Checkbox>
-                ))}
-              </Stack>
-              <Stack>
-                {["pink", "yellow", "orange", "purple", "burgundy"].map((e) => (
-                  <Checkbox key={e} name="colours" ref={register} value={e}>
-                    {e}
-                  </Checkbox>
-                ))}
-              </Stack>
-              <Stack>
-                {["navy", "khaki", "gray", "lime", "white"].map((e) => (
-                  <Checkbox key={e} name="colours" ref={register} value={e}>
-                    {e}
-                  </Checkbox>
-                ))}
-              </Stack>
-            </div>
-          </CheckboxGroup>
+          <Input name="colours" ref={register} />
 
           <FormLabel>Occasion</FormLabel>
-          <CheckboxGroup colorScheme="green">
-            <div className={styles.checkGroupFlex}>
-              <Stack>
-                {["formal", "casual", "streetwear", "business-casual"].map(
-                  (e) => (
-                    <Checkbox key={e} name="occasions" ref={register} value={e}>
-                      {e}
-                    </Checkbox>
-                  )
-                )}
-              </Stack>
-            </div>
-          </CheckboxGroup>
+          <Input name="occasions" ref={register} />
 
           <FormLabel>Season</FormLabel>
-          <CheckboxGroup colorScheme="green">
-            <div className={styles.checkGroupFlex}>
-              <Stack>
-                {["winter", "spring", "summer", "fall"].map((e) => (
-                  <Checkbox key={e} name="seasons" ref={register} value={e}>
-                    {e}
-                  </Checkbox>
-                ))}
-              </Stack>
-            </div>
-          </CheckboxGroup>
+          <Input name="seasons" ref={register} />
 
           <FormLabel>Build</FormLabel>
-          <CheckboxGroup colorScheme="green">
-            <div className={styles.checkGroupFlex}>
-              <Stack>
-                {["husky", "skinny", "muscular", "fit"].map((e) => (
-                  <Checkbox key={e} name="builds" ref={register} value={e}>
-                    {e}
-                  </Checkbox>
-                ))}
-              </Stack>
-            </div>
-          </CheckboxGroup>
+          <Input name="builds" ref={register} />
 
           <FormLabel>Available Sizes</FormLabel>
-          <CheckboxGroup colorScheme="green">
-            <div className={styles.checkGroupFlex}>
-              <Stack>
-                {["XS", "S", "M"].map((e) => (
-                  <Checkbox key={e} name="sizes" ref={register} value={e}>
-                    {e}
-                  </Checkbox>
-                ))}
-              </Stack>
-              <Stack>
-                {["L", "XL", "XXL", "3XL+"].map((e) => (
-                  <Checkbox key={e} name="sizes" ref={register} value={e}>
-                    {e}
-                  </Checkbox>
-                ))}
-              </Stack>
-            </div>
-          </CheckboxGroup>
+          <Input name="sizes" ref={register} />
 
           <div className={styles.buttonContainer}>
             <Button background="green.200" type="submit">
