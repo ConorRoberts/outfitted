@@ -37,14 +37,10 @@ const Preferences = () => {
   if (!session && !loading) {
     router.push("/");
   }
-  const [updateSettings, { data }] = useMutation(UPDATE_SETTINGS);
-  const [form, setForm] = useState({
-    favColours: [],
-  });
+  const [updateSettings] = useMutation(UPDATE_SETTINGS);
 
   const settings = useUserSettings(session?.user.id);
-  console.log(settings);
-  
+
   useEffect(() => {
     if (settings) {
       Object.entries(settings).forEach(([key, val]) => {
@@ -52,13 +48,17 @@ const Preferences = () => {
       });
 
       setValue("favColours", settings?.favColours.join(", "));
-      setValue("birthday", new Date(settings.birthday).toISOString().slice(0, 10));
+      setValue(
+        "birthday",
+        new Date(settings.birthday).toISOString().slice(0, 10)
+      );
       setValue("favBrands", settings?.favBrands.join(", "));
       setValue("favInfluencers", settings?.favInfluencers.join(", "));
       setValue("heightIn", settings?.height % 12);
       setValue("heightFt", settings?.height / 12);
     }
   }, [settings]);
+
   const onSubmit = ({
     build,
     gender,
@@ -84,8 +84,8 @@ const Preferences = () => {
           pantsSize,
           shirtSize,
           sweaterSize,
+          favBrands: favBrands.split(","),
           favColours: favColours.split(","),
-          favBrands,
           styleIcons: styleIcons.split(",").map((e) => e.trim()),
           favInfluencers: favInfluencers.split(",").map((e) => e.trim()),
           shoeSize: +shoeSize,
@@ -95,7 +95,6 @@ const Preferences = () => {
     });
     router.push("/");
   };
-
 
   return (
     <div>

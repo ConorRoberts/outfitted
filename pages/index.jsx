@@ -79,13 +79,13 @@ export default function Home() {
               name="Graham Anderson"
               linkedInLink="https://www.linkedin.com/in/graham-anderson-736869195/"
               instaLink="https://www.instagram.com/grahamandersonn/"
-              desc="Graham is a current University of Guelph marketing management major with a passion for and drive to innovate as a entrepreneur."
+              desc="Graham is a current University of Guelph Marketing Management major with a passion for and drive to innovate as a entrepreneur."
               title="Co-Founder"
             />
             <AboutUsModule
               imageURL="https://static.wixstatic.com/media/52cf91_4bd27a68ed4846b699b57dfffd38f379~mv2.jpg/v1/crop/x_713,y_0,w_3243,h_3240/fill/w_216,h_216,al_c,q_80,usm_0.66_1.00_0.01/IMG_0089_JPG.webp"
               title="Co-Founder"
-              desc="James is a current University of Guelph economics and finance major with a passion for the stock market."
+              desc="James is a current University of Guelph Economics and Finance major with a passion for the stock market."
               name="James Romain"
               instaLink="https://www.instagram.com/jamesromain59/"
               linkedInLink="https://www.linkedin.com/in/james-romain-27482b187/"
@@ -94,7 +94,7 @@ export default function Home() {
               imageURL="https://conorroberts.com/_next/image?url=%2Fheadshot.JPG&w=3840&q=75"
               name="Conor Roberts"
               title="Web Developer"
-              desc="Conor is a current University of Guelph computer science major"
+              desc="Conor is a current University of Guelph Computer Science major with a passion for learning new technologies."
               linkedInLink="https://www.linkedin.com/in/conorjroberts/"
             />
           </div>

@@ -31,12 +31,12 @@
     "pages/_app.jsx",
     "pages/closet.jsx",
     "pages/index.jsx",
-    "pages/newsletter/index.jsx",
+    "pages/articles/index.jsx",
     "components/Article.jsx",
     "components/Header.jsx",
     "pages/admin/create_item/[...create_item].jsx",
     "pages/admin/articles/create_article.jsx",
-    "pages/newsletter/[...id].jsx"
+    "pages/articles/[...id].jsx"
   ],
   "exclude": ["node_modules"]
 }

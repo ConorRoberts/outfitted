@@ -127,12 +127,12 @@ const Header = ({ title }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link passHref href="/newsletter">
+                  <Link passHref href="/articles">
                     <a className={styles.link}>
                       <span className={styles.icon}>
                         <FaRegNewspaper />
                       </span>
-                      Newsletter
+                      Articles
                     </a>
                   </Link>
                 </li>
