@@ -25,6 +25,13 @@ const settingsObject = (settings) => {
       ...settings._doc,
       _id: settings.id,
       birthday: new Date(settings._doc.birthday).toISOString(),
+      recommendations: settings._doc.recommendations.map(e => ({
+        item: e.item,
+        _id: e.id,
+        timeLive: new Date(e.timeLive).toISOString(),
+        timeRecommended: new Date(e.timeRecommended).toISOString(),
+        body:e.body
+      })),
     }
     : null;
 };
@@ -57,6 +64,7 @@ const settingsFromId = async (id) => {
     path: "recommendations.item",
     model: Item
   }])
+
   return settingsObject(settings);
 };
 
@@ -150,7 +158,7 @@ const resolvers = {
       return settingsFromId(user);
     },
     createRecommendation: async (_, { recommendationInput }) => {
-      const { user, item, timeLive, timeRecommended } = recommendationInput;
+      const { user, item, timeLive, timeRecommended,body } = recommendationInput;
       const settings = await Settings.findOne({ _user: user });
 
       if (!settings) return null;
@@ -161,7 +169,7 @@ const resolvers = {
       }
 
       if (!settings.recommendations.map(e => e.item).includes(item)) {
-        settings.recommendations.push({ item, timeLive, timeRecommended });
+        settings.recommendations.push({ item, timeLive, timeRecommended,body });
         await settings.save();
       }
 

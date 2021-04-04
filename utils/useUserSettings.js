@@ -36,11 +36,13 @@ const GET_USER_SETTINGS = gql`
         _id
         timeLive
         timeRecommended
+        body
         item{
+          _id
           name
-        description
-        images
-        category
+          description
+          images
+          category
         }
       }
     }

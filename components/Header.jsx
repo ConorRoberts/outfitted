@@ -10,6 +10,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { FaRegNewspaper } from "react-icons/fa";
 import { BsFileEarmarkPlus, BsPlusCircle } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
+import { GrCoatCheck } from "react-icons/gr";
 import {
   Drawer,
   DrawerBody,
@@ -133,6 +134,16 @@ const Header = ({ title }) => {
                         <FaRegNewspaper />
                       </span>
                       Articles
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link passHref href="/newsletters">
+                    <a className={styles.link}>
+                      <span className={styles.icon}>
+                        <GrCoatCheck />
+                      </span>
+                      Newsletter
                     </a>
                   </Link>
                 </li>

@@ -43,7 +43,7 @@ const UserPage = () => {
   const settings = useUserSettings(id);
   const admin = useAdminStatus();
 
-  const { register, handleSubmit, control, watch } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       item: "None",
     },
@@ -216,7 +216,6 @@ const UserPage = () => {
                 ))}
             </Select>
             {watch("item") !== "None" && (
-              // console.log(itemList.filter(({ _id }) => _id === watch("item"))[0])
               <Item
                 item={itemList?.find(({ _id }) => _id === watch("item")) ?? {}}
               />
