@@ -137,18 +137,18 @@ const Header = ({ title }) => {
                     </a>
                   </Link>
                 </li>
-                <li>
-                  <Link passHref href="/newsletters">
-                    <a className={styles.link}>
-                      <span className={styles.icon}>
-                        <GrCoatCheck />
-                      </span>
-                      Newsletter
-                    </a>
-                  </Link>
-                </li>
                 {session && (
                   <>
+                    <li>
+                      <Link passHref href="/newsletters">
+                        <a className={styles.link}>
+                          <span className={styles.icon}>
+                            <GrCoatCheck />
+                          </span>
+                          Newsletter
+                        </a>
+                      </Link>
+                    </li>
                     <li>
                       <Link passHref href="/preferences">
                         <a className={styles.link}>
