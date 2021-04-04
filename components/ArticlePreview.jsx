@@ -6,7 +6,7 @@ const ArticlePreview = ({ article, compact = false }) => {
   const { title, image, timestamp, body, author, _id } = article;
 
   return (
-    <Link href={`/newsletter/${_id}`}>
+    <Link href={`/articles/${_id}`}>
       {compact ? (
         <div className={styles.compact}>
           <img src={`${image ?? "https://via.placeholder.com/500"}`} />
