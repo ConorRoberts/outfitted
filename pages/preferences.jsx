@@ -1,30 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import Head from "next/head";
 import styles from "../styles/Preferences.module.scss";
 import {
   Input,
   Select,
   FormLabel,
-  NumberInput,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberInputField,
-  NumberDecrementStepper,
-  InputRightAddon,
   InputLeftAddon,
   InputGroup,
   Flex,
   Checkbox,
   CheckboxGroup,
-  HStack,
   Stack,
   Button,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useSession } from "next-auth/client";
 import { useRouter } from "next/router";
+import useUserSettings from "@utils/useUserSettings";
 
 const UPDATE_SETTINGS = gql`
   mutation UpdateSettings($settingsInput: SettingsInput!) {
@@ -37,12 +30,9 @@ const UPDATE_SETTINGS = gql`
   }
 `;
 
-// Query for initial settings values
-// const GET_SETTINGS
-
 const Preferences = () => {
   const router = useRouter();
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const [session, loading] = useSession();
   if (!session && !loading) {
     router.push("/");
@@ -52,6 +42,23 @@ const Preferences = () => {
     favColours: [],
   });
 
+  const settings = useUserSettings(session?.user.id);
+  console.log(settings);
+  
+  useEffect(() => {
+    if (settings) {
+      Object.entries(settings).forEach(([key, val]) => {
+        setValue(key, val);
+      });
+
+      setValue("favColours", settings?.favColours.join(", "));
+      setValue("birthday", new Date(settings.birthday).toISOString().slice(0, 10));
+      setValue("favBrands", settings?.favBrands.join(", "));
+      setValue("favInfluencers", settings?.favInfluencers.join(", "));
+      setValue("heightIn", settings?.height % 12);
+      setValue("heightFt", settings?.height / 12);
+    }
+  }, [settings]);
   const onSubmit = ({
     build,
     gender,
@@ -65,8 +72,8 @@ const Preferences = () => {
     styleIcons,
     favInfluencers,
     favBrands,
+    favColours,
   }) => {
-    const { favColours } = form;
     updateSettings({
       variables: {
         settingsInput: {
@@ -77,7 +84,7 @@ const Preferences = () => {
           pantsSize,
           shirtSize,
           sweaterSize,
-          favColours,
+          favColours: favColours.split(","),
           favBrands,
           styleIcons: styleIcons.split(",").map((e) => e.trim()),
           favInfluencers: favInfluencers.split(",").map((e) => e.trim()),
@@ -88,6 +95,7 @@ const Preferences = () => {
     });
     router.push("/");
   };
+
 
   return (
     <div>
@@ -161,32 +169,7 @@ const Preferences = () => {
             <option>Tight</option>
           </Select>
           <FormLabel>What are your favourite colours?</FormLabel>
-          <CheckboxGroup
-            onChange={(e) => setForm({ ...form, favColours: e })}
-            colorScheme="green"
-          >
-            <div className={styles.checkGroupFlex}>
-              <Stack>
-                <Checkbox value="green">Green</Checkbox>
-                <Checkbox value="blue">Blue</Checkbox>
-                <Checkbox value="red">Red</Checkbox>
-                <Checkbox value="magenta">Magenta</Checkbox>
-              </Stack>
-              <Stack>
-                <Checkbox value="pink">Pink</Checkbox>
-                <Checkbox value="yellow">Yellow</Checkbox>
-                <Checkbox value="orange">Orange</Checkbox>
-                <Checkbox value="purple">Purple</Checkbox>
-                <Checkbox value="burgundy">Burgundy</Checkbox>
-              </Stack>
-              <Stack>
-                <Checkbox value="cream">Cream</Checkbox>
-                <Checkbox value="white">White</Checkbox>
-                <Checkbox value="black">Black</Checkbox>
-                <Checkbox value="brown">Brown</Checkbox>
-              </Stack>
-            </div>
-          </CheckboxGroup>
+          <Input ref={register} name="favColours" />
           <FormLabel>Pants Size</FormLabel>
           <Select name="pantsSize" ref={register}>
             <option>XS</option>
