@@ -15,7 +15,8 @@ import { BsPlusCircle } from "react-icons/bs";
 import { useForm, useFieldArray } from "react-hook-form";
 import styles from "@styles/UpdateItemPage.module.scss";
 import Header from "@components/Header";
-import Head from "next/head";
+import Loading from "@components/Loading";
+import useAdminStatus from "@utils/useAdminStatus";
 
 const GET_ITEM = gql`
   query getItem($id: String!) {
@@ -69,6 +70,10 @@ const UpdateItemPage = () => {
     control,
     name: "images",
   });
+
+  const admin = useAdminStatus();
+
+  if (!admin) return <Loading/>;
 
   useEffect(() => {
     data &&

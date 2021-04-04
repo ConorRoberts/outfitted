@@ -6,16 +6,14 @@ import {
   FormLabel,
   Textarea,
   Select,
-  CheckboxGroup,
-  Stack,
-  Checkbox,
   Button,
 } from "@chakra-ui/react";
 import { BsPlusCircle } from "react-icons/bs";
 import { useForm, useFieldArray } from "react-hook-form";
 import styles from "@styles/UpdateItemPage.module.scss";
 import Header from "@components/Header";
-import Head from "next/head";
+import useAdminStatus from "@utils/useAdminStatus";
+import Loading from "@components/Loading";
 
 const GET_ITEM = gql`
   query getItem($id: String!) {
@@ -101,6 +99,10 @@ const UpdateItemPage = () => {
     });
     router.push("/admin");
   };
+
+  const admin = useAdminStatus();
+
+  if (!admin) return <Loading/>;
   return (
     <div>
       <Header title="Create Article" />

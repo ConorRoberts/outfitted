@@ -8,9 +8,6 @@ import {
   InputLeftAddon,
   InputGroup,
   Flex,
-  Checkbox,
-  CheckboxGroup,
-  Stack,
   Button,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
@@ -55,7 +52,7 @@ const Preferences = () => {
       setValue("favBrands", settings?.favBrands.join(", "));
       setValue("favInfluencers", settings?.favInfluencers.join(", "));
       setValue("heightIn", settings?.height % 12);
-      setValue("heightFt", settings?.height / 12);
+      setValue("heightFt", Math.round(settings?.height / 12));
     }
   }, [settings]);
 
@@ -84,8 +81,8 @@ const Preferences = () => {
           pantsSize,
           shirtSize,
           sweaterSize,
-          favBrands: favBrands.split(","),
-          favColours: favColours.split(","),
+          favBrands: favBrands.split(",").map((e) => e.trim()),
+          favColours: favColours.split(",").map((e) => e.trim()),
           styleIcons: styleIcons.split(",").map((e) => e.trim()),
           favInfluencers: favInfluencers.split(",").map((e) => e.trim()),
           shoeSize: +shoeSize,
