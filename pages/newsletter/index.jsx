@@ -13,11 +13,7 @@ const Newsletter = () => {
 
   return (
     <div>
-      <Head>
-        <title>Newsletter</title>
-        <link rel="icon" type="image/png" href="/logo.jpg" />
-      </Head>
-      <Header />
+      <Header title="Articles" />
       <main className={styles.main}>
         <h1>Newsletter</h1>
         <div className={styles.container}>

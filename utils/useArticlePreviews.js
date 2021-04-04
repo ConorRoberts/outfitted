@@ -9,6 +9,7 @@ const getArticles = gql`
       image
       timestamp
       author
+      body
     }
   }
 `;

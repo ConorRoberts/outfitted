@@ -21,6 +21,7 @@ import {
   Button,
   Divider,
 } from "@chakra-ui/react";
+import Head from "next/head";
 
 const LoginButton = () => {
   return (
@@ -48,7 +49,7 @@ const Logo = () => {
   );
 };
 
-const Header = () => {
+const Header = ({ title }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const admin = useAdminStatus();
@@ -56,6 +57,10 @@ const Header = () => {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>{`${title} | Outfitted`}</title>
+        <link rel="icon" type="image/png" href="/logo-no-bg.png" />
+      </Head>
       <ul className={styles.mobile}>
         <li>
           <Link passHref href="/">

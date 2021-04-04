@@ -45,11 +45,7 @@ const ItemPage = () => {
 
   return (
     <div>
-      <Head>
-        <title>{data?.item?.name} | Outfitted</title>
-        <link rel="icon" type="image/png" href="/logo.jpg" />
-      </Head>
-      <Header />
+      <Header title={data?.item?.name} />
       <main className={styles.main}>
         <div className={styles.imagesContainer}>
           {data?.item.images &&

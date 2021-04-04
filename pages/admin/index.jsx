@@ -32,10 +32,7 @@ const Admin = () => {
 
   return (
     <div>
-      <Head>
-        <title>Admin</title>
-      </Head>
-      <Header />
+      <Header title="Admin" />
       <main className={styles.main}>
         <div className={styles.switchContainer}>
           <p>Show Users or Items</p>

@@ -1,97 +1,177 @@
 @import "./variables.scss";
 
 .main {
-  position: relative;
+  margin: 0 5vw;
   .splashContainer {
     display: flex;
     justify-content: center;
-    .container{
-      display:flex;
+    .container {
+      display: flex;
       box-shadow: 0 0 5px black;
-      width: 90%;
-      img{
-        height:100%;
-        width:100%;
+      width: 100%;
+      @media (min-width: 1000px) {
+        width: 80%;
       }
-      @media(min-width:1000px){
-        width:70%;
-      }
-      @media(min-width:1200px){
-        width:45%;
+      img {
+        height: 100%;
+        width: 100%;
       }
     }
   }
-  .titleContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: black;
+  @media (min-width: 1000px) {
+    margin: 0 25vw;
+  }
+  @media (min-width: 1200px) {
+    margin: 0 20vw;
+  }
+}
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  text-align: center;
+  margin-top: 2rem;
+  h1 {
+    line-height: 2.4rem;
+    color: $light-blue;
+    font-size: 3rem;
+    font-weight: 300;
+    padding-right: 3rem;
+    span {
+      color: black;
+      padding-left: 3rem;
+    }
+  }
+  p {
+    border-left: 3px solid $light-blue;
+    margin: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    padding-left: 1rem;
+    text-align: left;
+    width: 100%;
+    @media (min-width: 1000px) {
+      width: 80%;
+    }
+  }
+}
+.aboutContainer {
+  @include flexColumnCenter();
+  h2 {
+    font-size: 2rem;
     text-align: center;
-    z-index: 1;
-    margin-top: 2.5rem;
-    h1 {
-      line-height: 2.4rem;
-      color: $light-blue;
-      font-size: 3rem;
-      font-weight: 300;
-      span {
-        color: black;
-        padding-left: 4rem;
-      }
-    }
-    p {
-      border-left: 3px solid $light-blue;
-      margin: 0 1rem;
-      margin-top: 5vh;
-      font-size: 1.2rem;
-      font-weight: 300;
-      padding-left: 1rem;
-      text-align: left;
-    }
-    @media(min-width:1100px){
-      .intro {
-        margin: 0 20vw;
-        margin-top: 5vh;
-      }
-    }
   }
-}
-.articlesTitle{
-  text-align:center;
-  font-size:2rem;
-  font-weight:300;
-  color:white;
-  box-shadow:0 0 5px black;
-  background:rgb(46, 105, 139);
-  margin:2rem 5vw;
-}
-.articles{
-  display:flex;
-  justify-content:center;
-  margin-bottom:1rem;
-  width:100%;
-  @media(min-width:1100px){
-    height:40vh;
-  }
-  .list{
-    width:60%;
-    display:flex;
-    align-items:center;
-    flex-direction:column;
-    @media(min-width:1100px){
-      justify-content:space-evenly;
-      flex-direction:row;
+  .people {
+    @include flexColumnCenter();
+    @media (min-width: 800px) {
       width:80%;
     }
   }
-  .article{
-    display:flex;
-    justify-content:center;
-    
-    @media(min-width:1100px){
-      width:30%;
-      height:100%;
+  .person {
+    @include flexColumnCenter();
+    margin: 1.7rem 0;
+
+    img {
+      width: 65%;
+      border-radius: 50%;
+      box-shadow: 0 0 5px black;
+      @media (min-width: 800px) {
+        width:25%;
+        margin-right:1rem;
+      }
+    }
+
+    @media (min-width: 800px) {
+      justify-content: space-between;
+      flex-direction: row;
+      width:100%;
+    }
+    .textContainer {
+      @include flexColumnCenter();
+      margin: 0.8rem 1rem;
+      @media (min-width: 800px) {
+        width:75%;
+      }
+      .name {
+        font-weight: 600;
+        font-size: 1.5rem;
+        color: $light-blue;
+      }
+      .title {
+        font-weight: 400;
+        font-size: 1.3rem;
+      }
+      .description {
+        margin: 0.3rem;
+        font-weight: 300;
+        text-align:justify;
+        font-size:1.1rem;
+      }
+      .socials {
+        display: flex;
+        list-style-type: none;
+        li {
+          font-size: 1.8rem;
+          padding: 0.2rem;
+          margin: 0 0.7rem;
+          transition: color 200ms ease;
+          &:hover {
+            color: $light-blue;
+          }
+        }
+      }
     }
   }
 }
+.titleBlock {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 300;
+  color: white;
+  box-shadow: 0 0 5px black;
+  background: rgb(46, 105, 139);
+  margin: 2rem 0;
+  width: 90%;
 
+  @media (min-width: 1000px) {
+    width: 70%;
+  }
+  @media (min-width: 1200px) {
+    width: 85%;
+  }
+}
+.articles {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  .list {
+    width: 70%;
+    margin: 0 5vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    @media (min-width: 600px) {
+      // margin: 0 25vw;
+    }
+    @media (min-width: 1200px) {
+      width:80%;
+    }
+  }
+  .article {
+    display: flex;
+    // justify-content: center;
+    margin: 1rem 0;
+    cursor: pointer;
+    width:100%;
+
+    @media (min-width: 1100px) {
+      // width: 30%;
+      height: 100%;
+    }
+  }
+}

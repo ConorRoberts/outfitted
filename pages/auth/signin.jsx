@@ -23,11 +23,7 @@ const Option = ({ name, providerID }) => {
 export default function SignIn({ providers }) {
   return (
     <div>
-      <Head>
-        <title>Sign In</title>
-        <link rel="icon" type="image/png" href="/logo.jpg"/>
-      </Head>
-      <Header />
+      <Header title="Sign In" />
 
       <div className={styles.container}>
         <div className={styles.optionContainer}>

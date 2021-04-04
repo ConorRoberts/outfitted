@@ -81,10 +81,7 @@ const CreateItem = () => {
   if (!admin) return <Loading />;
   return (
     <div>
-      <Head>
-        <title>Create an Item</title>
-      </Head>
-      <Header />
+      <Header title="Create Item"/>
       <h1 className={styles.title}>Create an Item</h1>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <FormLabel>Name</FormLabel>

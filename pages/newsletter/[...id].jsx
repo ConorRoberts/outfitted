@@ -14,7 +14,7 @@ const GET_ARTICLE = gql`
       image
       author
       timestamp
-      featuredItems{
+      featuredItems {
         _id
         name
         images
@@ -39,11 +39,7 @@ const ArticlePage = () => {
 
   return (
     <div>
-      <Head>
-        <title>{data?.article.title}</title>
-        <link rel="icon" type="image/png" href="/logo.jpg" />
-      </Head>
-      <Header />
+      <Header title={data?.article.title} />
       <div className={styles.main}>
         <Article article={data?.article} />
       </div>

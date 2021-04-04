@@ -81,6 +81,7 @@ const CreateArticle = () => {
 
   // Event on form preview
   const onPreview = (formData) => {
+    console.log(itemsForm.featuredItems);
     setPreview({
       title: formData.title,
       body: formData.body,
@@ -104,11 +105,7 @@ const CreateArticle = () => {
 
   return (
     <div>
-      <Head>
-        <title>Create an Article</title>
-        <link rel="icon" type="image/png" href="/logo.jpg" />
-      </Head>
-      <Header />
+      <Header title="Create Article"/>
       <div className={styles.container}>
         <form
           className={styles.formContainer}

@@ -11,11 +11,7 @@ const UserPage = () => {
   const settings = useUserSettings(id);
   return (
     <div>
-      <Head>
-        <title>{settings?._user?.name ?? "User"}</title>
-        <link rel="icon" type="image/png" href="/logo.jpg"/>
-      </Head>
-      <Header />
+      <Header title={settings?._user?.name ?? "User"} />
       {settings && <UserPreview user={settings} />}
     </div>
   );

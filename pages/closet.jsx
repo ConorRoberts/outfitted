@@ -39,23 +39,19 @@ const Closet = () => {
 
   return (
     <div>
-      <Head>
-        <title>Closet</title>
-        <link rel="icon" type="image/png" href="/logo.jpg" />
-      </Head>
-      <Header />
+      <Header title="Closet" />
       <main className={styles.main}>
         <h2 className={styles.title}>We think you'll like these</h2>
         <div className={styles.itemListContainer}>
           <div className={styles.itemList}>
-          <h2>Likes</h2>
+            <h2>Likes</h2>
             {data &&
               data.settings.likes.map((item) => (
                 <Item key={item._id} item={item} />
               ))}
           </div>
           <div className={styles.itemList}>
-              <h2>Recommendations</h2>
+            <h2>Recommendations</h2>
             {data &&
               data.settings.recommendations.map((item) => (
                 <Item key={item._id} item={item} />

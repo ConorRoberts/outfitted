@@ -31,25 +31,52 @@
 
 .compact {
   height: 100%;
-  flex-direction:column;
-  display:flex;
-  justify-content:center;
-  text-align:center;
-  img{
-    height: 100%;
-    box-shadow:0 0 5px black;
-    @media(min-width:1000px){
-      overflow:hidden;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  @media (min-width: 1000px) {
+    flex-direction: row;
+  }
+  img {
+    box-shadow: 0 0 5px black;
+    @media (min-width: 1000px) {
+      width:40%;
     }
   }
-  h4{
-    font-weight:400;
-    font-size:1.4rem;
-    color:$light-blue;
+  h4 {
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: $light-blue;
+    font-family: "Shippori Mincho B1";
   }
-  p{
-    font-weight:400;
-    font-style:italic;
-    font-size:0.8rem;
+  p {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.8rem;
+    @media (min-width: 1000px) {
+      margin-bottom:0.5rem;
+    }
+  }
+  .description{
+    display:none;
+    text-align:justify;
+    font-weight:300;
+    font-size:1rem;
+    font-style:normal;
+    @media(min-width:1000px){
+      display:block;
+    }
+  }
+  .textContainer{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    @media (min-width: 1000px) {
+      margin-left:2rem;
+      width:60%;
+    }
   }
 }

@@ -74,12 +74,12 @@ const UpdateItemPage = () => {
     data &&
       Object.entries(data?.item).forEach(([key, val]) => setValue(key, val));
 
-    data && setValue("colours",data.item.colours.join(", "));
-    data && setValue("builds",data.item.builds.join(", "));
-    data && setValue("occasions",data.item.occasions.join(", "));
-    data && setValue("seasons",data.item.seasons.join(", "));
-    data && setValue("sizes",data.item.sizes.join(", "));
-    
+    data && setValue("colours", data.item.colours.join(", "));
+    data && setValue("builds", data.item.builds.join(", "));
+    data && setValue("occasions", data.item.occasions.join(", "));
+    data && setValue("seasons", data.item.seasons.join(", "));
+    data && setValue("sizes", data.item.sizes.join(", "));
+
     // data && data?.item.images.forEach((e) => append({ link: e }));
     // append({link:"hi"});
   }, [data]);
@@ -103,7 +103,7 @@ const UpdateItemPage = () => {
   };
   return (
     <div>
-      <Header title="Create Item" />
+      <Header title="Create Article" />
       <main className={styles.main}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <FormLabel>Name</FormLabel>

@@ -44,14 +44,13 @@ const Preferences = () => {
   const router = useRouter();
   const { register, handleSubmit, watch, errors } = useForm();
   const [session, loading] = useSession();
-  if (!session && !loading){
-      router.push("/");
+  if (!session && !loading) {
+    router.push("/");
   }
   const [updateSettings, { data }] = useMutation(UPDATE_SETTINGS);
   const [form, setForm] = useState({
     favColours: [],
   });
-
 
   const onSubmit = ({
     build,
@@ -65,7 +64,7 @@ const Preferences = () => {
     shoeSize,
     styleIcons,
     favInfluencers,
-    favBrands
+    favBrands,
   }) => {
     const { favColours } = form;
     updateSettings({
@@ -80,8 +79,8 @@ const Preferences = () => {
           sweaterSize,
           favColours,
           favBrands,
-          styleIcons:styleIcons.split(",").map(e=>e.trim()),
-          favInfluencers:favInfluencers.split(",").map(e=>e.trim()),
+          styleIcons: styleIcons.split(",").map((e) => e.trim()),
+          favInfluencers: favInfluencers.split(",").map((e) => e.trim()),
           shoeSize: +shoeSize,
           height: +heightFt * 12 + +heightIn,
         },
@@ -92,11 +91,7 @@ const Preferences = () => {
 
   return (
     <div>
-      <Head>
-        <title>Preferences</title>
-        <link rel="icon" type="image/png" href="/logo.jpg" />
-      </Head>
-      <Header />
+      <Header title="Preferences" />
       <main className={styles.main}>
         <h1 className={styles.title}>Preferences</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -140,7 +135,13 @@ const Preferences = () => {
             <option>Husky</option>
           </Select>
           <FormLabel>Shoe Size (US)</FormLabel>
-          <Input required name="shoeSize" ref={register} type="number" step={0.5} />
+          <Input
+            required
+            name="shoeSize"
+            ref={register}
+            type="number"
+            step={0.5}
+          />
           <FormLabel>What are your 5 favourite clothing brands?</FormLabel>
           <Input required name="favBrands" ref={register} />
           <FormLabel>
