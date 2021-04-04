@@ -34,10 +34,14 @@ const GET_USER_SETTINGS = gql`
       favInfluencers
       recommendations {
         _id
-        name
+        timeLive
+        timeRecommended
+        item{
+          name
         description
         images
         category
+        }
       }
     }
   }

@@ -4,17 +4,13 @@ import useAllItems from "@utils/useAllItems";
 import useAllSettings from "@utils/useAllSettings";
 import Loading from "@components/Loading";
 import Header from "@components/Header";
-import UserPreview from "@components/UserPreview";
-import ItemPreview from "@components/ItemPreview";
 import styles from "@styles/Admin.module.scss";
 import { Switch } from "@chakra-ui/react";
-import Head from "next/head";
 import Link from "next/link";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -84,16 +80,6 @@ const Admin = () => {
                   ))}
             </Tbody>
           </Table>
-          {/* {settings?.map((user) => (
-              <UserPreview key={user._id} user={user} />
-            ))} */}
-          {/* </div>
-        ) : (
-        <div className={styles.itemList}>
-          {items?.map((item, index) => (
-            <ItemPreview key={item._id} item={item} />
-          ))}
-        </div> */}
         </div>
       </main>
     </div>

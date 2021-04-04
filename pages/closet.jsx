@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/Header";
-import Head from "next/head";
 import { useSession } from "next-auth/client";
 import styles from "../styles/Closet.module.scss";
 import { useRouter } from "next/router";

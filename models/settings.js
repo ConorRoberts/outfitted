@@ -73,9 +73,14 @@ const settingsSchema = new Schema({
   },
   recommendations: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Item",
-    },
+      item: {
+        type: Schema.Types.ObjectId,
+        ref: "Item",
+      },
+      timeRecommended: Date,
+      timeLive: Date,
+      body:String,
+    }
   ],
 });
 

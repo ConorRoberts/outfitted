@@ -14,7 +14,6 @@ import Article from "@components/Article";
 import ArticlePreview from "@components/ArticlePreview";
 import Header from "@components/Header";
 import styles from "@styles/Create_Article.module.scss";
-import Head from "next/head";
 import { useSession } from "next-auth/client";
 import useAdminStatus from "@utils/useAdminStatus";
 import useAllItems from "@utils/useAllItems";

@@ -29,7 +29,26 @@ const typeDefs = gql`
     shirtSize: String!
     styleIcons: [String!]!
     favInfluencers: [String!]!
-    recommendations:[Item!]!
+    recommendations:[Recommendation!]!
+  }
+
+  type Recommendation{
+    _id:ID!
+    item:Item!
+    timeLive:String!
+    timeRecommended:String!
+    body:String!
+  }
+  input RecommendationInput{
+    # User ID
+    user:String!
+    # Item ID
+    item:String!
+    # Time when recommendation will be visible
+    timeLive:String!
+    # Timestamp 
+    timeRecommended:String!
+    body:String!
   }
 
   type Item {
@@ -141,11 +160,6 @@ const typeDefs = gql`
     styleIcons: [String!]
     favInfluencers: [String!]
     likes: [ID!]
-  }
-
-  input RecommendationInput{
-    user:String!
-    item:String!
   }
 
   type Query {
