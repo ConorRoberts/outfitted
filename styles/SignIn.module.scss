@@ -1,52 +1,52 @@
 @import "./variables.scss";
 
-.option{
-    display:flex;
-    align-items:center;
-    // justify-content:space-between;
-    border-radius:5px;
-    max-width:90%;
-    padding:0.4rem;
-    border:1px solid grey;
-    .optionImage{
-        width:10%;
-    }
-    .optionLabel{
-        width:90%;
-        font-weight:400;
-        font-size:1.1rem;
-    }
+.option {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  max-width: 90%;
+  padding: 0.4rem;
+  color: $text-main;
+  border: 1px solid white;
+  .optionImage {
+    width: 10%;
+  }
+  .optionLabel {
+    width: 90%;
+    font-weight: 400;
+    font-size: 1.1rem;
+  }
 }
 
-.container{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-top:10vh;
+.container {
+  display: flex;
+  justify-content: center;
+  @include main();
 }
 
-.optionContainer{
-    border:1px solid grey;
-    border-radius:15px;
-    width:90%;
-    padding:3rem;
-    display:flex;
-    align-items:center;
-    flex-direction:column;
+.optionContainer {
+  margin-top: 3rem;
+//   border: 1px solid white;
+  box-shadow:0 0 10px black;
+  border-radius: 15px;
+  width: 90%;
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 40vh;
+  @media (min-width: 800px) {
+    width: 40%;
+  }
 }
-.title{
-    font-size:3rem;
-    font-weight:300;
-    color:$light-blue;
+.title {
+  font-size: 3rem;
+  font-weight: 300;
+  color: $accent-main;
 }
-.optionList{
-    margin-top:10%;
-    display:flex;
-    justify-content:center;
-}
-
-@media(min-width:800px){
-    .optionContainer{
-        width:40%;
-    }
+.optionList {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
 }

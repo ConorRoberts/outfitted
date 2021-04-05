@@ -77,9 +77,10 @@
 }
 
 .loginBtn {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.2rem;
   cursor: pointer;
+  @include whiteColorHover();
 }
 @media (min-width: 1200px) {
   .container {

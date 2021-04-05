@@ -14,3 +14,11 @@ $text-main: white;
   color: $text-main;
   min-height: 100vh;
 }
+
+@mixin whiteColorHover() {
+  color: white;
+  transition: color 300ms ease;
+  &:hover {
+    color: $accent-main;
+  }
+}
