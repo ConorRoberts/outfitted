@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@styles/footer.module.scss";
+import styles from "@styles/Footer.module.scss";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 
