@@ -66,63 +66,63 @@ const ArticlePage = () => {
   return (
     <div>
       <Header title={articleQuery?.data.article?.title} />
-        <div className={styles.container}>
-          <h2 className={styles.title}>{articleQuery?.data.article?.title}</h2>
-          <p className={styles.author}>By {articleQuery?.data.article?.author}</p>
-          <p className={styles.body}>{articleQuery?.data.body}</p>
-          {articleQuery?.data.article?.sections?.map((section, index) => (
-            <div
-              className={styles.sectionContainer}
-              key={`${section.title}${index}`}
-            >
-              <h2 className={styles.sectionTitle}>{section.title}</h2>
-              <div className={styles.sectionContent}>
-                {section.image && (
-                  <img
-                    className={styles.sectionImage}
-                    src={section.image}
-                    alt={section.title}
-                  />
-                )}
-                <p className={styles.sectionBody}>{section.body}</p>
-              </div>
+      <div className={styles.container}>
+        <h2 className={styles.title}>{articleQuery?.data.article?.title}</h2>
+        <p className={styles.author}>By {articleQuery?.data.article?.author}</p>
+        <p className={styles.body}>{articleQuery?.data.body}</p>
+        {articleQuery?.data.article?.sections?.map((section, index) => (
+          <div
+            className={styles.sectionContainer}
+            key={`${section.title}${index}`}
+          >
+            <h2 className={styles.sectionTitle}>{section.title}</h2>
+            <div className={styles.sectionContent}>
+              {section.image && (
+                <img
+                  className={styles.sectionImage}
+                  src={section.image}
+                  alt={section.title}
+                />
+              )}
+              <p className={styles.sectionBody}>{section.body}</p>
             </div>
-          ))}
-          {articleQuery?.data.article?.featuredItems?.length && (
-            <>
-              <h2 className={styles.sectionTitle}>Featured Items</h2>
-              <div className={styles.featuredItems}>
-                {articleQuery?.data.article?.featuredItems?.map((item) => (
-                  <div key={item._id} className={styles.featuredItemContainer}>
-                    <ItemPreview item={item} />
-                    <div
-                      className={
-                        findMatchingId(
-                          data?.likeItem?.likes ?? settings?.likes,
-                          item._id
-                        )
-                          ? styles.heartLiked
-                          : styles.heart
-                      }
-                      onClick={() =>
-                        likeItem({
-                          variables: {
-                            likeItemInput: {
-                              user: session?.user?.id,
-                              item: `${item._id}`,
-                            },
+          </div>
+        ))}
+        {articleQuery?.data.article?.featuredItems?.length > 0 && (
+          <>
+            <h2 className={styles.sectionTitle}>Featured Items</h2>
+            <div className={styles.featuredItems}>
+              {articleQuery?.data.article?.featuredItems?.map((item) => (
+                <div key={item._id} className={styles.featuredItemContainer}>
+                  <ItemPreview item={item} />
+                  <div
+                    className={
+                      findMatchingId(
+                        data?.likeItem?.likes ?? settings?.likes,
+                        item._id
+                      )
+                        ? styles.heartLiked
+                        : styles.heart
+                    }
+                    onClick={() =>
+                      likeItem({
+                        variables: {
+                          likeItemInput: {
+                            user: session?.user?.id,
+                            item: `${item._id}`,
                           },
-                        })
-                      }
-                    >
-                      <FaHeart />
-                    </div>
+                        },
+                      })
+                    }
+                  >
+                    <FaHeart />
                   </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
