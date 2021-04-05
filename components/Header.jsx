@@ -10,7 +10,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { FaRegNewspaper } from "react-icons/fa";
 import { BsFileEarmarkPlus, BsPlusCircle } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
-import { GrCoatCheck } from "react-icons/gr";
+import { GiHanger } from "react-icons/gi";
 import {
   Drawer,
   DrawerBody,
@@ -42,10 +42,11 @@ const LogoutButton = () => {
 const Logo = () => {
   return (
     <div className={styles.logoContainer}>
+      <Image src="/outfitted.png" width={512} height={163} />
       <div className={styles.logoImageContainer}>
-        <Image src="/logo.jpg" width={200} height={200} />
+        {/* <Image src="/logo.jpg" width={200} height={200} /> */}
       </div>
-      <p className={styles.logoText}>Outfitted</p>
+      {/* <p className={styles.logoText}>Outfitted</p> */}
     </div>
   );
 };
@@ -73,7 +74,10 @@ const Header = ({ title }) => {
         <ul>
           {/* Show if the user is logged in */}
           {session && (
-            <li className={styles.greetingContainer}>{session.user.name}</li>
+            <li className={styles.greetingContainer}>
+              <span className={styles.greetingHey}>Welcome, </span>
+              {session.user.name}
+            </li>
           )}
 
           {/* Show if the user isn't logged in */}
@@ -82,17 +86,17 @@ const Header = ({ title }) => {
               <LoginButton />
             </li>
           )}
-          {session && (
+          {/* {session && (
             <li className={styles.closetLink}>
               <Link href="/closet">Closet</Link>
             </li>
-          )}
+          )} */}
           <li>
             <Button
               ref={btnRef}
               size="sm"
-              color="black"
               fontSize="1.6rem"
+              color="#93F3FE"
               colorScheme="none"
               onClick={onOpen}
             >
@@ -109,8 +113,8 @@ const Header = ({ title }) => {
         size="xs"
       >
         <DrawerOverlay>
-          <DrawerContent>
-            <DrawerCloseButton />
+          <DrawerContent background="#1A202C">
+            <DrawerCloseButton color="#93F3FE" />
             <DrawerHeader>
               <Logo />
             </DrawerHeader>
@@ -143,7 +147,7 @@ const Header = ({ title }) => {
                       <Link passHref href="/newsletters">
                         <a className={styles.link}>
                           <span className={styles.icon}>
-                            <GrCoatCheck />
+                            <GiHanger />
                           </span>
                           Newsletter
                         </a>

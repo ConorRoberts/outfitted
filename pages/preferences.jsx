@@ -111,7 +111,11 @@ const Preferences = () => {
           <FormLabel>Height</FormLabel>
           <Flex align="center">
             <InputGroup>
-              <InputLeftAddon children="ft" />
+              <InputLeftAddon
+                background="#93F3FE"
+                color="black"
+                children="ft"
+              />
               <Input
                 required
                 type="number"
@@ -121,7 +125,11 @@ const Preferences = () => {
               />
             </InputGroup>
             <InputGroup>
-              <InputLeftAddon children="in" />
+              <InputLeftAddon
+                background="#93F3FE"
+                color="black"
+                children="in"
+              />
               <Input
                 required
                 type="number"
@@ -202,7 +210,7 @@ const Preferences = () => {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <Button background="green.200" type="submit">
+              <Button background="#93F3FE" color="black" type="submit">
                 Save
               </Button>
             )}

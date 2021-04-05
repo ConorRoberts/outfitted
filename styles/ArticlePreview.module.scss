@@ -1,35 +1,6 @@
 @import "./variables.scss";
 
-.titleContainer {
-  padding: 1rem 0.5rem;
-  color: black;
-  font-family: "Shippori Mincho B1";
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  h4 {
-    font-weight: 600;
-    text-align: center;
-    font-size: 1.4rem;
-  }
-  p {
-    text-align: center;
-    font-weight: 300;
-    font-size: 1rem;
-    font-style: italic;
-  }
-}
-.imageContainer {
-  box-shadow: 0 0 5px black;
-}
 .article {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-}
-
-.compact {
   height: 100%;
   flex-direction: column;
   display: flex;
@@ -41,13 +12,13 @@
   img {
     box-shadow: 0 0 5px black;
     @media (min-width: 1000px) {
-      width:40%;
+      width: 40%;
     }
   }
   h4 {
     font-weight: 300;
     font-size: 1.6rem;
-    color: $light-blue;
+    color: $accent-main;
     font-family: "Shippori Mincho B1";
   }
   p {
@@ -55,28 +26,28 @@
     font-style: italic;
     font-size: 0.8rem;
     @media (min-width: 1000px) {
-      margin-bottom:0.5rem;
+      margin-bottom: 0.5rem;
     }
   }
-  .description{
-    display:none;
-    text-align:justify;
-    font-weight:300;
-    font-size:1rem;
-    font-style:normal;
-    @media(min-width:1000px){
-      display:block;
+  .description {
+    display: none;
+    text-align: justify;
+    font-weight: 300;
+    font-size: 1rem;
+    font-style: normal;
+    @media (min-width: 1000px) {
+      display: block;
     }
   }
-  .textContainer{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     @media (min-width: 1000px) {
-      margin-left:2rem;
-      width:60%;
+      margin-left: 2rem;
+      width: 60%;
     }
   }
 }

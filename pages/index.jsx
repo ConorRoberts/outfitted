@@ -5,6 +5,7 @@ import Loading from "@components/Loading";
 import useArticlePreviews from "@utils/useArticlePreviews";
 import ArticlePreview from "@components/ArticlePreview";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import Footer from "@components/Footer";
 
 const AboutUsModule = ({
   name = "Name",
@@ -48,7 +49,7 @@ export default function Home() {
   if (loading || !articles) return <Loading />;
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <Header title="Home" />
       <main className={styles.main}>
         <div className={styles.splashContainer}>
@@ -61,9 +62,9 @@ export default function Home() {
         </div>
         <div className={styles.titleContainer}>
           <h1>
-            Your closet,
+            "Taking the Stress out of
             <br />
-            <span>our canvas</span>
+            <span>Getting Dressed"</span>
           </h1>
           <p className={styles.intro}>
             Our Mission is to provide you with personalized style selections so
@@ -111,6 +112,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }

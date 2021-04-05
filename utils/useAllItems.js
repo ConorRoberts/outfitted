@@ -9,6 +9,7 @@ const GET_ITEMS = gql`
       description
       images
       link
+      category
     }
   }
 `;

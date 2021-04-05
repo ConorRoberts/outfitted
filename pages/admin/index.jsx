@@ -46,23 +46,25 @@ const Admin = () => {
             <Thead>
               <Tr>
                 <Th>Name</Th>
-                <Th>{checked ? "Description" : "Email"}</Th>
+                {checked ? (
+                  <Th>{"Description"}</Th>
+                ) : (
+                  <Th className={styles.middle}>{"Email"}</Th>
+                )}
                 <Th>Link</Th>
               </Tr>
             </Thead>
             <Tbody>
               {checked
-                ? items?.map(({ _id, name, description }) => (
+                ? items?.map(({ _id, name, category }) => (
                     <Tr key={_id}>
                       <Td>{name}</Td>
-                      <Td>
-                        {description.length > 100
-                          ? `${description.substring(0, 100)} ...`
-                          : description}
-                      </Td>
+                      <Td>{category}</Td>
                       <Td>
                         <Link passHref href={`/item/${_id}`}>
-                          <Button>Link</Button>
+                          <Button background="#93F3FE" color="black">
+                            Link
+                          </Button>
                         </Link>
                       </Td>
                     </Tr>
@@ -70,10 +72,12 @@ const Admin = () => {
                 : settings?.map(({ _user: { name, email, _id } }) => (
                     <Tr key={_id}>
                       <Td>{name}</Td>
-                      <Td>{email}</Td>
+                      <Td className={styles.middle}>{email}</Td>
                       <Td>
                         <Link passHref href={`/user/${_id}`}>
-                          <Button>Link</Button>
+                          <Button background="#93F3FE" color="black">
+                            Link
+                          </Button>
                         </Link>
                       </Td>
                     </Tr>

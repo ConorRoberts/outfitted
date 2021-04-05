@@ -1,28 +1,34 @@
 @import "./variables.scss";
 
-.itemList,.userList {
+.itemList,
+.userList {
+  background:$bg-main;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:90%;
-  @media(min-width:800px){
-    width:60%;
+  height:100%;
+  width: 90%;
+  @media (min-width: 800px) {
+    width: 60%;
   }
-  @media(min-width:1200px){
-    width:50%;
+  @media (min-width: 1200px) {
+    width: 50%;
   }
 }
 
 .main {
+  background: $bg-main;
+  color: $text-main;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height:100vh;
 }
 
 .switchContainer {
   display: flex;
   border-radius: 10px;
-  border: 1px solid grey;
+  border: 1px solid $accent-main;
   padding: 1rem 1rem;
   justify-content: center;
   align-items: center;
@@ -37,5 +43,12 @@
   }
   @media (min-width: 1200px) {
     width: 25%;
+  }
+}
+
+.middle {
+  display: none;
+  @media (min-width: 600px) {
+    display: table-cell;
   }
 }

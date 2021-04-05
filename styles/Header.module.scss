@@ -3,15 +3,17 @@
 .logoContainer {
   display: flex;
   align-items: center;
-  .logoImageContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    width: 45px;
-    border-radius: 8px;
-    overflow: hidden;
-  }
+  width: 163px;
+  // height:512px;
+  // .logoImageContainer {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   font-size: 2rem;
+  //   width: 45px;
+  //   border-radius: 8px;
+  //   overflow: hidden;
+  // }
   .logoText {
     font-weight: 600;
     margin-left: 0.75rem;
@@ -19,9 +21,11 @@
   }
 }
 .container {
+  background: $bg-main;
+  font-family: "Roboto";
   // position: absolute;
-  margin-top: 2vh;
-  color: black;
+  // padding-top: 2vh;
+  color: white;
   overflow: hidden;
   z-index: 10;
   width: 100%;
@@ -33,12 +37,12 @@
     list-style-type: none;
     align-items: center;
     font-size: 1.2rem;
-    .greetingContainer{
-      display:none;
-      margin-right:0.3rem;
+    .greetingContainer {
+      display: none;
+      margin-right: 0.3rem;
     }
-    .closetLink{
-      font-weight:600;
+    .closetLink {
+      font-weight: 600;
     }
     ul {
       display: flex;
@@ -54,18 +58,20 @@
   display: flex;
   list-style-type: none;
   flex-direction: column;
+  color:$text-main;
   li {
     padding: 0.5rem 1rem;
     margin: 0.5rem 0;
     font-size: 1.2rem;
     font-weight: 600;
   }
-  .link{
-    display:flex;
-    align-items:center;
-    .icon{
-      font-size:1.5rem;
-      margin-right:0.6rem;
+  .link {
+    display: flex;
+    align-items: center;
+    .icon {
+      font-size: 1.5rem;
+      margin-right: 0.6rem;
+      color:$accent-main;
     }
   }
 }
@@ -85,8 +91,8 @@
 @media (min-width: 600px) {
   .container {
     .mobile {
-      .greetingContainer{
-        display:inline;
+      .greetingContainer {
+        display: inline;
       }
     }
   }

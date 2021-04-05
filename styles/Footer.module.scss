@@ -1,0 +1,22 @@
+@import "./variables.scss";
+
+.container {
+  padding: 2rem 0;
+  font-family: "Roboto";
+  font-weight: 300;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+  background: $bg-main;
+  color: $text-main;
+  border-top: 1px solid $text-main;
+}
+
+.label{
+    font-weight:400;
+}
+
+.socials{
+    display:flex;
+    list-style-type:none;
+}

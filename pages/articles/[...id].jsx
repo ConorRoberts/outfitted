@@ -1,10 +1,13 @@
-import React from "react";
-import Article from "@components/Article";
 import { useRouter } from "next/router";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import Header from "@components/Header";
-import Head from "next/head";
 import styles from "@styles/ArticlePage.module.scss";
+import React, { useEffect } from "react";
+import ItemPreview from "@components/ItemPreview";
+import { useSession } from "next-auth/client";
+import { FaHeart } from "react-icons/fa";
+import Loading from "@components/Loading";
+import useUserSettings from "@utils/useUserSettings";
 
 const GET_ARTICLE = gql`
   query GetArticle($id: String!) {
@@ -29,20 +32,97 @@ const GET_ARTICLE = gql`
     }
   }
 `;
+const LIKE_ITEM = gql`
+  mutation likeItem($likeItemInput: LikeItemInput!) {
+    likeItem(likeItemInput: $likeItemInput) {
+      _id
+      likes {
+        _id
+      }
+    }
+  }
+`;
+
+const findMatchingId = (settings, id) => {
+  const arr = settings?.map((s) => s._id);
+  return arr?.includes(id);
+};
 
 const ArticlePage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useQuery(GET_ARTICLE, {
+  const articleQuery = useQuery(GET_ARTICLE, {
     variables: { id: "" + id },
   });
 
+  const [likeItem, { data }] = useMutation(LIKE_ITEM);
+
+  const [session, loading] = useSession();
+
+  const settings = useUserSettings(session?.user?.id ?? "");
+
+  if (loading || !settings) return <Loading />;
+
   return (
     <div>
-      <Header title={data?.article.title} />
-      <div className={styles.main}>
-        <Article article={data?.article} />
-      </div>
+      <Header title={articleQuery?.data.article?.title} />
+        <div className={styles.container}>
+          <h2 className={styles.title}>{articleQuery?.data.article?.title}</h2>
+          <p className={styles.author}>By {articleQuery?.data.article?.author}</p>
+          <p className={styles.body}>{articleQuery?.data.body}</p>
+          {articleQuery?.data.article?.sections?.map((section, index) => (
+            <div
+              className={styles.sectionContainer}
+              key={`${section.title}${index}`}
+            >
+              <h2 className={styles.sectionTitle}>{section.title}</h2>
+              <div className={styles.sectionContent}>
+                {section.image && (
+                  <img
+                    className={styles.sectionImage}
+                    src={section.image}
+                    alt={section.title}
+                  />
+                )}
+                <p className={styles.sectionBody}>{section.body}</p>
+              </div>
+            </div>
+          ))}
+          {articleQuery?.data.article?.featuredItems?.length && (
+            <>
+              <h2 className={styles.sectionTitle}>Featured Items</h2>
+              <div className={styles.featuredItems}>
+                {articleQuery?.data.article?.featuredItems?.map((item) => (
+                  <div key={item._id} className={styles.featuredItemContainer}>
+                    <ItemPreview item={item} />
+                    <div
+                      className={
+                        findMatchingId(
+                          data?.likeItem?.likes ?? settings?.likes,
+                          item._id
+                        )
+                          ? styles.heartLiked
+                          : styles.heart
+                      }
+                      onClick={() =>
+                        likeItem({
+                          variables: {
+                            likeItemInput: {
+                              user: session?.user?.id,
+                              item: `${item._id}`,
+                            },
+                          },
+                        })
+                      }
+                    >
+                      <FaHeart />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
     </div>
   );
 };
