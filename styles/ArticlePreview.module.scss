@@ -16,15 +16,15 @@
     }
   }
   h4 {
-    font-weight: 300;
+    font-weight: 400;
     font-size: 1.6rem;
     color: $accent-main;
-    font-family: "Shippori Mincho B1";
+    font-family: "Roboto";
   }
   p {
-    font-weight: 400;
+    font-weight: 300;
     font-style: italic;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     @media (min-width: 1000px) {
       margin-bottom: 0.5rem;
     }
