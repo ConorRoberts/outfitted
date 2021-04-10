@@ -22,3 +22,15 @@ $text-main: white;
     color: $accent-main;
   }
 }
+
+@keyframes dropIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-40%);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateY(0%);
+  }
+}

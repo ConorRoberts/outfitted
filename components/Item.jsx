@@ -7,7 +7,7 @@ const Item = ({ item }) => {
     <Link href={`/item/${item._id}`}>
       <div className={styles.item}>
         <img src={images ? images[0] : "https://via.placeholder.com/500"} />
-        <div>
+        <div className={styles.text}>
           <h4>{name}</h4>
           <p>{category}</p>
         </div>

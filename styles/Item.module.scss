@@ -1,24 +1,39 @@
 @import "./variables.scss";
 
-.item{
-    cursor: pointer;
-    display:flex;
-    padding:1rem;
-    // margin:0 5vw;
-    align-items:center;
-    h4{
-      font-weight:300;
-      color:$accent-main;
-      font-size:1.5rem;
+.item {
+  cursor: pointer;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  .text {
+    text-align: center;
+    h4 {
+      font-weight: 300;
+      color: $accent-main;
+      font-size: 1.5rem;
     }
-    img{
-      box-shadow:0 0 5px black;
-      width:25%;
-      margin-right:1rem;
-    }
-    box-shadow:none;
-    transition:box-shadow 300ms;
-    &:hover{
-      box-shadow: 0 0 5px black;
+    @media (min-width: 800px) {
+      text-align:left;
     }
   }
+  img {
+    box-shadow: 0 0 5px black;
+    width:22rem;
+    @media (min-width: 800px) {
+      margin-right: 1rem;
+      width: 15rem;
+    }
+    @media (min-width: 1400px) {
+      width: 20rem;
+    }
+  }
+  box-shadow: none;
+  transition: box-shadow 300ms;
+  &:hover {
+    box-shadow: 0 0 5px black;
+  }
+  @media (min-width: 800px) {
+    flex-direction: row;
+  }
+}

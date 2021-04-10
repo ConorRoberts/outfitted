@@ -1,0 +1,63 @@
+@import "./variables.scss";
+
+.main {
+  @include main();
+  @media (min-width: 800px) {
+    padding: 1rem 10vw;
+  }
+  @media (min-width: 1400px) {
+    padding: 1rem 25vw;
+  }
+}
+
+.weekContainer {
+  .weekTitle {
+    color: $accent-main;
+    font-size: 3rem;
+    text-align: center;
+    font-weight: 300;
+  }
+  .recommendation {
+    @include flexColumnCenter();
+
+    .smallScreen {
+      @include flexColumnCenter();
+    }
+
+    .bigScreen {
+      display: none;
+    }
+    .openButton {
+      cursor: pointer;
+      font-size: 2rem;
+      color: $text-main;
+      @include whiteColorHover();
+    }
+    .text {
+      font-size: 1.2rem;
+      animation: dropIn 0.3s ease;
+      h4 {
+        color: $accent-main;
+        font-weight: 300;
+        font-size: 1.6rem;
+        text-align: center;
+      }
+    }
+    @media (min-width: 1000px) {
+      flex-direction: row;
+      justify-content: space-between;
+    //   .item {
+    //     width: 50%;
+    //   }
+      .openButton {
+        font-size: 2.5rem;
+      }
+      .smallScreen {
+        display: none;
+      }
+      .bigScreen {
+        display: block;
+      }
+    }
+  }
+}
