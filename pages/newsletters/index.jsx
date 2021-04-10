@@ -57,11 +57,11 @@ const Newsletters = () => {
       const filteredItems = settings.recommendations
         .slice()
         .sort((a, b) => new Date(a.timeLive) - new Date(b.timeLive))
-        // .filter(
-        //   ({ timeLive }) =>
-        //     new Date(timeLive) <= Date.now() &&
-        //     new Date(timeLive) >= WEEK_ZERO_START
-        // )
+        .filter(
+          ({ timeLive }) =>
+            new Date(timeLive) <= Date.now() &&
+            new Date(timeLive) >= WEEK_ZERO_START
+        )
         .map((item) => ({
           ...item,
           weekNumber: getWeekNumber(item.timeLive),
