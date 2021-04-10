@@ -15,6 +15,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import useUserSettings from "@utils/useUserSettings";
+import Footer from "@components/Footer";
 
 const UPDATE_SETTINGS = gql`
   mutation UpdateSettings($settingsInput: SettingsInput!) {
@@ -217,6 +218,7 @@ const Preferences = () => {
           </div>
         </form>
       </main>
+      <Footer/>
     </div>
   );
 };

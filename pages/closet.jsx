@@ -5,6 +5,7 @@ import styles from "../styles/Closet.module.scss";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 import Item from "@components/Item";
+import Footer from "@components/Footer";
 
 const GET_ITEMS = gql`
   query GetItems($id: String!) {
@@ -58,6 +59,7 @@ const Closet = () => {
           </div>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 };

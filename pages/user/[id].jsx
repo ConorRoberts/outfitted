@@ -10,6 +10,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useMutation, gql } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import useAllItems from "@utils/useAllItems";
+import Footer from "@components/Footer";
 import {
   Table,
   Thead,
@@ -228,6 +229,7 @@ const UserPage = () => {
           </form>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

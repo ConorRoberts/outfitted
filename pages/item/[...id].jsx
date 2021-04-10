@@ -16,6 +16,7 @@ import {
 import styles from "@styles/ItemPage.module.scss";
 import { BsPencilSquare } from "react-icons/bs";
 import Link from "next/link";
+import Footer from "@components/Footer";
 
 const GET_ITEM = gql`
   query getItem($id: String!) {
@@ -85,6 +86,7 @@ const ItemPage = () => {
           </Tbody>
         </Table>
       </main>
+      <Footer/>
     </div>
   );
 };

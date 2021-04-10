@@ -2,17 +2,19 @@
 
 .article {
   height: 100%;
+  width:100%;
   flex-direction: column;
   display: flex;
   justify-content: center;
   text-align: center;
   @media (min-width: 1000px) {
     flex-direction: row;
+    justify-content:space-between;
   }
   img {
     box-shadow: 0 0 5px black;
     @media (min-width: 1000px) {
-      width: 40%;
+      width: 15rem;
     }
   }
   h4 {
