@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import styles from "@styles/Create_Item.module.scss";
 import Header from "@components/Header";
-import Head from "next/head";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -80,7 +79,7 @@ const CreateItem = () => {
 
   if (!admin) return <Loading />;
   return (
-    <div>
+    <div className={styles.container}>
       <Header title="Create Item"/>
       <h1 className={styles.title}>Create an Item</h1>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>

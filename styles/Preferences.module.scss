@@ -1,10 +1,18 @@
 @import "./variables.scss";
 
+
+.container{
+    
+    @include main();
+}
 .main{
     padding:1rem;
-    min-height:100vh;
-    background:$bg-main;
-    color:$text-main;
+    @media(min-width:900px){
+            padding:1rem 25vw;
+    }
+    @media(min-width:1800px){
+            padding:1rem 35vw;
+    }
 }
 
 .title,.heading{
@@ -22,19 +30,15 @@
     font-size:1.2rem;
 }
 
+.form{
+    background:$bg-main;
+    option{
+        color:black;
+    }
+}
+
 .submit{
     margin:1rem 0;
     display:flex;
     justify-content:center;
-}
-
-@media(min-width:900px){
-    .main{
-        padding:1rem 25vw;
-    }
-}
-@media(min-width:1800px){
-    .main{
-        padding:1rem 35vw;
-    }
 }

@@ -1,19 +1,26 @@
 @import "./variables.scss";
 
 .title {
-  color: $light-blue;
+  color: $accent-main;
   font-weight: 300;
   font-size: 1.6rem;
   text-align: center;
 }
 .form {
   padding: 0 5vw;
+  option{
+    color:black;
+  }
   @media(min-width:800px){
     padding: 0 20vw;
   }
   @media(min-width:1200px){
     padding: 0 30vw;
   }
+}
+
+.container{
+  @include main();
 }
 
 .checkGroupFlex {

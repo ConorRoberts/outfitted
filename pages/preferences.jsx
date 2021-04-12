@@ -95,7 +95,7 @@ const Preferences = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <Header title="Preferences" />
       <main className={styles.main}>
         <h1 className={styles.title}>Preferences</h1>
