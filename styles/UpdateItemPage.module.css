@@ -1,0 +1,35 @@
+@keyframes dropIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-40%);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0%);
+  }
+}
+.container {
+  background: #1a202c;
+  color: white;
+  min-height: 100vh;
+}
+.container .main {
+  margin: 0 5vw;
+}
+@media (min-width: 800px) {
+  .container .main {
+    margin: 0 15vw;
+  }
+}
+@media (min-width: 1200px) {
+  .container .main {
+    margin: 0 25vw;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+  color: black;
+}

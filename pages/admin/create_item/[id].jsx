@@ -1,20 +1,12 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { gql, useQuery, useMutation } from "@apollo/client";
-import {
-  Input,
-  FormLabel,
-  Textarea,
-  Select,
-  CheckboxGroup,
-  Stack,
-  Checkbox,
-  Button,
-} from "@chakra-ui/react";
+import { Input, FormLabel, Textarea, Select, Button } from "@chakra-ui/react";
 import { BsPlusCircle } from "react-icons/bs";
 import { useForm, useFieldArray } from "react-hook-form";
 import styles from "@styles/UpdateItemPage.module.scss";
 import Header from "@components/Header";
+import Footer from "@components/Footer";
 import Loading from "@components/Loading";
 import useAdminStatus from "@utils/useAdminStatus";
 
@@ -66,28 +58,29 @@ const UpdateItemPage = () => {
   const { data } = useQuery(GET_ITEM, { variables: { id: `${id}` } });
   const [updateItem] = useMutation(UPDATE_ITEM);
   const { register, handleSubmit, control, setValue } = useForm();
-  const { fields, append } = useFieldArray({
-    control,
-    name: "images",
-  });
+  // const { fields, append } = useFieldArray({
+  //   control,
+  //   name: "images",
+  // });
 
   const admin = useAdminStatus();
 
-  if (!admin) return <Loading/>;
+  // if (!admin) return <Loading />;
 
   useEffect(() => {
-    data &&
+    if (data){
       Object.entries(data?.item).forEach(([key, val]) => setValue(key, val));
+      setValue("colours",data.item.colours.join(", "));
+      setValue("builds",data.item.builds.join(", "));
+      setValue("occasions",data.item.occasions.join(", "));
+      setValue("seasons",data.item.seasons.join(", "));
+      setValue("sizes",data.item.sizes.join(", "));
 
-    data && setValue("colours",data.item.colours.join(", "));
-    data && setValue("builds",data.item.builds.join(", "));
-    data && setValue("occasions",data.item.occasions.join(", "));
-    data && setValue("seasons",data.item.seasons.join(", "));
-    data && setValue("sizes",data.item.sizes.join(", "));
-    
+    }
+
     // data && data?.item.images.forEach((e) => append({ link: e }));
     // append({link:"hi"});
-  }, [data]);
+  }, []);
   const onSubmit = (formData) => {
     updateItem({
       variables: {
@@ -107,7 +100,7 @@ const UpdateItemPage = () => {
     router.push("/admin");
   };
   return (
-    <div>
+    <div className={styles.container}>
       <Header title="Create Item" />
       <main className={styles.main}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -171,6 +164,7 @@ const UpdateItemPage = () => {
           </div>
         </form>
       </main>
+      <Footer/>
     </div>
   );
 };

@@ -12,15 +12,15 @@ const GET_SETTINGS = gql`
 
 const useAdminStatus = () => {
   const [session, loading] = useSession();
-  const [uid, setUid] = useState("");
+  // const [uid, setUid] = useState("");
   const [admin, setAdmin] = useState(false);
   const { data } = useQuery(GET_SETTINGS, {
-    variables: { id: `${uid}` },
+    variables: { id: `${session ? session?.user?.id: ""}` },
   });
 
-  useEffect(() => {
-    if (session) setUid(session.user.id);
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) setUid(session.user.id);
+  // }, [session]);
 
   useEffect(() => {
     if (data) setAdmin(data.settings.admin);
