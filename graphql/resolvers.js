@@ -2,8 +2,9 @@ import User from "@models/user";
 import Item from "@models/item";
 import Article from "@models/article";
 import Settings from "@models/settings";
+import Feedback from "@models/feedback";
 
-const userObject = (user) => {
+const formatUser = (user) => {
   return user
     ? {
       ...user._doc,
@@ -11,7 +12,7 @@ const userObject = (user) => {
     }
     : null;
 };
-const itemObject = (item) => {
+const formatItem = (item) => {
   return item
     ? {
       ...item._doc,
@@ -19,7 +20,8 @@ const itemObject = (item) => {
     }
     : null;
 };
-const settingsObject = (settings) => {
+
+const formatSettings = (settings) => {
   return settings
     ? {
       ...settings._doc,
@@ -30,7 +32,7 @@ const settingsObject = (settings) => {
         _id: e.id,
         timeLive: new Date(e.timeLive).toISOString(),
         timeRecommended: new Date(e.timeRecommended).toISOString(),
-        body:e.body
+        body: e.body
       })),
     }
     : null;
@@ -40,18 +42,40 @@ const articleObject = (article) => {
     ? {
       ...article._doc,
       _id: article.id,
-      // featuredItems:article._doc.featuredItems.map(item=>itemObject(item))
       timestamp: new Date(article._doc.timestamp).toISOString(),
     }
     : null;
 };
 
-const itemFromId = async (id) => {
+/**
+ * Format feedback document to be used by GQL
+ * @param {} feedback 
+ * @returns 
+ */
+const formatFeedback = ({ _doc }) => {
+  return {
+    ..._doc,
+    timestamp: new Date(_doc.timestamp).toISOString(),
+    creator:formatUser(_doc.creator)
+  }
+}
+
+/**
+ * Grab feedback document from ID
+ * @param {} id 
+ * @returns 
+ */
+const getFeedback = async (id) => {
+  const feedback = await Feedback.findById(id).populate("creator");
+  return formatFeedback(feedback);
+}
+
+const getItem = async (id) => {
   const item = await Item.findById(id);
-  return itemObject(item);
+  return formatItem(item);
 };
 
-const settingsFromId = async (id) => {
+const getSettings = async (id) => {
   const settings = await Settings.findOne({ _user: id }).populate([{
     path: "likes",
     model: Item
@@ -65,7 +89,7 @@ const settingsFromId = async (id) => {
     model: Item
   }])
 
-  return settingsObject(settings);
+  return formatSettings(settings);
 };
 
 const articleFromId = async (id) => {
@@ -80,11 +104,11 @@ const resolvers = {
         .populate("_user")
         .populate("likes")
         .populate("recommendations");
-      return settings.map((e) => settingsObject(e));
+      return settings.map((e) => formatSettings(e));
     },
     user: async (_, { id }) => {
       const user = await User.findById(id);
-      return userObject(user);
+      return formatUser(user);
     },
     items: async () => {
       const items = await Item.find({});
@@ -101,10 +125,10 @@ const resolvers = {
       return articleObject(article);
     },
     item: async (_, { id }) => {
-      return itemFromId(id);
+      return getItem(id);
     },
     settings: async (_, { id = "" }) => {
-      return settingsFromId(id);
+      return getSettings(id);
     },
   },
   Mutation: {
@@ -121,7 +145,7 @@ const resolvers = {
 
       if (settings) {
         return {
-          ...settingsObject(settings),
+          ...formatSettings(settings),
         };
       }
 
@@ -155,10 +179,10 @@ const resolvers = {
         await settings.save();
       }
 
-      return settingsFromId(user);
+      return getSettings(user);
     },
     createRecommendation: async (_, { recommendationInput }) => {
-      const { user, item, timeLive, timeRecommended,body } = recommendationInput;
+      const { user, item, timeLive, timeRecommended, body } = recommendationInput;
       const settings = await Settings.findOne({ _user: user });
 
       if (!settings) return null;
@@ -169,22 +193,29 @@ const resolvers = {
       }
 
       if (!settings.recommendations.map(e => e.item).includes(item)) {
-        settings.recommendations.push({ item, timeLive, timeRecommended,body });
+        settings.recommendations.push({ item, timeLive, timeRecommended, body });
         await settings.save();
       }
 
-      return settingsFromId(user);
+      return getSettings(user);
     },
     updateItem: async (_, { id, updateItemInput }) => {
       await Item.findByIdAndUpdate(id, { ...updateItemInput });
 
-      return itemFromId(id);
+      return getItem(id);
     },
     updateArticle: async (_, { id, updateArticleInput }) => {
       await Article.findByIdAndUpdate(id, { ...updateArticleInput });
 
       return articleFromId(id);
     },
+    createFeedback: async (_, { createFeedbackInput }) => {
+      const feedback = new Feedback({ ...createFeedbackInput });
+
+      await feedback.save();
+
+      return await getFeedback(feedback.id);
+    }
   },
 };
 

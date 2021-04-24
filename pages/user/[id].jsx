@@ -229,7 +229,6 @@ const UserPage = () => {
           </form>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 };

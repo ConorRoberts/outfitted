@@ -164,7 +164,6 @@ const UpdateItemPage = () => {
           </div>
         </form>
       </main>
-      <Footer/>
     </div>
   );
 };

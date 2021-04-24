@@ -6,7 +6,7 @@ import useAdminStatus from "../utils/useAdminStatus";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdSettings } from "react-icons/io";
-import { RiAdminFill } from "react-icons/ri";
+import { RiAdminFill, RiFeedbackFill } from "react-icons/ri";
 import { FaRegNewspaper } from "react-icons/fa";
 import { BsFileEarmarkPlus, BsPlusCircle } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
@@ -43,8 +43,7 @@ const Logo = () => {
   return (
     <div className={styles.logoContainer}>
       <Image src="/outfitted.png" width={512} height={163} />
-      <div className={styles.logoImageContainer}>
-      </div>
+      <div className={styles.logoImageContainer}></div>
     </div>
   );
 };
@@ -158,6 +157,16 @@ const Header = ({ title }) => {
                             <IoMdSettings />
                           </span>
                           Preferences
+                        </a>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link passHref href="/feedback">
+                        <a className={styles.link}>
+                          <span className={styles.icon}>
+                            <RiFeedbackFill />
+                          </span>
+                          Feedback
                         </a>
                       </Link>
                     </li>

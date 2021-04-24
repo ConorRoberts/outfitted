@@ -17,6 +17,7 @@ import {
   TableCaption,
   Button,
 } from "@chakra-ui/react";
+import Footer from "@components/Footer";
 
 const Admin = () => {
   const admin = useAdminStatus();

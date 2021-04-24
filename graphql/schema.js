@@ -51,6 +51,39 @@ const typeDefs = gql`
     body:String!
   }
 
+  type Feedback{
+    _id:ID!
+    weekNumber:Int
+    creator:User
+    outfitChoice:String
+    priceRange:String
+    topPurchased:String
+    bottomPurchased:String
+    shoesPurchased:String
+    wasGoodIcon:String
+    iconFeedback:String
+    didPurchasedIconPiece:String
+    iconPiecesPurchased:[String]
+    localFeedback:String
+    goodLocalPick:String
+    timestamp:String
+  }
+  input CreateFeedbackInput{
+    weekNumber:Int
+    creator:ID!
+    outfitChoice:String
+    priceRange:String
+    topPurchased:String
+    bottomPurchased:String
+    shoesPurchased:String
+    wasGoodIcon:String
+    iconFeedback:String
+    didPurchasedIconPiece:String
+    iconPiecesPurchased:[String]
+    localFeedback:String
+    goodLocalPick:String
+  }
+
   type Item {
     _id: ID!
     name: String
@@ -179,6 +212,7 @@ const typeDefs = gql`
     createRecommendation(recommendationInput:RecommendationInput!): Settings
     updateItem(id:String!,updateItemInput:UpdateItemInput!):Item
     updateArticle(id:String!,updateArticleInput:UpdateArticleInput!):Article
+    createFeedback(createFeedbackInput:CreateFeedbackInput!):Feedback!
   }
 `;
 

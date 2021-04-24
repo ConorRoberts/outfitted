@@ -21,12 +21,15 @@ const settingsSchema = new Schema({
     type: Number,
     default: 0,
   },
-  likes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Item",
-    },
-  ],
+  likes: {
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Item",
+      },
+    ],
+    default: []
+  },
   gender: {
     type: String,
     default: "Other",
@@ -77,9 +80,22 @@ const settingsSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Item",
       },
-      timeRecommended: Date,
-      timeLive: Date,
-      body:String,
+      timeRecommended: {
+        type: Date,
+        default: Date.now()
+      },
+      timeLive: {
+        type: Date,
+        default: Date.now()
+      },
+      body: {
+        type: String,
+        default: "Recommendation body"
+      },
+      hasPurchased: {
+        type: Boolean,
+        default: false
+      }
     }
   ],
 });

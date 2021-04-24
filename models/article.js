@@ -1,11 +1,23 @@
 import mongoose, { Schema } from "mongoose";
 
 const articleSchema = new Schema({
-  title: String,
-  body: String,
+  title: {
+    type: String,
+    default: "Article title"
+  },
+  body: {
+    type: String,
+    default: "Article body"
+  },
   image: String,
-  timestamp: Date,
-  author: String,
+  timestamp: {
+    type: Date,
+    default: Date.now()
+  },
+  author: {
+    type: String,
+    default: "Article author"
+  },
   featuredItems: [
     {
       type: Schema.Types.ObjectId,
@@ -15,8 +27,14 @@ const articleSchema = new Schema({
   sections: [
     {
       image: String,
-      title: String,
-      body: String,
+      title: {
+        type: String,
+        default: "Section title"
+      },
+      body: {
+        type: String,
+        default: "Section body"
+      },
     },
   ],
 });

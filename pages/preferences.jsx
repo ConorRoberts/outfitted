@@ -218,7 +218,6 @@ const Preferences = () => {
           </div>
         </form>
       </main>
-      <Footer/>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "@components/Header";
-import Head from "next/head";
+import { AiOutlineShopping } from "react-icons/ai";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
@@ -55,6 +55,13 @@ const ItemPage = () => {
             ))}
         </div>
 
+        <Link href={data?.item.link}>
+          <Button>
+            <AiOutlineShopping />
+            Shop This Item
+          </Button>
+        </Link>
+
         <div className={styles.editIconContainer}>
           <Link href={`/admin/create_item/${id}`}>
             <a className={styles.editIcon}>
@@ -86,7 +93,6 @@ const ItemPage = () => {
           </Tbody>
         </Table>
       </main>
-      <Footer/>
     </div>
   );
 };

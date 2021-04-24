@@ -88,7 +88,6 @@ const Newsletters = () => {
             </div>
           ))}
       </main>
-      <Footer/>
     </div>
   );
 };
