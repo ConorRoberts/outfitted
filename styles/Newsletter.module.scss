@@ -2,11 +2,12 @@
 
 .main {
   @include main();
+  padding:1rem;
   @media (min-width: 800px) {
     padding: 1rem 10vw;
   }
   @media (min-width: 1400px) {
-    padding: 1rem 25vw;
+    padding: 1rem 20vw;
   }
 }
 

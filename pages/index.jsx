@@ -5,7 +5,6 @@ import Loading from "@components/Loading";
 import useArticlePreviews from "@utils/useArticlePreviews";
 import ArticlePreview from "@components/ArticlePreview";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import Footer from "@components/Footer";
 
 const AboutUsModule = ({
   name = "Name",

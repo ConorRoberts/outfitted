@@ -203,14 +203,16 @@ const typeDefs = gql`
     articles: [Article!]
     article(id: String!): Article
     settings(id: String!): Settings
+    getAllFeedback:[Feedback]
   }
   type Mutation {
+    deleteRecommendation(userId:String!,recommendationId:String!):Settings
     updateSettings(settingsInput: SettingsInput!): Settings
     createItem(newItemInput: NewItemInput!): Item
-    createArticle(articleInput: ArticleInput!): Article
     likeItem(likeItemInput: LikeItemInput!): Settings
     createRecommendation(recommendationInput:RecommendationInput!): Settings
     updateItem(id:String!,updateItemInput:UpdateItemInput!):Item
+    createArticle(articleInput: ArticleInput!): Article
     updateArticle(id:String!,updateArticleInput:UpdateArticleInput!):Article
     createFeedback(createFeedbackInput:CreateFeedbackInput!):Feedback!
   }

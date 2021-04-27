@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "@components/Header";
+import Container from "@components/Container";
 import { AiOutlineShopping } from "react-icons/ai";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -7,16 +8,16 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
+  Button,
+  Flex,
 } from "@chakra-ui/react";
-import styles from "@styles/ItemPage.module.scss";
 import { BsPencilSquare } from "react-icons/bs";
 import Link from "next/link";
-import Footer from "@components/Footer";
+import styled from "styled-components";
 
 const GET_ITEM = gql`
   query getItem($id: String!) {
@@ -47,28 +48,29 @@ const ItemPage = () => {
   return (
     <div>
       <Header title={data?.item?.name} />
-      <main className={styles.main}>
-        <div className={styles.imagesContainer}>
+      <Container>
+        <ImagesContainer>
           {data?.item.images &&
             data?.item.images.map((image, index) => (
               <img key={`image-${index}`} src={image} />
             ))}
-        </div>
+        </ImagesContainer>
 
-        <Link href={data?.item.link}>
-          <Button>
-            <AiOutlineShopping />
-            Shop This Item
-          </Button>
-        </Link>
-
-        <div className={styles.editIconContainer}>
-          <Link href={`/admin/create_item/${id}`}>
-            <a className={styles.editIcon}>
-              <BsPencilSquare />
-            </a>
+        <Flex direction="column" align="center">
+          <Link href={data?.item.link ?? ""}>
+            <Button>
+              <AiOutlineShopping />
+              Shop This Item
+            </Button>
           </Link>
-        </div>
+
+          <Link href={`/admin/create_item/${id}`}>
+            <EditIconLink>
+              <BsPencilSquare />
+            </EditIconLink>
+          </Link>
+        </Flex>
+
         <Table>
           <TableCaption placement="top">Sizes</TableCaption>
           <Thead>
@@ -85,16 +87,37 @@ const ItemPage = () => {
                   ([key, val]) =>
                     key !== "images" && (
                       <Tr key={key}>
-                        <Td className={styles.label}>{key}</Td>
+                        <Label>{key}</Label>
                         <Td>{Array.isArray(val) ? val.join(", ") : val}</Td>
                       </Tr>
                     )
                 )}
           </Tbody>
         </Table>
-      </main>
+      </Container>
     </div>
   );
 };
+
+const Label = styled(Td)`
+  text-transform: capitalize;
+  font-weight: 500;
+`;
+
+const ImagesContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+`;
+
+const EditIconLink = styled.a`
+  margin-top: 1rem;
+  font-size: 2rem;
+  text-align: center;
+  transition: color 200ms ease;
+  &:hover {
+    color: $light-blue;
+  }
+`;
 
 export default ItemPage;

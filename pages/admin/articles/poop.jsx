@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import Article from "@components/Article";
 import ArticlePreview from "@components/ArticlePreview";
 import Header from "@components/Header";
-import styles from "@styles/Create_Article.module.scss";
 import { useSession } from "next-auth/client";
 import useAdminStatus from "@utils/useAdminStatus";
 import useAllItems from "@utils/useAllItems";
@@ -104,7 +103,7 @@ const CreateArticle = () => {
 
   return (
     <div>
-      <Header title="Create Article"/>
+      <Header title="Stinky"/>
       <div className={styles.container}>
         <form
           className={styles.formContainer}

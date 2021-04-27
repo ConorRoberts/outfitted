@@ -56,7 +56,7 @@ const formatFeedback = ({ _doc }) => {
   return {
     ..._doc,
     timestamp: new Date(_doc.timestamp).toISOString(),
-    creator:formatUser(_doc.creator)
+    creator: formatUser(_doc.creator)
   }
 }
 
@@ -130,6 +130,11 @@ const resolvers = {
     settings: async (_, { id = "" }) => {
       return getSettings(id);
     },
+    getAllFeedback: async () => {
+      const result = await Feedback.find({}).populate("creator");
+
+      return result.map(e => formatFeedback(e));
+    }
   },
   Mutation: {
     updateSettings: async (_, { settingsInput }) => {
@@ -215,6 +220,15 @@ const resolvers = {
       await feedback.save();
 
       return await getFeedback(feedback.id);
+    },
+    deleteRecommendation: async (_, { userId, recommendationId }) => {
+      const updatedSettings = await Settings.findOneAndUpdate({ _user: userId }, {
+        $pull: {
+          recommendations: { _id: recommendationId }
+        }
+      }, { new: true })
+
+      return updatedSettings;
     }
   },
 };

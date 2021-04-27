@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import useAdminStatus from "@utils/useAdminStatus";
-import useAllItems from "@utils/useAllItems";
-import useAllSettings from "@utils/useAllSettings";
 import Loading from "@components/Loading";
 import Header from "@components/Header";
-import styles from "@styles/Admin.module.scss";
-import { Switch } from "@chakra-ui/react";
+import { breakpoints } from "../../globalStyles";
 import Link from "next/link";
+import styled from "styled-components";
 import {
   Table,
   Thead,
@@ -16,79 +14,155 @@ import {
   Td,
   TableCaption,
   Button,
+  Select,
+  FormLabel
 } from "@chakra-ui/react";
-import Footer from "@components/Footer";
+import Container from "@components/Container";
+import { useQuery, gql } from "@apollo/client";
+
+const QUERY = gql`
+  query GetTables {
+    users {
+      _user {
+        name
+        email
+        _id
+      }
+    }
+    items {
+      _id
+      name
+      category
+    }
+    getAllFeedback {
+      _id
+      weekNumber
+      creator {
+        name
+      }
+    }
+  }
+`;
+
+const UsersTable = ({ users = [] }) => {
+  return users?.map(({ _user: { name, email, _id } }) => (
+    <Tr key={_id}>
+      <Td>{name}</Td>
+      <HiddenTd>{email}</HiddenTd>
+      <Td>
+        <Link passHref href={`/user/${_id}`}>
+          <Button background="#93F3FE" color="black">
+            Link
+          </Button>
+        </Link>
+      </Td>
+    </Tr>
+  ));
+};
+
+const ItemsTable = ({ items = [] }) => {
+  return items.map(({ _id, name, category }) => (
+    <Tr key={_id}>
+      <Td>{name}</Td>
+      <HiddenTd>{category}</HiddenTd>
+      <Td>
+        <Link passHref href={`/item/${_id}`}>
+          <Button background="#93F3FE" color="black">
+            Link
+          </Button>
+        </Link>
+      </Td>
+    </Tr>
+  ));
+};
+
+const FeedbackTable = ({ list = [] }) => {
+  return [...list]
+    ?.sort((a, b) => a.weekNumber - b.weekNumber)
+    .map(({ _id, creator, weekNumber }) => (
+      <Tr key={_id}>
+        <Td>{creator?.name ?? "Unknown"}</Td>
+        <Td>{weekNumber}</Td>
+        <Td>
+          <Link passHref href={`/feedback/${_id}`}>
+            <Button background="#93F3FE" color="black">
+              Link
+            </Button>
+          </Link>
+        </Td>
+      </Tr>
+    ));
+};
 
 const Admin = () => {
   const admin = useAdminStatus();
-  const [checked, setChecked] = useState(false);
-  const items = useAllItems();
-  const settings = useAllSettings();
+  const [selected, setSelected] = useState("Users");
 
-  if (!admin || !items || !settings) return <Loading />;
+  const { data } = useQuery(QUERY);
+
+  if (!admin || !data) return <Loading />;
 
   return (
     <div>
       <Header title="Admin" />
-      <main className={styles.main}>
-        <div className={styles.switchContainer}>
-          <p>Show Users or Items</p>
-          <Switch
-            size="md"
-            onChange={() => setChecked(!checked)}
-            isChecked={checked}
-          />
-        </div>
-        <div className={styles.list}>
-          <Table variant="simple">
-            <TableCaption placement="top">
-              {checked ? "Items" : "Users"}
-            </TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                {checked ? (
-                  <Th>{"Description"}</Th>
-                ) : (
-                  <Th className={styles.middle}>{"Email"}</Th>
-                )}
-                <Th>Link</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {checked
-                ? items?.map(({ _id, name, category }) => (
-                    <Tr key={_id}>
-                      <Td>{name}</Td>
-                      <Td>{category}</Td>
-                      <Td>
-                        <Link passHref href={`/item/${_id}`}>
-                          <Button background="#93F3FE" color="black">
-                            Link
-                          </Button>
-                        </Link>
-                      </Td>
-                    </Tr>
-                  ))
-                : settings?.map(({ _user: { name, email, _id } }) => (
-                    <Tr key={_id}>
-                      <Td>{name}</Td>
-                      <Td className={styles.middle}>{email}</Td>
-                      <Td>
-                        <Link passHref href={`/user/${_id}`}>
-                          <Button background="#93F3FE" color="black">
-                            Link
-                          </Button>
-                        </Link>
-                      </Td>
-                    </Tr>
-                  ))}
-            </Tbody>
-          </Table>
-        </div>
-      </main>
+      <Container>
+        <SelectContainer>
+          <Select onChange={(e) => setSelected(e.target.value)}>
+            {["Users", "Items", "Feedback"].map((e, index) => (
+              <option key={index} value={e}>
+                {e}
+              </option>
+            ))}
+          </Select>
+        </SelectContainer>
+        <Table variant="simple">
+          <TableCaption placement="top">{selected}</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Name</Th>
+              {selected === "Items" && <HiddenTh>Category</HiddenTh>}
+              {selected === "Feedback" && <Th>Week</Th>}
+              {selected === "Users" && <HiddenTh>Email</HiddenTh>}
+              <Th>Link</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {selected === "Users" && <UsersTable users={data?.users} />}
+            {selected === "Items" && <ItemsTable items={data?.items} />}
+            {selected === "Feedback" && (
+              <FeedbackTable list={data?.getAllFeedback} />
+            )}
+          </Tbody>
+        </Table>
+      </Container>
     </div>
   );
 };
+
+const HiddenTh = styled(Th)`
+  display: none;
+  @media ${breakpoints.S} {
+    display: table-cell;
+  }
+`;
+const HiddenTd = styled(Td)`
+  display: none;
+  @media ${breakpoints.S} {
+    display: table-cell;
+  }
+`;
+
+const SelectContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  margin: 0 2rem;
+  @media ${breakpoints.XS} {
+    margin:0 10vw;
+  }
+  @media ${breakpoints.S} {
+    margin:0 22vw;
+  }
+`;
 
 export default Admin;

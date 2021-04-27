@@ -6,7 +6,6 @@ import Item from "@components/Item";
 import styles from "@styles/Newsletter.module.scss";
 import _ from "lodash";
 import { BsPlusCircle } from "react-icons/bs";
-import Footer from "@components/Footer";
 
 const WEEK_ZERO_START = new Date(2021, 3, 4);
 const WEEK_MS = 1000 * 60 * 60 * 24 * 7;
