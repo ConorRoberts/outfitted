@@ -9,25 +9,27 @@ import {
   Button,
   Flex,
 } from "@chakra-ui/react";
-import { BsPlus, BsPlusCircle } from "react-icons/bs";
+import { BsPlusCircle } from "react-icons/bs";
+import { BiMinusCircle } from "react-icons/bi";
 import Header from "@components/Header";
 import useAdminStatus from "@utils/useAdminStatus";
 import Loading from "@components/Loading";
 import Container from "@components/Container";
 import styled from "styled-components";
 import { theme, breakpoints } from "../../../globalStyles";
+import _ from "lodash";
 
 const UPDATE_ARTICLE = gql`
-  mutation updateArticle($id: String!, $article: UpdateArticleInput!) {
-    updateArticle(id: $id, updateArticleInput: $article) {
+  mutation updateArticle($id: String!, $updatedArticle: UpdateArticleInput!) {
+    updateArticle(id: $id, updatedArticle: $updatedArticle) {
       _id
     }
   }
 `;
 
 const CREATE_ARTICLE = gql`
-  mutation createArticle($article: ArticleInput!) {
-    createArticle(articleInput: $article) {
+  mutation createArticle($articleInput: ArticleInput!) {
+    createArticle(articleInput: $articleInput) {
       _id
     }
   }
@@ -54,10 +56,32 @@ const GET_ARTICLE = gql`
         image
       }
     }
+    items {
+      _id
+      name
+      images
+      category
+      description
+    }
   }
 `;
 
-const UpdateItemPage = ({ method, id }) => {
+const FeaturedItemPreview = ({ item = {} }) => {
+  const { name, images, category, description } = item;
+
+  return (
+    <ItemPreviewContainer>
+      <img src={images && images[0]} />
+      <Flex direction="column" marginLeft="1rem">
+        <h4>{name}</h4>
+        <p>{category}</p>
+        <p>{description}</p>
+      </Flex>
+    </ItemPreviewContainer>
+  );
+};
+
+const CreateArticlePage = ({ method, id }) => {
   const router = useRouter();
   const [form, setForm] = useState({
     title: "",
@@ -67,6 +91,7 @@ const UpdateItemPage = ({ method, id }) => {
   });
   const [sections, setSections] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState("none");
 
   const [getArticle, { data, loading }] = useLazyQuery(GET_ARTICLE);
   const [updateArticle] = useMutation(UPDATE_ARTICLE);
@@ -89,7 +114,14 @@ const UpdateItemPage = ({ method, id }) => {
         image: article.image,
         author: article.author,
       });
-      setSections(article.sections);
+      setSections(
+        article.sections.map(({ title, body, image }) => ({
+          title,
+          body,
+          image,
+        }))
+      );
+      setFeaturedItems(article.featuredItems);
     }
   }, [data]);
 
@@ -111,32 +143,69 @@ const UpdateItemPage = ({ method, id }) => {
     setSections([...tmp]);
   };
 
-  const shrinkSections = () => {
+  /**
+   * Remove a specific section from the sections array
+   * @param {*} index
+   */
+  const popSections = (index) => {
     const tmp = [...sections];
-    tmp.pop();
+    tmp.splice(index, 1);
     setSections([...tmp]);
   };
+
+  /**
+   * Append a template to sections array
+   */
   const growSections = () => {
     const tmp = [...sections];
     tmp.push({ title: "Title", body: "Body", image: "Image" });
     setSections([...tmp]);
   };
 
+  /**
+   * Event handler for form submission
+   * @param {*} e
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
-    const article = { ...form, sections, featuredItems };
+    const article = {
+      ...form,
+      sections,
+      featuredItems: featuredItems.map(({ _id }) => _id),
+    };
     if (method === "edit") {
       updateArticle({
-        variables: { id: id, article: article },
+        variables: { id: id, updatedArticle: article },
       });
     } else if (method === "new") {
       createArticle({
-        variables: { article: article },
+        variables: { articleInput: article },
       });
     }
     router.push("/articles");
   };
 
+  /**
+   * Add item (selectedItem id) to featuredItems array
+   * @returns
+   */
+  const appendFeaturedItems = () => {
+    const newItem = _.find(data?.items, { _id: selectedItem });
+
+    if (featuredItems.includes(newItem)) return;
+
+    setFeaturedItems([...featuredItems, newItem]);
+  };
+
+  /**
+   * Remove item from featuredItems array
+   * @param {*} item
+   */
+  const popFeaturedItems = (item) => {
+    setFeaturedItems(featuredItems.filter((e) => e !== item));
+  };
+
+  // If the user is not admin OR the admin state hasn't been retrieved
   if (!admin) return <Loading />;
 
   return (
@@ -146,15 +215,20 @@ const UpdateItemPage = ({ method, id }) => {
         <form onSubmit={handleSubmit}>
           <Heading>Head</Heading>
           {Object.entries(form).map(([key, val]) => {
+            const props = {
+              required: true,
+              name: key,
+              value: val,
+              onChange: handleChange,
+            };
             return (
               <FormGroup key={key}>
                 <StyledFormLabel>{key}</StyledFormLabel>
-                <Input
-                  required
-                  name={key}
-                  value={val}
-                  onChange={handleChange}
-                />
+                {key === "body" ? (
+                  <Textarea {...props} />
+                ) : (
+                  <Input {...props} />
+                )}
               </FormGroup>
             );
           })}
@@ -164,8 +238,14 @@ const UpdateItemPage = ({ method, id }) => {
             const key = `Section ${index + 1}`;
 
             return (
-              <FormGroup key={key}>
+              <SectionGroup key={key}>
                 <SectionLabel>{key}</SectionLabel>
+                <Flex justify="center">
+                  <Button margin="0 1rem" onClick={() => popSections(index)}>
+                    <StyledMinusIcon />
+                    Remove {key}
+                  </Button>
+                </Flex>
                 <StyledFormLabel>Title</StyledFormLabel>
                 <Input
                   name="title"
@@ -187,18 +267,48 @@ const UpdateItemPage = ({ method, id }) => {
                   required
                   onChange={(e) => handleSectionChange(e, index)}
                 />
-              </FormGroup>
+              </SectionGroup>
             );
           })}
-
           <Flex margin="1rem 0" justify="center">
             <Button margin="0 1rem" onClick={growSections}>
-              <BsPlusCircle />
-            </Button>
-            <Button margin="0 1rem" onClick={shrinkSections}>
-              Remove
+              <StyledPlusIcon /> New Section
             </Button>
           </Flex>
+
+          <Heading>Select Items</Heading>
+          <StyledFormLabel>Featured Items</StyledFormLabel>
+          <Select
+            onChange={(e) => setSelectedItem(e.target.value)}
+            value={selectedItem}
+          >
+            <option value="none">None</option>
+            {data?.items.map(({ name, _id }) => (
+              <option key={_id} value={_id}>
+                {name}
+              </option>
+            ))}
+          </Select>
+          {selectedItem !== "none" && (
+            <Flex margin="1rem 0" justify="center">
+              <Button margin="0 1rem" onClick={appendFeaturedItems}>
+                <StyledPlusIcon /> Add
+              </Button>
+            </Flex>
+          )}
+          <FeaturedItemPreview
+            item={_.find(data?.items, { _id: selectedItem })}
+          />
+          {featuredItems.length !== 0 && <Heading>Featured Items</Heading>}
+          {featuredItems.map((item, index) => (
+            <FormGroup key={`featured-${index}`}>
+              <Button margin="0 1rem" onClick={() => popFeaturedItems(item)}>
+                <BiMinusCircle />
+              </Button>
+              <FeaturedItemPreview item={item} />
+            </FormGroup>
+          ))}
+
           <Flex justify="center">
             <Button
               margin=".5rem 0"
@@ -215,7 +325,23 @@ const UpdateItemPage = ({ method, id }) => {
   );
 };
 
+const ItemPreviewContainer = styled.div`
+  display: flex;
+  /* justify-content:space-between; */
+  img{
+    width:15rem;
+  }
+  h4{
+    color:${theme.accentMain};
+    font-weight:400;
+    font-size:1.2rem;
+  }
+`;
+
 const FormGroup = styled.div``;
+const SectionGroup = styled.div`
+  margin: 1rem 0;
+`;
 const StyledFormLabel = styled(FormLabel)`
   text-transform: capitalize;
 `;
@@ -233,12 +359,21 @@ const SectionLabel = styled.h3`
   text-align: center;
 `;
 
+const StyledMinusIcon = styled(BiMinusCircle)`
+  font-size: 1.4rem;
+  margin-right: 0.2rem;
+`;
+const StyledPlusIcon = styled(BsPlusCircle)`
+  font-size: 1.4rem;
+  margin-right: 0.2rem;
+`;
+
 export const getServerSideProps = async (req, res) => {
   const {
     query: [method, id],
   } = req.query;
 
-  return { props: { method, id } };
+  return { props: { method, id: id ?? "" } };
 };
 
-export default UpdateItemPage;
+export default CreateArticlePage;

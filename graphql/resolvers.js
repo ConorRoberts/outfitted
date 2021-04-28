@@ -174,17 +174,22 @@ const resolvers = {
 
       return articleFromId(savedArticle._id);
     },
-    likeItem: async (_, { likeItemInput }) => {
-      const { user, item } = likeItemInput;
-      const settings = await Settings.findOne({ _user: user });
+    likeItem: async (_, { userId, itemId }) => {
+      const settings = await Settings.findOne({ _user: userId });
 
+      // If there is no settings object to mutate, end
       if (!settings) return null;
-      if (!settings.likes.includes(item)) {
-        settings.likes.push(item);
-        await settings.save();
+
+      // Decide whether to remove or append the item ID
+      if (settings.likes.includes(itemId)) {
+        settings.likes.pull(itemId);
+      } else {
+        settings.likes.push(itemId);
       }
 
-      return getSettings(user);
+      await settings.save();
+
+      return getSettings(userId);
     },
     createRecommendation: async (_, { recommendationInput }) => {
       const { user, item, timeLive, timeRecommended, body } = recommendationInput;
@@ -209,8 +214,8 @@ const resolvers = {
 
       return getItem(id);
     },
-    updateArticle: async (_, { id, updateArticleInput }) => {
-      await Article.findByIdAndUpdate(id, { ...updateArticleInput });
+    updateArticle: async (_, { id, updatedArticle }) => {
+      await Article.findByIdAndUpdate(id, { ...updatedArticle });
 
       return articleFromId(id);
     },

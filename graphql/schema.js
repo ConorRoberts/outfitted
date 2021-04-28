@@ -171,11 +171,6 @@ const typeDefs = gql`
     featuredItems: [String]
   }
 
-  input LikeItemInput {
-    user: String!
-    item: String!
-  }
-
   input SettingsInput {
     _user: ID!
     gender: String
@@ -209,11 +204,11 @@ const typeDefs = gql`
     deleteRecommendation(userId:String!,recommendationId:String!):Settings
     updateSettings(settingsInput: SettingsInput!): Settings
     createItem(newItemInput: NewItemInput!): Item
-    likeItem(likeItemInput: LikeItemInput!): Settings
+    likeItem(userId:String!,itemId:String!): Settings
     createRecommendation(recommendationInput:RecommendationInput!): Settings
     updateItem(id:String!,updateItemInput:UpdateItemInput!):Item
     createArticle(articleInput: ArticleInput!): Article
-    updateArticle(id:String!,updateArticleInput:UpdateArticleInput!):Article
+    updateArticle(id:String!,updatedArticle:UpdateArticleInput!):Article
     createFeedback(createFeedbackInput:CreateFeedbackInput!):Feedback!
   }
 `;
