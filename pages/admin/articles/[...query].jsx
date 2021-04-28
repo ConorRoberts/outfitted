@@ -18,6 +18,7 @@ import Container from "@components/Container";
 import styled from "styled-components";
 import { theme, breakpoints } from "../../../globalStyles";
 import _ from "lodash";
+import useAllItems from "@utils/useAllItems";
 
 const UPDATE_ARTICLE = gql`
   mutation updateArticle($id: String!, $updatedArticle: UpdateArticleInput!) {
@@ -56,13 +57,6 @@ const GET_ARTICLE = gql`
         image
       }
     }
-    items {
-      _id
-      name
-      images
-      category
-      description
-    }
   }
 `;
 
@@ -94,6 +88,8 @@ const CreateArticlePage = ({ method, id }) => {
   const [selectedItem, setSelectedItem] = useState("none");
 
   const [getArticle, { data, loading }] = useLazyQuery(GET_ARTICLE);
+  const items = useAllItems();
+
   const [updateArticle] = useMutation(UPDATE_ARTICLE);
   const [createArticle] = useMutation(CREATE_ARTICLE);
 
@@ -190,7 +186,7 @@ const CreateArticlePage = ({ method, id }) => {
    * @returns
    */
   const appendFeaturedItems = () => {
-    const newItem = _.find(data?.items, { _id: selectedItem });
+    const newItem = _.find(items, { _id: selectedItem });
 
     if (featuredItems.includes(newItem)) return;
 
@@ -283,7 +279,7 @@ const CreateArticlePage = ({ method, id }) => {
             value={selectedItem}
           >
             <option value="none">None</option>
-            {data?.items.map(({ name, _id }) => (
+            {items.map(({ name, _id }) => (
               <option key={_id} value={_id}>
                 {name}
               </option>
@@ -297,7 +293,7 @@ const CreateArticlePage = ({ method, id }) => {
             </Flex>
           )}
           <FeaturedItemPreview
-            item={_.find(data?.items, { _id: selectedItem })}
+            item={_.find(items, { _id: selectedItem })}
           />
           {featuredItems.length !== 0 && <Heading>Featured Items</Heading>}
           {featuredItems.map((item, index) => (
@@ -328,13 +324,13 @@ const CreateArticlePage = ({ method, id }) => {
 const ItemPreviewContainer = styled.div`
   display: flex;
   /* justify-content:space-between; */
-  img{
-    width:15rem;
+  img {
+    width: 15rem;
   }
-  h4{
-    color:${theme.accentMain};
-    font-weight:400;
-    font-size:1.2rem;
+  h4 {
+    color: ${theme.accentMain};
+    font-weight: 400;
+    font-size: 1.2rem;
   }
 `;
 

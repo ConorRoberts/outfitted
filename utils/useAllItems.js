@@ -13,23 +13,10 @@ const GET_ITEMS = gql`
     }
   }
 `;
-const GET_ITEMS_DETAILED = gql`
-  query GetItemsDetailed {
-    items {
-      _id
-      name
-      description
-      images
-      link
-    }
-  }
-`;
 
 const useAllItems = (detailed) => {
-  const [items, setItems] = useState(false);
-  const { data } = detailed
-    ? useQuery(GET_ITEMS_DETAILED)
-    : useQuery(GET_ITEMS);
+  const [items, setItems] = useState(null);
+  const { data } = useQuery(GET_ITEMS);
 
   useEffect(() => setItems(data?.items), [data]);
   return items;

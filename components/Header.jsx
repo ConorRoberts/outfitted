@@ -184,7 +184,7 @@ const Header = ({ title }) => {
                           </Link>
                         </li>
                         <li>
-                          <Link passHref href="/admin/create_article">
+                          <Link passHref href="/admin/articles/new">
                             <a className={styles.link}>
                               <span className={styles.icon}>
                                 <BsFileEarmarkPlus />

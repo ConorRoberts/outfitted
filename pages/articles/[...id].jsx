@@ -142,15 +142,19 @@ const ArticlePage = () => {
         )}
         <Title>{data?.article?.title}</Title>
         <Author>By {data?.article?.author}</Author>
-        <Body>{data?.body}</Body>
+        <Body>{data?.article?.body}</Body>
         {data?.article?.sections?.map((section, index) => (
           <ArticleSection section={section} key={`section-${index}`} />
         ))}
-        <SectionTitle>Featured Items</SectionTitle>
-        <FeaturedItemsList
-          userId={session?.user?.id}
-          items={data?.article?.featuredItems}
-        />
+        {data?.article?.featuredItems?.length > 0 && (
+          <>
+            <SectionTitle>Featured Items</SectionTitle>
+            <FeaturedItemsList
+              userId={session?.user?.id}
+              items={data?.article?.featuredItems}
+            />
+          </>
+        )}
       </Container>
     </div>
   );
