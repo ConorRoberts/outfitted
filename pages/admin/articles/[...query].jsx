@@ -111,13 +111,13 @@ const CreateArticlePage = ({ method, id }) => {
         author: article.author,
       });
       setSections(
-        article.sections.map(({ title, body, image }) => ({
+        article?.sections?.map(({ title, body, image }) => ({
           title,
           body,
           image,
         }))
       );
-      setFeaturedItems(article.featuredItems);
+      setFeaturedItems(article?.featuredItems);
     }
   }, [data]);
 
