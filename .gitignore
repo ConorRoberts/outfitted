@@ -5,8 +5,6 @@
 /.pnp
 .pnp.js
 
-babel.config.json
-
 # testing
 /coverage
 
