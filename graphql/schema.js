@@ -147,6 +147,7 @@ const typeDefs = gql`
     timestamp: String
     sections: [ArticleSection!]
     featuredItems: [Item!]
+    videoLinks:[String!]
   }
   input ArticleSectionInput {
     image: String!
@@ -169,6 +170,7 @@ const typeDefs = gql`
     image: String
     sections: [ArticleSectionInput]
     featuredItems: [String]
+    videoLinks:[String]
   }
 
   input SettingsInput {

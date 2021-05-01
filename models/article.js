@@ -37,6 +37,10 @@ const articleSchema = new Schema({
       },
     },
   ],
+  videoLinks: {
+    type: [String],
+    default: []
+  }
 });
 
 export default mongoose.models.Article ||

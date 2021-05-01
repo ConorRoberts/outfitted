@@ -108,6 +108,9 @@ const ImagesContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+  & > *{
+    flex: 0 1 25rem;
+  }
 `;
 
 const EditIconLink = styled.a`
