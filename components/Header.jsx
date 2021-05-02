@@ -23,6 +23,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import Head from "next/head";
+import { theme } from "../globalStyles";
 
 const LoginButton = () => {
   return (
@@ -67,10 +68,12 @@ const Header = ({ title }) => {
           property="og:description"
           content="Taking the stress out of getting dressed."
         />
-        <meta property="og:image" content="/outfitted.png" />
+        <meta property="og:image" content="https://i.imgur.com/8d001jz.png" />
         <meta property="og:image:alt" content="Outfitted header" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="https://i.imgur.com/8d001jz.png" />
+        <meta name="theme-color" content={theme.bgLight}></meta>
       </Head>
       <ul className={styles.mobile}>
         <li>
