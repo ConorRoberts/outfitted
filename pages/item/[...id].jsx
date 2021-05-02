@@ -65,9 +65,9 @@ const ItemPage = () => {
           </Link>
 
           <Link href={`/admin/create_item/${id}`}>
-            <EditIconLink>
-              <BsPencilSquare />
-            </EditIconLink>
+            <Button margin="1rem 0" leftIcon={<BsPencilSquare />}>
+              Edit
+            </Button>
           </Link>
         </Flex>
 
@@ -108,18 +108,10 @@ const ImagesContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
-  & > *{
-    flex: 0 1 25rem;
-  }
-`;
 
-const EditIconLink = styled.a`
-  margin-top: 1rem;
-  font-size: 2rem;
-  text-align: center;
-  transition: color 200ms ease;
-  &:hover {
-    color: $light-blue;
+  & > * {
+    flex: 0 1 20rem;
+    width: 20rem;
   }
 `;
 

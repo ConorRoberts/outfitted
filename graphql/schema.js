@@ -201,6 +201,7 @@ const typeDefs = gql`
     article(id: String!): Article
     settings(id: String!): Settings
     getAllFeedback:[Feedback]
+    getFeedbackById(id:String!):Feedback
   }
   type Mutation {
     deleteRecommendation(userId:String!,recommendationId:String!):Settings

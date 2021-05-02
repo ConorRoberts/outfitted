@@ -84,7 +84,7 @@ const FeedbackTable = ({ list = [] }) => {
         <Td>{creator?.name ?? "Unknown"}</Td>
         <Td>{weekNumber}</Td>
         <Td>
-          <Link passHref href={`/feedback/${_id}`}>
+          <Link passHref href={`/admin/feedback/${_id}`}>
             <Button background="#93F3FE" color="black">
               Link
             </Button>

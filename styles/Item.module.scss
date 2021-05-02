@@ -30,9 +30,6 @@
   }
   box-shadow: none;
   transition: box-shadow 300ms;
-  &:hover {
-    box-shadow: 0 0 5px black;
-  }
   @media (min-width: 800px) {
     flex-direction: row;
   }

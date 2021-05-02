@@ -134,6 +134,16 @@ const resolvers = {
       const result = await Feedback.find({}).populate("creator");
 
       return result.map(e => formatFeedback(e));
+    },
+    getFeedbackById: async (_, { id }) => {
+      try {
+        const result = await Feedback.findOne({ _id: id }).populate("creator");
+
+        return formatFeedback(result);
+      } catch (error) {
+        console.error(error);
+      }
+      return null;
     }
   },
   Mutation: {
