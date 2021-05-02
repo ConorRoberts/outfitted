@@ -249,7 +249,7 @@ const CreateArticlePage = ({ method, id }) => {
           })}
 
           <Heading>Sections</Heading>
-          {sections.map(({ title, body, image }, index) => {
+          {sections?.map(({ title, body, image }, index) => {
             const key = `Section ${index + 1}`;
 
             return (
@@ -298,7 +298,7 @@ const CreateArticlePage = ({ method, id }) => {
             value={selectedItem}
           >
             <option value="none">None</option>
-            {items.map(({ name, _id }) => (
+            {items?.map(({ name, _id }) => (
               <option key={_id} value={_id}>
                 {name}
               </option>
