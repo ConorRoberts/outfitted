@@ -53,12 +53,24 @@ const Header = ({ title }) => {
   const btnRef = useRef();
   const admin = useAdminStatus();
   const [session, loading] = useSession();
+  const formattedTitle = `${title} | Outfitted`;
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>{`${title} | Outfitted`}</title>
+        <title>{formattedTitle}</title>
         <link rel="icon" type="image/png" href="/logo-no-bg.png" />
+
+        <meta name="description" content="Page description" />
+        <meta property="og:title" content={formattedTitle} />
+        <meta
+          property="og:description"
+          content="Taking the stress out of getting dressed."
+        />
+        <meta property="og:image" content="/outfitted.png" />
+        <meta property="og:image:alt" content="Outfitted header" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
       </Head>
       <ul className={styles.mobile}>
         <li>

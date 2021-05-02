@@ -23,6 +23,7 @@ const GET_ARTICLE = gql`
       image
       author
       timestamp
+      videoLinks
       featuredItems {
         _id
         name
@@ -155,10 +156,36 @@ const ArticlePage = () => {
             />
           </>
         )}
+        {data?.article?.videoLinks?.length > 0 && (
+          <>
+            <SectionTitle>Featured Videos</SectionTitle>
+            <Flex justify="center" direction="row" wrap="wrap">
+              {data?.article?.videoLinks?.map((link, index) => (
+                <VideoPlayer
+                  key={`video-${index}`}
+                  src={`https://www.youtube.com/embed/${link}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="Video"
+                />
+              ))}
+            </Flex>
+          </>
+        )}
       </Container>
     </div>
   );
 };
+
+const VideoPlayer = styled.iframe`
+  width: 20rem;
+  height: 15rem;
+  @media ${breakpoints.S} {
+    width: 30rem;
+    height: 20rem;
+  }
+`;
 
 const Title = styled.h1`
   font-weight: 500;

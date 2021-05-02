@@ -44,6 +44,7 @@ const GET_ARTICLE = gql`
       image
       author
       timestamp
+      videoLinks
       featuredItems {
         _id
         name
@@ -86,6 +87,7 @@ const CreateArticlePage = ({ method, id }) => {
   const [sections, setSections] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState("none");
+  const [videoLinks, setVideoLinks] = useState([]);
 
   const [getArticle, { data, loading }] = useLazyQuery(GET_ARTICLE);
   const items = useAllItems();
@@ -118,6 +120,7 @@ const CreateArticlePage = ({ method, id }) => {
         }))
       );
       setFeaturedItems(article?.featuredItems);
+      setVideoLinks(article?.videoLinks ?? []);
     }
   }, [data]);
 
@@ -125,9 +128,18 @@ const CreateArticlePage = ({ method, id }) => {
    * onChange event handler for most of the form inputs
    * @param {*} e
    */
-  const handleChange = (e) => {
+  const handleHeaderChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const handleInputChange = (e, array, index) => {
+    const { value } = e.target;
+    let tmp = [...array];
+
+    tmp[index] = value;
+
+    return tmp;
   };
 
   const handleSectionChange = (e, index) => {
@@ -168,6 +180,7 @@ const CreateArticlePage = ({ method, id }) => {
       ...form,
       sections,
       featuredItems: featuredItems.map(({ _id }) => _id),
+      videoLinks,
     };
     if (method === "edit") {
       updateArticle({
@@ -201,6 +214,12 @@ const CreateArticlePage = ({ method, id }) => {
     setFeaturedItems(featuredItems.filter((e) => e !== item));
   };
 
+  const arrayRemove = (array, index) => {
+    const newArray = [...array];
+    newArray.splice(index, 1);
+    return newArray;
+  };
+
   // If the user is not admin OR the admin state hasn't been retrieved
   if (!admin) return <Loading />;
 
@@ -215,7 +234,7 @@ const CreateArticlePage = ({ method, id }) => {
               required: true,
               name: key,
               value: val,
-              onChange: handleChange,
+              onChange: handleHeaderChange,
             };
             return (
               <FormGroup key={key}>
@@ -292,11 +311,9 @@ const CreateArticlePage = ({ method, id }) => {
               </Button>
             </Flex>
           )}
-          <FeaturedItemPreview
-            item={_.find(items, { _id: selectedItem })}
-          />
-          {featuredItems.length !== 0 && <Heading>Featured Items</Heading>}
-          {featuredItems.map((item, index) => (
+          <FeaturedItemPreview item={_.find(items, { _id: selectedItem })} />
+          {featuredItems?.length !== 0 && <Heading>Featured Items</Heading>}
+          {featuredItems?.map((item, index) => (
             <FormGroup key={`featured-${index}`}>
               <Button margin="0 1rem" onClick={() => popFeaturedItems(item)}>
                 <BiMinusCircle />
@@ -304,6 +321,34 @@ const CreateArticlePage = ({ method, id }) => {
               <FeaturedItemPreview item={item} />
             </FormGroup>
           ))}
+
+          <Heading>Video Links</Heading>
+          {videoLinks?.map((link, index) => (
+            <FormGroup key={`video-${index}`}>
+              <Button
+                margin="0 1rem"
+                onClick={() => setVideoLinks(arrayRemove(videoLinks, index))}
+              >
+                <BiMinusCircle />
+              </Button>
+              <Input
+                value={link}
+                placeholder="Link"
+                onChange={(e) =>
+                  setVideoLinks(handleInputChange(e, videoLinks, index))
+                }
+              />
+            </FormGroup>
+          ))}
+          <Flex margin="1rem 0" justify="center">
+            <Button
+              margin="0 1rem"
+              onClick={() => setVideoLinks([...videoLinks, ""])}
+              leftIcon={<StyledPlusIcon />}
+            >
+              Add
+            </Button>
+          </Flex>
 
           <Flex justify="center">
             <Button
