@@ -43,55 +43,17 @@ export default function Home() {
           </p>
         </TitleContainer>
 
-        <SectionTitle>About Us</SectionTitle>
-        <Flex justify="center" wrap="wrap" gridGap="10">
-          <PersonCard
-            image={{
-              path: "/Graham_bio_image.jpg",
-              width: 893,
-              height: 1049,
-            }}
-            name="Graham Anderson"
-            linkedInLink="https://www.linkedin.com/in/graham-anderson-736869195/"
-            instaLink="https://www.instagram.com/grahamandersonn/"
-            desc="Graham Anderson is a current University of Guelph student studying Marketing Management. Graham founded Outfitted with his co-founder James Romain with the belief that everyone should be able to find their own style and feel confident about the clothes in their closet. Graham’s goals for Outfitted are to grow the businesses presence in the targeted social media spaces as well as focusing on giving users the highest quality clothing suggestions. Since starting Outfitted Graham has learned a lot about entrepreneurship including the ins and outs of running a business and is looking to continue learning as the business grows. Graham has a passion for Managing and a drive to innovate as an entrepreneur."
-            title="Co-Founder"
-          />
-          <PersonCard
-            image={{
-              path: "/James_bio_image.jpg",
-              width: 869,
-              height: 1061,
-            }}
-            title="Co-Founder"
-            desc="James is a current University of Guelph Economics and Finance major with a passion for the stock market."
-            name="James Romain"
-            instaLink="https://www.instagram.com/jamesromain59/"
-            linkedInLink="https://www.linkedin.com/in/james-romain-27482b187/"
-          />
-          <PersonCard
-            image={{
-              path: "/Conor_bio_image.jpg",
-              width: 907,
-              height: 1060,
-            }}
-            name="Conor Roberts"
-            title="Web Developer"
-            desc="Conor is a current full-stack developer and Computer Science Major at the University of Guelph. "
-            linkedInLink="https://www.linkedin.com/in/conorjroberts/"
-          />
-        </Flex>
 
         <SectionTitle>Recent Articles</SectionTitle>
         {/* <ArticleList>
           <div>
-            {articles?.slice(0, 3).map((article) => (
-              <ArticleContainer key={article._id}>
-                <ArticlePreview compact article={article} />
-              </ArticleContainer>
+          {articles?.slice(0, 3).map((article) => (
+            <ArticleContainer key={article._id}>
+            <ArticlePreview compact article={article} />
+            </ArticleContainer>
             ))}
-          </div>
-        </ArticleList> */}
+            </div>
+          </ArticleList> */}
         <Flex gridGap="10" wrap="wrap" justify="center">
           {articles?.slice(0, 3).map((article) => (
             <Link href={`/articles/${article._id}`} key={article._id}>
@@ -101,6 +63,44 @@ export default function Home() {
             </Link>
           ))}
         </Flex>
+          <SectionTitle>About Us</SectionTitle>
+          <Flex justify="center" wrap="wrap" gridGap="10">
+            <PersonCard
+              image={{
+                path: "/Graham_bio_image.jpg",
+                width: 893,
+                height: 1049,
+              }}
+              name="Graham Anderson"
+              linkedInLink="https://www.linkedin.com/in/graham-anderson-736869195/"
+              instaLink="https://www.instagram.com/grahamandersonn/"
+              desc="Graham Anderson is a current University of Guelph student studying Marketing Management. Graham founded Outfitted with his co-founder James Romain with the belief that everyone should be able to find their own style and feel confident about the clothes in their closet. Graham’s goals for Outfitted are to grow the businesses presence in the targeted social media spaces as well as focusing on giving users the highest quality clothing suggestions. Since starting Outfitted Graham has learned a lot about entrepreneurship including the ins and outs of running a business and is looking to continue learning as the business grows. Graham has a passion for Managing and a drive to innovate as an entrepreneur."
+              title="Co-Founder"
+            />
+            <PersonCard
+              image={{
+                path: "/James_bio_image.jpg",
+                width: 869,
+                height: 1061,
+              }}
+              title="Co-Founder"
+              desc="James is a current University of Guelph Economics and Finance major with a passion for the stock market."
+              name="James Romain"
+              instaLink="https://www.instagram.com/jamesromain59/"
+              linkedInLink="https://www.linkedin.com/in/james-romain-27482b187/"
+            />
+            <PersonCard
+              image={{
+                path: "/Conor_bio_image.jpg",
+                width: 907,
+                height: 1060,
+              }}
+              name="Conor Roberts"
+              title="Web Developer"
+              desc="Conor is a current full-stack developer and Computer Science Major at the University of Guelph. "
+              linkedInLink="https://www.linkedin.com/in/conorjroberts/"
+            />
+          </Flex>
       </Container>
     </div>
   );
