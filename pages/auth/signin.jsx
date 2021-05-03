@@ -1,8 +1,7 @@
-import { providers, signIn } from "next-auth/client";
+import { getProviders, signIn } from "next-auth/client";
 import Image from "next/image";
-import Header from "../../components/Header";
-import styles from "../../styles/SignIn.module.scss";
-import Head from "next/head";
+import Header from "@components/Header";
+import styles from "@styles/SignIn.module.scss";
 
 const getImage = (name) => {
   switch (name) {
@@ -20,7 +19,7 @@ const Option = ({ name, providerID }) => {
   );
 };
 
-export default function SignIn({ providers }) {
+export default function SignIn({providers}) {
   return (
     <div>
       <Header title="Sign In" />
@@ -43,8 +42,9 @@ export default function SignIn({ providers }) {
   );
 }
 
-SignIn.getInitialProps = async () => {
+export async function getServerSideProps(context) {
+  const providers = await getProviders();
   return {
-    providers: await providers(),
+    props: { providers },
   };
-};
+}
