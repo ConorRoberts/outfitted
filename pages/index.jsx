@@ -38,7 +38,7 @@ export default function Home() {
             <span>Getting Dressed"</span>
           </h1>
           <p>
-            Our Mission is to provide you with personalized style selections so
+            Our Mission is to provide users with personalized style selections so
             they can look and feel good while saving time and money
           </p>
         </TitleContainer>
