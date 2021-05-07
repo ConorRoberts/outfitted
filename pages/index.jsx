@@ -175,31 +175,3 @@ const SectionTitle = styled.h2`
     width: 85%;
   }
 `;
-
-const ArticleList = styled.div`
-  display: flex;
-`;
-// const ArticleList = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   margin-bottom: 1rem;
-//   width: 100%;
-//   div {
-//     width: 25rem;
-//     margin: 0 5vw;
-//     display: flex;
-//     align-items: center;
-//     flex-direction: column;
-//     @media (min-width: ${breakpoints.M}) {
-//       width: 55rem;
-//     }
-//   }
-// `;
-
-const ArticleContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0;
-  cursor: pointer;
-  width: 100%;
-`;

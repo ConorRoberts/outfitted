@@ -61,7 +61,7 @@ const CardImage = styled.div`
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) scale(0.4);
+    transform: translate(-50%, -50%) scale(0.35);
   }
 `;
 
@@ -111,11 +111,11 @@ const CardInner = styled.div`
   transform-style: preserve-3d;
 `;
 const CardContainer = styled.div`
-  width: 21rem;
+  width: 19.5rem;
   font-family: "Roboto";
   background-color: transparent;
   position: relative;
-  height: 33rem;
+  height: 33.5rem;
   display: flex;
   flex-direction: column;
   color: white;

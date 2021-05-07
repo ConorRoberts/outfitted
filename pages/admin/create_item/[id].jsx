@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { Input, FormLabel, Textarea, Select, Button } from "@chakra-ui/react";
 import { BsPlusCircle } from "react-icons/bs";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import styles from "@styles/UpdateItemPage.module.scss";
 import Header from "@components/Header";
-import Footer from "@components/Footer";
 import Loading from "@components/Loading";
 import useAdminStatus from "@utils/useAdminStatus";
 
@@ -52,6 +51,14 @@ const UPDATE_ITEM = gql`
   }
 `;
 
+const DELETE_ITEM = gql`
+  mutation deleteItem($id: String!) {
+    deleteItem(id: $id) {
+      _id
+    }
+  }
+`;
+
 const UpdateItemPage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -63,19 +70,32 @@ const UpdateItemPage = () => {
   //   name: "images",
   // });
 
+  const [form, setForm] = useState({
+    name: "",
+    brand: "",
+    description: "",
+    seasons: [],
+    category: "",
+    occasions: [],
+    colours: [],
+    material: "",
+    price: "",
+    images: [],
+    builds: [],
+    sizes: [],
+    link: "",
+  });
+
   const admin = useAdminStatus();
 
-  // if (!admin) return <Loading />;
-
   useEffect(() => {
-    if (data){
+    if (data) {
       Object.entries(data?.item).forEach(([key, val]) => setValue(key, val));
-      setValue("colours",data.item.colours.join(", "));
-      setValue("builds",data.item.builds.join(", "));
-      setValue("occasions",data.item.occasions.join(", "));
-      setValue("seasons",data.item.seasons.join(", "));
-      setValue("sizes",data.item.sizes.join(", "));
-
+      setValue("colours", data.item.colours.join(", "));
+      setValue("builds", data.item.builds.join(", "));
+      setValue("occasions", data.item.occasions.join(", "));
+      setValue("seasons", data.item.seasons.join(", "));
+      setValue("sizes", data.item.sizes.join(", "));
     }
 
     // data && data?.item.images.forEach((e) => append({ link: e }));
@@ -99,6 +119,8 @@ const UpdateItemPage = () => {
     });
     router.push("/admin");
   };
+
+  if (!admin) return <Loading />;
   return (
     <div className={styles.container}>
       <Header title="Create Item" />

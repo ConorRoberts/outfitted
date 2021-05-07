@@ -213,6 +213,8 @@ const typeDefs = gql`
     createArticle(articleInput: ArticleInput!): Article
     updateArticle(id:String!,updatedArticle:UpdateArticleInput!):Article
     createFeedback(createFeedbackInput:CreateFeedbackInput!):Feedback!
+    deleteArticle(id:String!):Article
+    deleteItem(id:String!):Item!
   }
 `;
 

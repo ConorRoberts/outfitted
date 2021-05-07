@@ -6,6 +6,9 @@ import Loading from "@components/Loading";
 import useArticlePreviews from "@utils/useArticlePreviews";
 import styled from "styled-components";
 import { theme } from "../../globalStyles";
+import ArticleCard from "@components/ArticleCard";
+import Container from "@components/Container";
+import { Flex } from "@chakra-ui/react";
 
 const Newsletter = () => {
   const articles = useArticlePreviews();
@@ -15,21 +18,27 @@ const Newsletter = () => {
   return (
     <div>
       <Header title="Articles" />
-      <main className={styles.main}>
+      <Container>
         <Title>Articles</Title>
-        <div className={styles.container}>
-          <div className={styles.articleListContainer}>
-            {articles?.map((article) => (
-              <div key={article._id} className={styles.article}>
-                <ArticlePreview article={article} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </main>
+        <List>
+          {articles?.map((article) => (
+            <ArticleCard key={article._id} {...article} />
+          ))}
+        </List>
+      </Container>
     </div>
   );
 };
+
+const List = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:center;
+  & > * {
+    margin: .5rem;
+  }
+`;
 
 const Title = styled.h1`
   font-size: 2.5rem;

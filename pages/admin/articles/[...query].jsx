@@ -37,6 +37,14 @@ const CREATE_ARTICLE = gql`
   }
 `;
 
+const DELETE_ARTICLE = gql`
+  mutation deleteArticle($id: String!) {
+    deleteArticle(id: $id) {
+      _id
+    }
+  }
+`;
+
 const GET_ARTICLE = gql`
   query getArticle($id: String!) {
     article(id: $id) {
@@ -81,6 +89,7 @@ const CreateArticlePage = ({ method, id }) => {
 
   const [updateArticle] = useMutation(UPDATE_ARTICLE);
   const [createArticle] = useMutation(CREATE_ARTICLE);
+  const [deleteArticle] = useMutation(DELETE_ARTICLE);
 
   const admin = useAdminStatus();
 
@@ -214,6 +223,15 @@ const CreateArticlePage = ({ method, id }) => {
     <div>
       <Header title="Create Article" />
       <Container>
+        <Button
+          onClick={() => {
+            deleteArticle({ variables: { id: id } });
+            router.push("/");
+          }}
+        >
+          Delete This Article
+        </Button>
+
         <form onSubmit={handleSubmit}>
           <Heading>Head</Heading>
           {Object.entries(form).map(([key, val]) => {

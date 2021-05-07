@@ -16,7 +16,7 @@ const PersonCard = ({
       </CardImage>
       <CardText>
         <Header>
-          <h4>{title}</h4>
+          <h4>{title.length > 17 ? `${title.slice(0, 17)} ...` : title}</h4>
 
           <p>
             Published by {author} on

@@ -244,8 +244,18 @@ const resolvers = {
       }, { new: true })
 
       return updatedSettings;
-    }
-  },
+    },
+    deleteArticle: async (_, { id }) => {
+      await Article.findOneAndDelete({ _id: id });
+
+      return null;
+    },
+    deleteItem: async (_, { id }) => {
+      await Item.findOneAndDelete({ _id: id });
+
+      return null;
+    },
+  }
 };
 
 export default resolvers;
