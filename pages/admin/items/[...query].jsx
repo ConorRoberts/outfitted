@@ -34,19 +34,6 @@ const UPDATE_ITEM = gql`
   mutation updateItem($id: String!, $updateItemInput: UpdateItemInput!) {
     updateItem(id: $id, updateItemInput: $updateItemInput) {
       _id
-      name
-      brand
-      description
-      seasons
-      category
-      occasions
-      colours
-      material
-      price
-      images
-      builds
-      sizes
-      link
     }
   }
 `;
@@ -64,6 +51,7 @@ const UpdateItemPage = () => {
   const { id } = router.query;
   const { data } = useQuery(GET_ITEM, { variables: { id: `${id}` } });
   const [updateItem] = useMutation(UPDATE_ITEM);
+  const [deleteItem] = useMutation(DELETE_ITEM);
   const { register, handleSubmit, control, setValue } = useForm();
   // const { fields, append } = useFieldArray({
   //   control,
@@ -123,7 +111,7 @@ const UpdateItemPage = () => {
   if (!admin) return <Loading />;
   return (
     <div className={styles.container}>
-      <Header title="Create Item" />
+      <Header title="Item" />
       <main className={styles.main}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <FormLabel>Name</FormLabel>
@@ -188,6 +176,14 @@ const UpdateItemPage = () => {
       </main>
     </div>
   );
+};
+
+export const getServerSideProps = async (req, res) => {
+  const {
+    query: [method, id],
+  } = req.query;
+
+  return { props: { method, id: id ?? "" } };
 };
 
 export default UpdateItemPage;

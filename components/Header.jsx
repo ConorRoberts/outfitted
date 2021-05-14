@@ -43,7 +43,7 @@ const LogoutButton = () => {
 const Logo = () => {
   return (
     <div className={styles.logoContainer}>
-      <Image src="/outfitted.png" width={512} height={163} />
+      <Image priority src="/outfitted.png" width={512} height={163} />
       <div className={styles.logoImageContainer}></div>
     </div>
   );
