@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { gql, useQuery, useMutation } from "@apollo/client";
-import { Input, FormLabel, Textarea, Select, Button } from "@chakra-ui/react";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import {
+  Input,
+  FormLabel,
+  Select,
+  Button,
+  Checkbox,
+  CheckboxGroup,
+} from "@chakra-ui/react";
 import { BsPlusCircle } from "react-icons/bs";
-import { useForm } from "react-hook-form";
 import styles from "@styles/UpdateItemPage.module.scss";
 import Header from "@components/Header";
 import Loading from "@components/Loading";
 import useAdminStatus from "@utils/useAdminStatus";
+import styled from "styled-components";
+
+const COLOURS = ["green","dark green","white","red","cream","black","maroon","burgundy","lime","pink","magenta",]
 
 const GET_ITEM = gql`
   query getItem($id: String!) {
@@ -31,8 +40,8 @@ const GET_ITEM = gql`
 `;
 
 const UPDATE_ITEM = gql`
-  mutation updateItem($id: String!, $updateItemInput: UpdateItemInput!) {
-    updateItem(id: $id, updateItemInput: $updateItemInput) {
+  mutation updateItem($id: String!, $item: ItemInput!) {
+    updateItem(id: $id, item: $item) {
       _id
     }
   }
@@ -46,17 +55,11 @@ const DELETE_ITEM = gql`
   }
 `;
 
-const UpdateItemPage = () => {
+const UpdateItemPage = ({ method, id }) => {
   const router = useRouter();
-  const { id } = router.query;
-  const { data } = useQuery(GET_ITEM, { variables: { id: `${id}` } });
+  const [getItem, { data, loading }] = useLazyQuery(GET_ITEM);
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [deleteItem] = useMutation(DELETE_ITEM);
-  // const { register, handleSubmit, control, setValue } = useForm();
-  // const { fields, append } = useFieldArray({
-  //   control,
-  //   name: "images",
-  // });
 
   const [form, setForm] = useState({
     name: "",
@@ -74,32 +77,61 @@ const UpdateItemPage = () => {
     link: "",
   });
 
-
   const admin = useAdminStatus();
 
   useEffect(() => {
-
-    // data && data?.item.images.forEach((e) => append({ link: e }));
-    // append({link:"hi"});
+    if (method === "edit") {
+      getItem({ variables: { id: `${id}` } });
+    }
   }, []);
+
+  useEffect(() => {
+    // Set default values for inputs
+    if (data && !loading) {
+      const { item } = data;
+      console.log(item);
+      setForm({
+        ...item,
+      });
+    }
+  }, [data]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateItem({
-      variables: {
-        id: id,
-        updateItemInput: {
-          ...formData,
-          price: +formData.price,
-          // images: formData.images && formData.images.map(({ link }) => link),
-          colours: formData.colours.split(",").map((e) => e.trim()),
-          builds: formData.builds.split(",").map((e) => e.trim()),
-          occasions: formData.occasions.split(",").map((e) => e.trim()),
-          seasons: formData.seasons.split(",").map((e) => e.trim()),
-          sizes: formData.sizes.split(",").map((e) => e.trim()),
+
+    console.log(form);
+    return;
+    if (method === "edit") {
+      updateItem({
+        variables: {
+          id: id,
+          item: {
+            ...form,
+            price: +form.price,
+            colours: form.colours.split(",").map((e) => e.trim()),
+            builds: form.builds.split(",").map((e) => e.trim()),
+            occasions: form.occasions.split(",").map((e) => e.trim()),
+            seasons: form.seasons.split(",").map((e) => e.trim()),
+            sizes: form.sizes.split(",").map((e) => e.trim()),
+          },
         },
-      },
-    });
+      });
+    }
     router.push("/admin");
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+  const appendArray = (name) => (e) => {
+    setForm({ ...form, [name]: [...form[name], ""] });
+  };
+  const handleArrayChange = (index, name) => (e) => {
+    const { value } = e.target;
+    let tmp = [...form[name]];
+    tmp[index] = value;
+    setForm({ ...form, [name]: tmp });
   };
 
   if (!admin) return <Loading />;
@@ -108,37 +140,38 @@ const UpdateItemPage = () => {
       <Header title="Item" />
       <main className={styles.main}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <FormLabel>Name</FormLabel>
-          <Input ref={register} required name="name" />
+          <Button type="submit" onClick={() => deleteItem(id)}>
+            Delete Item
+          </Button>
+          {["name", "description", "brand", "price", "link", "material"].map(
+            (e, index) => (
+              <div key={`input-field-${index}`}>
+                <StyledFormLabel>{e}</StyledFormLabel>
+                <Input
+                  required
+                  name={e}
+                  value={form[e]}
+                  onChange={handleInputChange}
+                />
+              </div>
+            )
+          )}
 
-          <FormLabel>Description</FormLabel>
-          <Textarea ref={register} name="description" required />
-
-          <FormLabel>Brand</FormLabel>
-          <Input ref={register} name="brand" required />
-
-          <FormLabel>Price</FormLabel>
-          <Input ref={register} name="price" required />
-
-          {/* <FormLabel>Images</FormLabel>
-          <BsPlusCircle onClick={() => append({ link: "" })} />
-          {fields.map((item, index) => (
+          <FormLabel>Images</FormLabel>
+          <Button leftIcon={<BsPlusCircle />} onClick={appendArray("images")}>
+            Add Image
+          </Button>
+          {form.images.map((e, index) => (
             <Input
-              key={item.id}
-              ref={register}
-              name={`images[${index}].link`}
+              key={`images-array-${index}`}
+              onChange={handleArrayChange(index, "images")}
+              value={e}
               required
             />
-          ))} */}
-
-          <FormLabel>Link</FormLabel>
-          <Input ref={register} name="link" required />
-
-          <FormLabel>Material</FormLabel>
-          <Input ref={register} name="material" required />
+          ))}
 
           <FormLabel>Category</FormLabel>
-          <Select ref={register} name="category" placeholder="None">
+          <Select name="category" placeholder="None">
             <option value="shoes">Shoes</option>
             <option value="hat">Hat</option>
             <option value="bottom">Bottom</option>
@@ -147,19 +180,22 @@ const UpdateItemPage = () => {
           </Select>
 
           <FormLabel>Colours</FormLabel>
-          <Input name="colours" ref={register} />
+          <Input name="colours" />
 
           <FormLabel>Occasion</FormLabel>
-          <Input name="occasions" ref={register} />
+          {form.occasions.map(e=>
+            
+          <Input name="occasions" />
+            )}
 
           <FormLabel>Season</FormLabel>
-          <Input name="seasons" ref={register} />
+          <Input name="seasons" />
 
           <FormLabel>Build</FormLabel>
-          <Input name="builds" ref={register} />
+          <Input name="builds" />
 
           <FormLabel>Available Sizes</FormLabel>
-          <Input name="sizes" ref={register} />
+          <Input name="sizes" />
 
           <div className={styles.buttonContainer}>
             <Button background="green.200" type="submit">
@@ -171,6 +207,10 @@ const UpdateItemPage = () => {
     </div>
   );
 };
+
+const StyledFormLabel = styled(FormLabel)`
+  text-transform: capitalize;
+`;
 
 export const getServerSideProps = async (req, res) => {
   const {

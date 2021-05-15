@@ -116,6 +116,21 @@ const typeDefs = gql`
     builds: [String!]!
     link: String!
   }
+  input ItemInput {
+    name: String!
+    brand: String!
+    description: String!
+    seasons: [String!]!
+    category: String!
+    occasions: [String!]!
+    colours: [String!]!
+    material: String!
+    price: Float!
+    images: [String!]!
+    sizes: [String!]!
+    builds: [String!]!
+    link: String!
+  }
   input UpdateItemInput {
     name: String
     brand: String
@@ -206,15 +221,15 @@ const typeDefs = gql`
   type Mutation {
     deleteRecommendation(userId:String!,recommendationId:String!):Settings
     updateSettings(settingsInput: SettingsInput!): Settings
-    createItem(newItemInput: NewItemInput!): Item
+    createItem(item: ItemInput!): Item
+    updateItem(id:String!,item:ItemInput!):Item
     likeItem(userId:String!,itemId:String!): Settings
     createRecommendation(recommendationInput:RecommendationInput!): Settings
-    updateItem(id:String!,updateItemInput:UpdateItemInput!):Item
     createArticle(articleInput: ArticleInput!): Article
     updateArticle(id:String!,updatedArticle:UpdateArticleInput!):Article
     createFeedback(createFeedbackInput:CreateFeedbackInput!):Feedback!
     deleteArticle(id:String!):Article
-    deleteItem(id:String!):Item!
+    deleteItem(id:String!):Item
   }
 `;
 
