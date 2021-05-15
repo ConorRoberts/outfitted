@@ -52,7 +52,7 @@ const UpdateItemPage = () => {
   const { data } = useQuery(GET_ITEM, { variables: { id: `${id}` } });
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [deleteItem] = useMutation(DELETE_ITEM);
-  const { register, handleSubmit, control, setValue } = useForm();
+  // const { register, handleSubmit, control, setValue } = useForm();
   // const { fields, append } = useFieldArray({
   //   control,
   //   name: "images",
@@ -74,22 +74,16 @@ const UpdateItemPage = () => {
     link: "",
   });
 
+
   const admin = useAdminStatus();
 
   useEffect(() => {
-    if (data) {
-      Object.entries(data?.item).forEach(([key, val]) => setValue(key, val));
-      setValue("colours", data.item.colours.join(", "));
-      setValue("builds", data.item.builds.join(", "));
-      setValue("occasions", data.item.occasions.join(", "));
-      setValue("seasons", data.item.seasons.join(", "));
-      setValue("sizes", data.item.sizes.join(", "));
-    }
 
     // data && data?.item.images.forEach((e) => append({ link: e }));
     // append({link:"hi"});
   }, []);
-  const onSubmit = (formData) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     updateItem({
       variables: {
         id: id,
@@ -113,7 +107,7 @@ const UpdateItemPage = () => {
     <div className={styles.container}>
       <Header title="Item" />
       <main className={styles.main}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form}>
           <FormLabel>Name</FormLabel>
           <Input ref={register} required name="name" />
 
