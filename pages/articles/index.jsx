@@ -1,14 +1,12 @@
 import React from "react";
 import Header from "@components/Header";
-import styles from "@styles/Articles.module.scss";
-import ArticlePreview from "@components/ArticlePreview";
 import Loading from "@components/Loading";
 import useArticlePreviews from "@utils/useArticlePreviews";
 import styled from "styled-components";
 import { theme } from "../../globalStyles";
 import ArticleCard from "@components/ArticleCard";
 import Container from "@components/Container";
-import { Flex } from "@chakra-ui/react";
+import Link from "next/link";
 
 const Newsletter = () => {
   const articles = useArticlePreviews();
@@ -22,7 +20,11 @@ const Newsletter = () => {
         <Title>Articles</Title>
         <List>
           {articles?.map((article) => (
-            <ArticleCard key={article._id} {...article} />
+            <Link href={`/articles/${article._id}`}>
+              <a>
+                <ArticleCard key={article._id} {...article} />
+              </a>
+            </Link>
           ))}
         </List>
       </Container>
@@ -34,9 +36,9 @@ const List = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content:center;
+  justify-content: center;
   & > * {
-    margin: .5rem;
+    margin: 0.5rem;
   }
 `;
 
