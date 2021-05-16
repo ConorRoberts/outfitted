@@ -16,7 +16,7 @@ import Loading from "@components/Loading";
 import useAdminStatus from "@utils/useAdminStatus";
 import styled from "styled-components";
 import Container from "@components/Container";
-import GoTrashcan from "react-icons/go";
+import {GoTrashcan} from "react-icons/go";
 
 const COLOURS = [
   "green",
@@ -163,7 +163,7 @@ const UpdateItemPage = ({ method, id }) => {
         <form onSubmit={handleSubmit}>
           <Flex justify="center">
             <Button
-              leftIcon={GoTrashcan}
+              leftIcon={<GoTrashcan/>}
               type="submit"
               onClick={() => deleteItem({ variables: { id: id } })}
             >
