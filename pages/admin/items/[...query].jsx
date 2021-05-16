@@ -8,15 +8,29 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
+  Flex,
 } from "@chakra-ui/react";
-import { BsPlusCircle } from "react-icons/bs";
-import styles from "@styles/UpdateItemPage.module.scss";
+import { BsPlus, BsPlusCircle } from "react-icons/bs";
 import Header from "@components/Header";
 import Loading from "@components/Loading";
 import useAdminStatus from "@utils/useAdminStatus";
 import styled from "styled-components";
+import Container from "@components/Container";
+import GoTrashcan from "react-icons/go";
 
-const COLOURS = ["green","dark green","white","red","cream","black","maroon","burgundy","lime","pink","magenta",]
+const COLOURS = [
+  "green",
+  "dark green",
+  "white",
+  "red",
+  "cream",
+  "black",
+  "maroon",
+  "burgundy",
+  "lime",
+  "pink",
+  "magenta",
+];
 
 const GET_ITEM = gql`
   query getItem($id: String!) {
@@ -35,6 +49,13 @@ const GET_ITEM = gql`
       builds
       sizes
       link
+    }
+  }
+`;
+const CREATE_ITEM = gql`
+  mutation createItem($item: ItemInput!) {
+    createItem(item: $item) {
+      _id
     }
   }
 `;
@@ -60,6 +81,7 @@ const UpdateItemPage = ({ method, id }) => {
   const [getItem, { data, loading }] = useLazyQuery(GET_ITEM);
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [deleteItem] = useMutation(DELETE_ITEM);
+  const [createItem] = useMutation(CREATE_ITEM);
 
   const [form, setForm] = useState({
     name: "",
@@ -89,33 +111,32 @@ const UpdateItemPage = ({ method, id }) => {
     // Set default values for inputs
     if (data && !loading) {
       const { item } = data;
-      console.log(item);
-      setForm({
-        ...item,
-      });
+      setForm(Object.fromEntries(Object.entries(item).slice(2)));
     }
   }, [data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(form);
-    return;
+    const res = Object.fromEntries(
+      Object.entries(form).map(([key, val]) => {
+        if (Array.isArray(val)) {
+          return [key, val.map((e) => e.trim().toLowerCase())];
+        }
+
+        return [key, key === "price" ? +val : val];
+      })
+    );
+
     if (method === "edit") {
       updateItem({
         variables: {
           id: id,
-          item: {
-            ...form,
-            price: +form.price,
-            colours: form.colours.split(",").map((e) => e.trim()),
-            builds: form.builds.split(",").map((e) => e.trim()),
-            occasions: form.occasions.split(",").map((e) => e.trim()),
-            seasons: form.seasons.split(",").map((e) => e.trim()),
-            sizes: form.sizes.split(",").map((e) => e.trim()),
-          },
+          item: res,
         },
       });
+    } else if (method === "new") {
+      createItem({ variables: { item: res } });
     }
     router.push("/admin");
   };
@@ -127,8 +148,8 @@ const UpdateItemPage = ({ method, id }) => {
   const appendArray = (name) => (e) => {
     setForm({ ...form, [name]: [...form[name], ""] });
   };
-  const handleArrayChange = (index, name) => (e) => {
-    const { value } = e.target;
+  const handleArrayChange = (index) => (e) => {
+    const { value, name } = e.target;
     let tmp = [...form[name]];
     tmp[index] = value;
     setForm({ ...form, [name]: tmp });
@@ -136,13 +157,19 @@ const UpdateItemPage = ({ method, id }) => {
 
   if (!admin) return <Loading />;
   return (
-    <div className={styles.container}>
+    <div>
       <Header title="Item" />
-      <main className={styles.main}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <Button type="submit" onClick={() => deleteItem(id)}>
-            Delete Item
-          </Button>
+      <Container>
+        <form onSubmit={handleSubmit}>
+          <Flex justify="center">
+            <Button
+              leftIcon={GoTrashcan}
+              type="submit"
+              onClick={() => deleteItem({ variables: { id: id } })}
+            >
+              Delete Item
+            </Button>
+          </Flex>
           {["name", "description", "brand", "price", "link", "material"].map(
             (e, index) => (
               <div key={`input-field-${index}`}>
@@ -158,20 +185,28 @@ const UpdateItemPage = ({ method, id }) => {
           )}
 
           <FormLabel>Images</FormLabel>
-          <Button leftIcon={<BsPlusCircle />} onClick={appendArray("images")}>
-            Add Image
-          </Button>
+          <Flex justify="center">
+            <Button leftIcon={<BsPlusCircle />} onClick={appendArray("images")}>
+              Add Image
+            </Button>
+          </Flex>
           {form.images.map((e, index) => (
             <Input
+              margin=".5rem 0"
               key={`images-array-${index}`}
-              onChange={handleArrayChange(index, "images")}
+              onChange={handleArrayChange(index)}
               value={e}
+              name="images"
               required
             />
           ))}
 
           <FormLabel>Category</FormLabel>
-          <Select name="category" placeholder="None">
+          <Select
+            name="category"
+            placeholder="None"
+            onChange={handleInputChange}
+          >
             <option value="shoes">Shoes</option>
             <option value="hat">Hat</option>
             <option value="bottom">Bottom</option>
@@ -180,30 +215,103 @@ const UpdateItemPage = ({ method, id }) => {
           </Select>
 
           <FormLabel>Colours</FormLabel>
-          <Input name="colours" />
+          <Flex justify="center">
+            <Button
+              leftIcon={<BsPlusCircle />}
+              onClick={appendArray("colours")}
+            >
+              Add Colour
+            </Button>
+          </Flex>
+          {form.colours.map((e, index) => (
+            <Input
+              name="colours"
+              value={e}
+              onChange={handleArrayChange(index)}
+              margin=".5rem 0"
+              key={`colour-${index}`}
+            />
+          ))}
 
-          <FormLabel>Occasion</FormLabel>
-          {form.occasions.map(e=>
-            
-          <Input name="occasions" />
-            )}
+          <FormLabel>Occasions</FormLabel>
+          <Flex justify="center">
+            <Button
+              leftIcon={<BsPlusCircle />}
+              onClick={appendArray("occasions")}
+            >
+              Add Occasion
+            </Button>
+          </Flex>
+          {form.occasions.map((e, index) => (
+            <Input
+              name="occasions"
+              value={e}
+              onChange={handleArrayChange(index)}
+              margin=".5rem 0"
+              key={`occasion-${index}`}
+            />
+          ))}
 
           <FormLabel>Season</FormLabel>
-          <Input name="seasons" />
+          <CheckboxGroup
+            value={form.seasons}
+            onChange={(e) => setForm({ ...form, seasons: e })}
+          >
+            <Flex justify="space-evenly">
+              {["winter", "spring", "summer", "fall"].map((e) => (
+                <Checkbox
+                  key={`season-${e}`}
+                  name="seasons"
+                  value={e}
+                  textTransform="capitalize"
+                >
+                  {e}
+                </Checkbox>
+              ))}
+            </Flex>
+          </CheckboxGroup>
 
-          <FormLabel>Build</FormLabel>
-          <Input name="builds" />
+          <FormLabel>Builds</FormLabel>
+          <Flex justify="center">
+            <Button leftIcon={<BsPlusCircle />} onClick={appendArray("builds")}>
+              Add Build
+            </Button>
+          </Flex>
+          {form.builds.map((e, index) => (
+            <Input
+              name="builds"
+              value={e}
+              onChange={handleArrayChange(index)}
+              margin=".5rem 0"
+              key={`build-${index}`}
+            />
+          ))}
 
           <FormLabel>Available Sizes</FormLabel>
-          <Input name="sizes" />
+          <CheckboxGroup
+            value={form.sizes.map((e) => e.toUpperCase())}
+            onChange={(e) => setForm({ ...form, sizes: e })}
+          >
+            <Flex justify="space-evenly">
+              {["XS", "S", "MD", "L", "XL", "2XL+"].map((e, index) => (
+                <Checkbox
+                  key={`sizes-${index}`}
+                  value={e}
+                  textTransform="capitalize"
+                >
+                  {e}
+                </Checkbox>
+              ))}
+            </Flex>
+          </CheckboxGroup>
 
-          <div className={styles.buttonContainer}>
-            <Button background="green.200" type="submit">
+          <Flex justify="center" marginTop="1rem">
+            <Button background="green.200" color="black" type="submit">
               Submit
             </Button>
-          </div>
+          </Flex>
         </form>
-      </main>
+      </Container>
     </div>
   );
 };

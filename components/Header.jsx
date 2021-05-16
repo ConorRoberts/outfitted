@@ -209,7 +209,7 @@ const Header = ({ title }) => {
                           </Link>
                         </li>
                         <li>
-                          <Link passHref href="/admin/create_item">
+                          <Link passHref href="/admin/items/new">
                             <a className={styles.link}>
                               <span className={styles.icon}>
                                 <BsPlusCircle />

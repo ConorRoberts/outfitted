@@ -166,12 +166,12 @@ const resolvers = {
 
       return null;
     },
-    createItem: async (_, { id, item }) => {
+    createItem: async (_, { item }) => {
       const newItem = new Item({
         ...item,
       });
 
-      await item.save();
+      await newItem.save();
 
       return newItem;
     },
