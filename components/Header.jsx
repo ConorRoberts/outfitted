@@ -43,7 +43,7 @@ const LogoutButton = () => {
 const Logo = () => {
   return (
     <div className={styles.logoContainer}>
-      <Image src="/outfitted.png" width={512} height={163} />
+      <Image priority src="/outfitted.png" width={512} height={163} />
       <div className={styles.logoImageContainer}></div>
     </div>
   );
@@ -209,7 +209,7 @@ const Header = ({ title }) => {
                           </Link>
                         </li>
                         <li>
-                          <Link passHref href="/admin/create_item">
+                          <Link passHref href="/admin/items/new">
                             <a className={styles.link}>
                               <span className={styles.icon}>
                                 <BsPlusCircle />

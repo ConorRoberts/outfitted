@@ -166,12 +166,12 @@ const resolvers = {
 
       return null;
     },
-    createItem: async (_, { id, newItemInput }) => {
-      const item = new Item({
-        ...newItemInput,
+    createItem: async (_, { item }) => {
+      const newItem = new Item({
+        ...item,
       });
 
-      const newItem = await item.save();
+      await newItem.save();
 
       return newItem;
     },
@@ -219,8 +219,8 @@ const resolvers = {
 
       return getSettings(user);
     },
-    updateItem: async (_, { id, updateItemInput }) => {
-      await Item.findByIdAndUpdate(id, { ...updateItemInput });
+    updateItem: async (_, { id, item }) => {
+      await Item.findByIdAndUpdate(id, { ...item });
 
       return getItem(id);
     },

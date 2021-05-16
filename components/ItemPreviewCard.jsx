@@ -36,6 +36,7 @@ const ItemPreviewContainer = styled.div`
   font-family: "Roboto";
   letter-spacing: 0.08rem;
   img {
+    border-radius:15px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -56,9 +57,9 @@ const ItemPreviewContainer = styled.div`
     font-weight: 300;
   }
 
-  @media ${breakpoints.S} {
+  /* @media ${breakpoints.S} {
     flex-direction: row;
-  }
+  } */
 `;
 
 export default ItemPreviewCard;

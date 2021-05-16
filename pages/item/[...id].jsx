@@ -64,7 +64,7 @@ const ItemPage = () => {
             </Button>
           </Link>
 
-          <Link href={`/admin/create_item/${id}`}>
+          <Link href={`/admin/items/edit/${id}`}>
             <Button margin="1rem 0" leftIcon={<BsPencilSquare />}>
               Edit
             </Button>
